@@ -3,249 +3,1177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nael Lakhledj</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Nael Lakhledj — Systèmes & Réseaux</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #0a0a0a;
+  --black2: #111111;
+  --black3: #1a1a1a;
+  --red: #e8192c;
+  --red-dim: #9b1120;
+  --red-glow: rgba(232,25,44,0.15);
+  --white: #ffffff;
+  --off-white: #f5f0eb;
+  --grey: #888;
+  --grey-light: #ccc;
+  --border: rgba(255,255,255,0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
-  background: #0a0a0a;
-  color: #f5f0eb;
+  background: var(--black);
+  color: var(--off-white);
   font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
 }
 
-/* Croix rouge décorative en fond */
+/* NOISE */
 body::before {
   content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 600px; height: 600px;
-  background:
-    linear-gradient(#e8192c 0 0) center/4px 100%,
-    linear-gradient(#e8192c 0 0) center/100% 4px;
-  background-repeat: no-repeat;
-  opacity: 0.04;
-}
-
-body::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px; height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,25,44,0.06) 0%, transparent 65%);
-}
-
-.content {
-  position: relative;
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
   z-index: 1;
-  animation: fadeIn 1s ease both;
+  opacity: 0.5;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* CURSOR */
+#cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--red);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  left: -50px;
+  top: -50px;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(232, 25, 44, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  left: -50px;
+  top: -50px;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
 }
 
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: #e8192c;
-  margin-bottom: 2rem;
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.8rem 4rem;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(16px);
 }
-.tag::before { content: ''; width: 24px; height: 1px; background: #e8192c; }
-.tag::after  { content: ''; width: 24px; height: 1px; background: #e8192c; }
-
-h1 {
+nav::after {
+  content: '';
+  position: absolute; bottom: 0; left: 4rem; right: 4rem;
+  height: 1px; background: var(--border);
+}
+.nav-logo {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(4rem, 12vw, 9rem);
-  font-weight: 900;
-  color: #fff;
-  line-height: 0.88;
-  letter-spacing: -0.03em;
-  margin-bottom: 2rem;
+  font-size: 1.15rem; font-weight: 700; color: var(--white); letter-spacing: 0.05em;
+}
+.nav-logo em { color: var(--red); font-style: normal; }
+.nav-links { display: flex; gap: 3rem; list-style: none; }
+.nav-links a {
+  color: var(--grey); text-decoration: none;
+  font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400;
+  transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--red);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-status {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.7rem; color: var(--grey); letter-spacing: 0.1em;
+}
+.status-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: #22c55e;
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot {
+  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
+  50% { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
 }
 
-h1 .outline {
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255,255,255,0.5);
+/* HERO */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; padding: 0 4rem; padding-top: 100px;
+  position: relative; overflow: hidden; gap: 4rem;
 }
-
-.subtitle {
-  font-size: 0.85rem;
-  color: #888;
-  letter-spacing: 0.08em;
-  margin-bottom: 3rem;
-  line-height: 1.8;
+.hero::before {
+  content: '';
+  position: absolute; top: -20%; right: -5%;
+  width: 55%; height: 140%;
+  background: linear-gradient(175deg, var(--red) 0%, #8b0000 100%);
+  clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%);
+  opacity: 0.07; z-index: 0;
 }
+.hero-left { position: relative; z-index: 2; }
 
-.subtitle span { color: #ccc; }
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 1rem;
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;
 }
+.hero-eyebrow-line { width: 40px; height: 1px; background: var(--red); }
+.hero-eyebrow-text {
+  font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); font-weight: 500;
+}
+.hero-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4rem, 7vw, 7rem); font-weight: 900; color: var(--white);
+  line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 0.3rem;
+}
+.hero-name .first { display: block; }
+.hero-name .last {
+  display: block; color: transparent;
+  -webkit-text-stroke: 1.5px var(--white); opacity: 0.9;
+}
+.hero-title {
+  font-size: 0.9rem; color: var(--grey-light); margin: 1.8rem 0 0.8rem;
+  font-weight: 400; letter-spacing: 0.05em;
+}
+.hero-title span { color: var(--red); }
+.hero-desc {
+  font-size: 0.85rem; color: var(--grey); line-height: 1.9;
+  max-width: 400px; margin-bottom: 3rem;
+}
+.hero-actions { display: flex; gap: 1.2rem; align-items: center; }
 
-.btn-main {
-  background: #e8192c;
-  color: #fff;
+.btn-red {
+  background: var(--red); color: var(--white);
   padding: 1rem 2.5rem;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-  transition: color 0.35s;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  border: none; cursor: none; text-decoration: none; display: inline-block;
+  position: relative; overflow: hidden; transition: color 0.35s;
 }
-.btn-main::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: #fff;
+.btn-red::before {
+  content: ''; position: absolute; inset: 0; background: #fff;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); z-index: 0;
+}
+.btn-red:hover::before { transform: scaleX(1); }
+.btn-red:hover { color: var(--red); }
+.btn-red span { position: relative; z-index: 1; }
+
+.btn-ghost {
+  color: var(--grey-light); font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  transition: color 0.3s; cursor: none;
+}
+.btn-ghost:hover { color: var(--white); }
+.btn-ghost-arrow {
+  width: 28px; height: 1px; background: currentColor;
+  position: relative; transition: width 0.3s;
+}
+.btn-ghost-arrow::after {
+  content: ''; position: absolute; right: 0; top: -3px;
+  width: 7px; height: 7px;
+  border-right: 1px solid currentColor; border-top: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+.btn-ghost:hover .btn-ghost-arrow { width: 46px; }
+
+.hero-right { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; }
+.hero-card {
+  background: var(--black2); border: 1px solid var(--border);
+  padding: 3rem; width: 100%; max-width: 420px; position: relative;
+}
+.hero-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: linear-gradient(90deg, var(--red), transparent);
+}
+.hero-card-label {
+  font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 2rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.hero-card-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.stat-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 2px; background: var(--border); margin-bottom: 2px;
+}
+.stat-cell { background: var(--black2); padding: 1.5rem; transition: background 0.2s; }
+.stat-cell:hover { background: var(--black3); }
+.stat-val {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 900; color: var(--white); line-height: 1; margin-bottom: 0.3rem;
+}
+.stat-val em { color: var(--red); font-style: normal; }
+.stat-lbl { font-size: 0.65rem; color: var(--grey); letter-spacing: 0.1em; text-transform: uppercase; }
+.hero-card-bottom {
+  background: var(--black3); padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-card-bottom-text { font-size: 0.72rem; color: var(--grey-light); }
+.hero-card-bottom-badge {
+  background: var(--red); color: var(--white);
+  font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem;
+}
+
+/* MARQUEE */
+.marquee-wrap {
+  overflow: hidden;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: 1.2rem 0; background: var(--black2); position: relative; z-index: 2;
+}
+.marquee-track {
+  display: flex; gap: 0; animation: marquee 22s linear infinite; width: max-content;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-item {
+  display: flex; align-items: center; gap: 2.5rem;
+  padding: 0 2.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--grey); white-space: nowrap; font-weight: 400;
+}
+.marquee-dot { color: var(--red); font-size: 1.2rem; line-height: 0; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* SECTION BASE */
+.section { padding: 8rem 4rem; position: relative; z-index: 2; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-label {
+  display: flex; align-items: center; gap: 1.5rem; margin-bottom: 4rem;
+}
+.section-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem; font-weight: 900; color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.08); line-height: 1; user-select: none;
+}
+.section-meta { display: flex; flex-direction: column; gap: 0.3rem; }
+.section-tag { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em;
+}
+.section-divider { flex: 1; height: 1px; background: var(--border); margin-top: auto; align-self: flex-end; margin-bottom: 0.8rem; }
+
+/* EXPERIENCE */
+.exp-list { display: flex; flex-direction: column; }
+.exp-row {
+  display: grid; grid-template-columns: 220px 1fr;
+  border-bottom: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.exp-row::after {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 2px; background: var(--red);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+}
+.exp-row:hover::after { transform: scaleY(1); }
+.exp-row:hover .exp-body { background: rgba(255,255,255,0.015); }
+.exp-sidebar {
+  padding: 3rem 2rem 3rem 0; border-right: 1px solid var(--border);
+}
+.exp-period { font-size: 0.72rem; color: var(--grey); line-height: 1.7; margin-bottom: 1rem; }
+.exp-type {
+  display: inline-block; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 0.3rem 0.8rem; border: 1px solid;
+}
+.exp-type.alt { border-color: var(--red); color: var(--red); }
+.exp-type.stage { border-color: var(--border); color: var(--grey); }
+.exp-type.project { border-color: rgba(255,255,255,0.2); color: var(--grey-light); }
+.exp-body { padding: 3rem 0 3rem 3rem; transition: background 0.3s; }
+.exp-role {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; letter-spacing: -0.01em;
+}
+.exp-company { font-size: 0.78rem; color: var(--red); margin-bottom: 1.5rem; letter-spacing: 0.05em; }
+.exp-missions { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.exp-missions li {
+  font-size: 0.82rem; color: var(--grey-light); line-height: 1.7;
+  padding-left: 1.2rem; position: relative;
+}
+.exp-missions li::before { content: '—'; position: absolute; left: 0; color: var(--red); }
+
+/* SKILLS */
+.skills-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);
+}
+.skill-panel { background: var(--black); padding: 3rem; transition: background 0.3s; }
+.skill-panel:hover { background: var(--black2); }
+.skill-panel-title {
+  font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 2rem;
+}
+.skill-items { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.skill-pill {
+  font-size: 0.75rem; color: var(--grey-light);
+  border: 1px solid var(--border); padding: 0.5rem 1.1rem; transition: all 0.25s; cursor: none;
+}
+.skill-pill:hover { border-color: var(--red); color: var(--white); background: var(--red-glow); }
+
+.certif-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); margin-top: 2px;
+}
+.certif-tile {
+  background: var(--black2); padding: 2.5rem 3rem;
+  display: flex; align-items: center; gap: 2rem; transition: background 0.3s;
+}
+.certif-tile:hover { background: var(--black3); }
+.certif-icon-box {
+  width: 56px; height: 56px; flex-shrink: 0;
+  border: 1px solid var(--red);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+}
+.certif-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.3rem; }
+.certif-sub { font-size: 0.72rem; color: var(--grey); line-height: 1.5; }
+
+/* FORMATION */
+.formation-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);
+}
+.formation-card {
+  background: var(--black); padding: 3.5rem; position: relative; overflow: hidden; transition: background 0.3s;
+}
+.formation-card:hover { background: var(--black2); }
+.formation-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--red), transparent);
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+}
+.formation-card:hover::after { transform: scaleX(1); }
+.formation-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem; font-weight: 900; color: transparent;
+  -webkit-text-stroke: 1px rgba(232,25,44,0.3); line-height: 1; margin-bottom: 1.5rem; user-select: none;
+}
+.formation-diploma {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; line-height: 1.3;
+}
+.formation-school { font-size: 0.75rem; color: var(--grey); line-height: 1.6; }
+
+/* CONTACT */
+.contact-section {
+  background: var(--white); padding: 8rem 4rem; position: relative; z-index: 2; overflow: hidden;
+}
+.contact-section::before {
+  content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 40%;
+  background: var(--red); clip-path: polygon(0 0, 85% 0, 65% 100%, 0 100%);
+}
+.contact-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center; position: relative; z-index: 1;
+}
+.contact-big {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; color: var(--white);
+  line-height: 1.1; letter-spacing: -0.02em;
+}
+.contact-sub { margin-top: 1.5rem; font-size: 0.85rem; color: rgba(255,255,255,0.8); line-height: 1.8; }
+.contact-right { display: flex; flex-direction: column; gap: 0; }
+.contact-info-row {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.8rem 0; border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.contact-info-icon {
+  width: 44px; height: 44px; flex-shrink: 0; background: var(--black);
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.contact-info-label { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--grey); margin-bottom: 0.2rem; }
+.contact-info-val { font-size: 0.9rem; color: var(--black); font-weight: 500; }
+.contact-cta {
+  margin-top: 2rem; display: inline-block; background: var(--black); color: var(--white);
+  padding: 1.1rem 3rem; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+  text-decoration: none; cursor: none; position: relative; overflow: hidden; transition: color 0.35s;
+}
+.contact-cta::before {
+  content: ''; position: absolute; inset: 0; background: var(--red);
   transform: scaleX(0); transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
 }
-.btn-main:hover::before { transform: scaleX(1); }
-.btn-main:hover { color: #e8192c; }
-.btn-main span { position: relative; z-index: 1; }
+.contact-cta:hover::before { transform: scaleX(1); }
+.contact-cta span { position: relative; z-index: 1; }
 
-.btn-sec {
-  color: #888;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: color 0.3s;
+/* ---- CONTACT SECTION REDESIGN ---- */
+.contact-section {
+  background: var(--black); padding: 0; position: relative; z-index: 2; overflow: hidden;
 }
-.btn-sec:hover { color: #fff; }
-.btn-sec-arrow {
-  width: 24px; height: 1px;
-  background: currentColor;
-  position: relative;
-  transition: width 0.3s;
+.contact-section::before { display: none; }
+
+.contact-wrapper {
+  display: grid; grid-template-columns: 1fr 1.2fr; min-height: 100vh;
 }
-.btn-sec-arrow::after {
+
+/* LEFT PANEL — rouge profond */
+.contact-panel-left {
+  background: var(--red);
+  padding: 7rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.contact-panel-left::before {
   content: '';
-  position: absolute; right: 0; top: -3px;
-  width: 6px; height: 6px;
-  border-right: 1px solid currentColor;
-  border-top: 1px solid currentColor;
-  transform: rotate(45deg);
+  position: absolute; bottom: -120px; right: -120px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: rgba(0,0,0,0.12);
+  pointer-events: none;
 }
-.btn-sec:hover .btn-sec-arrow { width: 40px; }
-
-/* Coins décoratifs */
-.corner {
-  position: fixed;
-  width: 40px; height: 40px;
-  opacity: 0.25;
+.contact-panel-left::after {
+  content: '';
+  position: absolute; top: -80px; left: -80px;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
 }
-.corner-tl { top: 2rem; left: 2rem; border-top: 1px solid #e8192c; border-left: 1px solid #e8192c; }
-.corner-tr { top: 2rem; right: 2rem; border-top: 1px solid #e8192c; border-right: 1px solid #e8192c; }
-.corner-bl { bottom: 2rem; left: 2rem; border-bottom: 1px solid #e8192c; border-left: 1px solid #e8192c; }
-.corner-br { bottom: 2rem; right: 2rem; border-bottom: 1px solid #e8192c; border-right: 1px solid #e8192c; }
+.contact-label-tag {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7); margin-bottom: 2rem; position: relative; z-index: 1;
+}
+.contact-label-tag::before { content: '04'; font-size: 0.55rem; opacity: 0.6; }
+.contact-label-tag::after { content: ''; width: 30px; height: 1px; background: rgba(255,255,255,0.4); }
 
-/* Stats bas de page */
-.stats {
-  position: fixed;
-  bottom: 2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+.contact-big {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem); font-weight: 900; color: var(--white);
+  line-height: 1.0; letter-spacing: -0.03em;
+  position: relative; z-index: 1;
+}
+.contact-sub {
+  margin-top: 2rem; font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.9;
+  position: relative; z-index: 1;
+}
+
+.contact-info-list {
+  margin-top: 3.5rem; display: flex; flex-direction: column; gap: 0;
+  position: relative; z-index: 1;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+.contact-info-item {
+  display: flex; align-items: center; gap: 1.2rem;
+  padding: 1.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.15);
+  transition: background 0.2s;
+}
+.cii-icon {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+.contact-info-item:hover .cii-icon { background: rgba(255,255,255,0.22); }
+.cii-label { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 0.15rem; }
+.cii-val { font-size: 0.85rem; color: var(--white); font-weight: 500; }
+
+/* RIGHT PANEL — formulaire dark */
+.contact-panel-right {
+  background: var(--black2);
+  padding: 7rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative;
+}
+.contact-panel-right::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--border);
+}
+
+.form-header { margin-bottom: 3rem; }
+.form-header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.form-header-sub { font-size: 0.78rem; color: var(--grey); line-height: 1.6; }
+
+/* FORM FIELDS */
+.contact-form { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.04); }
+.form-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.04); }
+
+.form-field {
+  position: relative; background: var(--black2);
+  transition: background 0.2s;
+}
+.form-field:focus-within { background: #161616; }
+
+.field-label {
+  display: block;
+  padding: 1.2rem 1.5rem 0;
+  font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey);
+  transition: color 0.25s;
+}
+.form-field:focus-within .field-label { color: var(--red); }
+
+.field-input, .field-textarea {
+  display: block; width: 100%;
+  background: transparent; border: none; outline: none;
+  padding: 0.4rem 1.5rem 1.2rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 400;
+  color: var(--white); resize: none;
+}
+.field-textarea { min-height: 140px; padding-top: 0.6rem; }
+.field-input::placeholder, .field-textarea::placeholder {
+  color: rgba(255,255,255,0.15); font-size: 0.85rem;
+}
+
+.field-bar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+.field-bar::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.form-field:focus-within .field-bar::after { transform: scaleX(1); }
+
+/* SUBMIT */
+.form-submit-row {
+  display: flex; align-items: center; gap: 1.5rem; margin-top: 1.5rem;
+}
+.btn-submit {
+  flex: 1;
+  background: var(--red); color: var(--white);
+  padding: 1.2rem 2rem; border: none; cursor: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+  transition: opacity 0.3s;
+}
+.btn-submit-inner { display: flex; align-items: center; gap: 0.8rem; position: relative; z-index: 1; }
+.btn-submit::before {
+  content: ''; position: absolute; inset: 0; background: #fff;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.btn-submit:hover::before { transform: scaleX(1); }
+.btn-submit:hover { color: var(--red); }
+.btn-submit:disabled { opacity: 0.5; pointer-events: none; }
+.btn-submit-arrow {
+  width: 32px; height: 32px;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.btn-submit:hover .btn-submit-arrow { border-color: rgba(232,25,44,0.4); transform: translateX(4px); }
+
+.form-hint { font-size: 0.65rem; color: var(--grey); line-height: 1.6; }
+
+/* STATUS */
+.form-status {
+  margin-top: 1.2rem; padding: 1.1rem 1.5rem;
+  font-size: 0.78rem; display: none; align-items: center; gap: 0.8rem;
+}
+.form-status.success {
   display: flex;
-  gap: 3rem;
-  font-size: 0.65rem;
-  color: #444;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  white-space: nowrap;
+  background: rgba(34,197,94,0.08); color: #4ade80;
+  border-left: 2px solid #22c55e;
 }
-.stats span { color: #e8192c; font-weight: 500; margin-right: 0.4rem; }
-
-/* Disponible indicator */
-.avail {
-  position: fixed;
-  top: 2rem; right: 2rem;
-  display: flex; align-items: center; gap: 0.5rem;
-  font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: #555;
-}
-.avail-dot {
-  width: 6px; height: 6px; border-radius: 50%; background: #22c55e;
-  animation: blink 2s infinite;
-}
-@keyframes blink {
-  0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,0.4); }
-  50%      { box-shadow: 0 0 0 5px rgba(34,197,94,0); }
+.form-status.error {
+  display: flex;
+  background: rgba(232,25,44,0.08); color: #ff6b6b;
+  border-left: 2px solid var(--red);
 }
 
-@media (max-width: 600px) {
-  .cta { flex-direction: column; align-items: center; }
-  .stats { gap: 1.5rem; font-size: 0.55rem; }
+/* SETUP NOTICE */
+.setup-notice {
+  background: rgba(232,25,44,0.06);
+  border: 1px dashed rgba(232,25,44,0.25);
+  padding: 1rem 1.4rem; font-size: 0.7rem; color: var(--grey);
+  line-height: 1.7; margin-bottom: 1.5rem; display: none;
+}
+.setup-notice strong { color: var(--red); }
+.setup-notice code {
+  background: rgba(255,255,255,0.06); padding: 0.1rem 0.4rem;
+  font-family: monospace; font-size: 0.68rem; border-radius: 2px; color: #ccc;
+}
+
+@media (max-width: 900px) {
+  .contact-wrapper { grid-template-columns: 1fr; min-height: auto; }
+  .contact-panel-left { padding: 5rem 2rem; }
+  .contact-panel-right { padding: 4rem 2rem; }
+  .form-duo { grid-template-columns: 1fr; }
+  .form-submit-row { flex-direction: column; align-items: stretch; }
+}
+
+/* FOOTER */
+footer {
+  background: var(--black); border-top: 1px solid var(--border);
+  padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 2;
+}
+.footer-logo { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1rem; color: var(--white); }
+.footer-logo em { color: var(--red); font-style: normal; }
+.footer-copy { font-size: 0.65rem; color: var(--grey); letter-spacing: 0.1em; }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.75s cubic-bezier(0.4,0,0.2,1), transform 0.75s cubic-bezier(0.4,0,0.2,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* HERO LOAD */
+.hero-left > * { opacity: 0; transform: translateY(30px); animation: heroLoad 0.8s cubic-bezier(0.4,0,0.2,1) forwards; }
+.hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+.hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+.hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+.hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+.hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+.hero-right { opacity: 0; transform: translateX(40px); animation: heroLoad 0.9s 0.35s cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes heroLoad { to { opacity: 1; transform: translate(0,0); } }
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); }
+
+@media (max-width: 900px) {
+  nav { padding: 1.4rem 2rem; }
+  nav::after { left: 2rem; right: 2rem; }
+  .nav-links { display: none; }
+  .hero { grid-template-columns: 1fr; padding: 6rem 2rem 4rem; gap: 3rem; }
+  .section { padding: 5rem 2rem; }
+  .skills-layout, .certif-grid, .formation-grid { grid-template-columns: 1fr; }
+  .exp-row { grid-template-columns: 1fr; }
+  .exp-sidebar { border-right: none; border-bottom: 1px solid var(--border); padding: 2rem 0; }
+  .exp-body { padding: 2rem 0; }
+  .contact-section { padding: 5rem 2rem; }
+  .contact-section::before { display: none; }
+  .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-big { color: var(--black); }
+  .contact-sub { color: var(--grey); }
+  footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
 }
 </style>
 </head>
 <body>
 
-<div class="corner corner-tl"></div>
-<div class="corner corner-tr"></div>
-<div class="corner corner-bl"></div>
-<div class="corner corner-br"></div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-<div class="avail">
-  <div class="avail-dot"></div>
-  Disponible Sept. 2026
-</div>
+<nav>
+  <div class="nav-logo">Nael <em>Lakhledj</em></div>
+  <ul class="nav-links">
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#skills">Compétences</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    Disponible — Sept. 2026
+  </div>
+</nav>
 
-<div class="content">
-  <div class="tag">Portfolio</div>
+<section class="hero">
+  <div class="hero-orb"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <div class="hero-eyebrow-text">Alternance Systèmes & Réseaux</div>
+    </div>
+    <h1 class="hero-name">
+      <span class="first">Nael</span>
+      <span class="last">Lakhledj</span>
+    </h1>
+    <p class="hero-title">Administrateur réseaux <span>·</span> BTS SIO SISR</p>
+    <p class="hero-desc">
+      Étudiant en alternance spécialisé en infrastructure IT.<br>
+      Cisco, pfSense, Active Directory, Proxmox, Zabbix.<br>
+      Paris / Île-de-France.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-red"><span>Me contacter</span></a>
+      <a href="#experience" class="btn-ghost">
+        Mes missions
+        <span class="btn-ghost-arrow"></span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-label">Profil technique</div>
+      <div class="stat-grid">
+        <div class="stat-cell">
+          <div class="stat-val">4<em>+</em></div>
+          <div class="stat-lbl">Expériences</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val">CCNA</div>
+          <div class="stat-lbl">Certifié Cisco</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val">7<em>+</em></div>
+          <div class="stat-lbl">Technos</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-val">2026</div>
+          <div class="stat-lbl">Diplôme BTS</div>
+        </div>
+      </div>
+      <div class="hero-card-bottom">
+        <div class="hero-card-bottom-text">Disponible en alternance</div>
+        <div class="hero-card-bottom-badge">Sept. 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <h1>
-    Nael<br>
-    <span class="outline">Lakhledj</span>
-  </h1>
-
-  <p class="subtitle">
-    <span>Administrateur réseaux</span> · BTS SIO SISR<br>
-    Cisco · pfSense · Active Directory · Proxmox
-  </p>
-
-  <div class="cta">
-    <a href="portfolio-nael.html" class="btn-main"><span>Voir le portfolio →</span></a>
-    <a href="mailto:nlakhledj@gmail.com" class="btn-sec">
-      Me contacter
-      <span class="btn-sec-arrow"></span>
-    </a>
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot">·</span>Windows Server</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Cisco / CCNA</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>pfSense</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Active Directory</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Proxmox</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Zabbix</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>VLAN / DMZ</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>GLPI</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Exchange Server</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>NAT & Filtrage</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Hyper-V</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Linux</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Windows Server</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Cisco / CCNA</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>pfSense</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Active Directory</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Proxmox</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Zabbix</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>VLAN / DMZ</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>GLPI</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Exchange Server</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>NAT & Filtrage</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Hyper-V</div>
+    <div class="marquee-item"><span class="marquee-dot">·</span>Linux</div>
   </div>
 </div>
 
-<div class="stats">
-  <div><span>CCNA</span>Certifié</div>
-  <div><span>4+</span>Expériences</div>
-  <div><span>2026</span>BTS SIO</div>
-  <div><span>IDF</span>Paris</div>
+<section class="section" id="experience">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <div class="section-num">01</div>
+      <div class="section-meta">
+        <div class="section-tag">Parcours</div>
+        <div class="section-title">Expériences</div>
+      </div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="exp-list">
+      <div class="exp-row reveal">
+        <div class="exp-sidebar">
+          <div class="exp-period">Août 2025<br>→ Présent</div>
+          <div class="exp-type alt">Apprentissage</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Administrateur Réseau</div>
+          <div class="exp-company">Assomption Bondy — Bondy, France</div>
+          <ul class="exp-missions">
+            <li>Support technique niveau 1 et 2 assuré en autonomie complète</li>
+            <li>Gestion et maintenance du parc informatique (postes élèves, enseignants, câblage, imprimantes)</li>
+            <li>Installation, configuration et dépannage de postes Windows</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-sidebar">
+          <div class="exp-period">Sept. 2025<br>→ Présent</div>
+          <div class="exp-type project">Projet</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Projet Infrastructure Réseaux</div>
+          <div class="exp-company">Lycée Robert Schuman — Dugny, France</div>
+          <ul class="exp-missions">
+            <li>Configuration d'équipements Cisco : switches, VLAN, ports access et trunk</li>
+            <li>Mise en place d'une infrastructure virtualisée complète</li>
+            <li>Création et gestion de VMs : ADP, ADS, pfSense, Zabbix, Exchange, GLPI</li>
+            <li>Déploiement et configuration du pare-feu pfSense (WAN, LAN, DMZ, NAT, DHCP/DNS)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-sidebar">
+          <div class="exp-period">Oct. — Nov. 2024<br>7 semaines</div>
+          <div class="exp-type stage">Stage</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Technicien IT</div>
+          <div class="exp-company">TSR Informatique</div>
+          <ul class="exp-missions">
+            <li>Installation d'écrans tactiles à l'échelle nationale</li>
+            <li>Gestion des systèmes informatiques d'entreprise</li>
+            <li>Configuration d'applications et d'ordinateurs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-sidebar">
+          <div class="exp-period">2022<br>7 semaines</div>
+          <div class="exp-type stage">Stage</div>
+        </div>
+        <div class="exp-body">
+          <div class="exp-role">Stage Informatique</div>
+          <div class="exp-company">Auchan — Sarcelles, France</div>
+          <ul class="exp-missions">
+            <li>Contrôle des stocks via logiciel de gestion en autonomie</li>
+            <li>Assistance technique aux équipes : dépannage de premier niveau</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="skills" style="background: var(--black2);">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <div class="section-num">02</div>
+      <div class="section-meta">
+        <div class="section-tag">Expertise</div>
+        <div class="section-title">Compétences</div>
+      </div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-layout reveal">
+      <div class="skill-panel">
+        <div class="skill-panel-title">Systèmes & Virtualisation</div>
+        <div class="skill-items">
+          <span class="skill-pill">Windows Server</span>
+          <span class="skill-pill">Linux</span>
+          <span class="skill-pill">Active Directory</span>
+          <span class="skill-pill">Hyper-V</span>
+          <span class="skill-pill">Proxmox</span>
+          <span class="skill-pill">Zabbix</span>
+          <span class="skill-pill">GLPI</span>
+        </div>
+      </div>
+      <div class="skill-panel">
+        <div class="skill-panel-title">Réseau & Sécurité</div>
+        <div class="skill-items">
+          <span class="skill-pill">Cisco (switches)</span>
+          <span class="skill-pill">pfSense</span>
+          <span class="skill-pill">VLAN / DMZ</span>
+          <span class="skill-pill">NAT & Filtrage</span>
+          <span class="skill-pill">DHCP / DNS</span>
+          <span class="skill-pill">Continuité AD</span>
+        </div>
+      </div>
+      <div class="skill-panel">
+        <div class="skill-panel-title">Déploiement & Support</div>
+        <div class="skill-items">
+          <span class="skill-pill">AD & Exchange</span>
+          <span class="skill-pill">Diagnostic</span>
+          <span class="skill-pill">Dépannage Win</span>
+          <span class="skill-pill">Assistance users</span>
+        </div>
+      </div>
+      <div class="skill-panel">
+        <div class="skill-panel-title">Langages & Outils</div>
+        <div class="skill-items">
+          <span class="skill-pill">HTML / CSS</span>
+          <span class="skill-pill">C#</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">GitHub</span>
+        </div>
+      </div>
+    </div>
+    <div class="certif-grid reveal">
+      <div class="certif-tile">
+        <div class="certif-icon-box">🌐</div>
+        <div>
+          <div class="certif-name">CCNA 1</div>
+          <div class="certif-sub">Cisco Certified Network Associate<br>Introduction to Networks</div>
+        </div>
+      </div>
+      <div class="certif-tile">
+        <div class="certif-icon-box">🇬🇧</div>
+        <div>
+          <div class="certif-name">PIX</div>
+          <div class="certif-sub">Test d'anglais professionnel certifié</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="formation">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <div class="section-num">03</div>
+      <div class="section-meta">
+        <div class="section-tag">Académique</div>
+        <div class="section-title">Formation</div>
+      </div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="formation-grid reveal">
+      <div class="formation-card">
+        <div class="formation-year">2026</div>
+        <div class="formation-diploma">BTS SIO — option SISR</div>
+        <div class="formation-school">Lycée Robert Schuman, Dugny<br>Solutions d'Infrastructure, Systèmes et Réseaux</div>
+      </div>
+      <div class="formation-card">
+        <div class="formation-year">2024</div>
+        <div class="formation-diploma">Baccalauréat Systèmes Numériques</div>
+        <div class="formation-school">Lycée Robert Schuman, Dugny<br>Option SN — Systèmes Numériques</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-section" id="contact">
+  <div class="contact-wrapper">
+
+    <!-- GAUCHE -->
+    <div class="contact-panel-left">
+      <div class="contact-label-tag">Contact</div>
+      <div class="contact-big">Cherche<br>une alternance<br>Sept. 2026</div>
+      <p class="contact-sub">BTS SIO SISR · Paris / Île-de-France<br>Rigoureux, autonome et passionné<br>par les infrastructures IT.</p>
+      <div class="contact-info-list">
+        <div class="contact-info-item">
+          <div class="cii-icon">📞</div>
+          <div>
+            <div class="cii-label">Téléphone</div>
+            <div class="cii-val">07 67 95 78 83</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="cii-icon">✉</div>
+          <div>
+            <div class="cii-label">Email</div>
+            <div class="cii-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3a54565b5152565f5e507a5d575b535614595557">[email&#160;protected]</a></div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="cii-icon">📍</div>
+          <div>
+            <div class="cii-label">Localisation</div>
+            <div class="cii-val">Villiers-le-Bel, Île-de-France</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DROITE — FORMULAIRE -->
+    <div class="contact-panel-right">
+      <div class="form-header">
+        <div class="form-header-title">Envoyer un message</div>
+        <div class="form-header-sub">Je réponds généralement sous 24h.</div>
+      </div>
+
+      <div class="setup-notice" id="setupNotice">
+        <strong>⚙ Configuration requise</strong><br>
+        Crée un compte gratuit sur <strong>emailjs.com</strong>, puis remplace dans le code :<br>
+        <code>TON_PUBLIC_KEY</code> · <code>TON_SERVICE_ID</code> · <code>TON_TEMPLATE_ID</code>
+      </div>
+
+      <div id="contactForm" class="contact-form">
+        <div class="form-duo">
+          <div class="form-field">
+            <label class="field-label" for="from_name">Nom complet *</label>
+            <input class="field-input" type="text" id="from_name" placeholder="Jean Dupont" required>
+            <div class="field-bar"></div>
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="from_email">Email *</label>
+            <input class="field-input" type="email" id="from_email" placeholder="jean@entreprise.fr" required>
+            <div class="field-bar"></div>
+          </div>
+        </div>
+        <div class="form-duo">
+          <div class="form-field">
+            <label class="field-label" for="company">Entreprise</label>
+            <input class="field-input" type="text" id="company" placeholder="Nom de l'entreprise">
+            <div class="field-bar"></div>
+          </div>
+          <div class="form-field">
+            <label class="field-label" for="subject">Objet *</label>
+            <input class="field-input" type="text" id="subject" placeholder="Proposition d'alternance" required>
+            <div class="field-bar"></div>
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="field-label" for="message">Message *</label>
+          <textarea class="field-textarea" id="message" placeholder="Décrivez votre proposition, votre entreprise, les dates souhaitées…" required></textarea>
+          <div class="field-bar"></div>
+        </div>
+      </div>
+
+      <div class="form-submit-row">
+        <button type="button" class="btn-submit" id="submitBtn" onclick="sendEmail()">
+          <div class="btn-submit-inner">
+            <span>Envoyer le message</span>
+            <div class="btn-submit-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </button>
+      </div>
+      <div class="form-hint">* Champs obligatoires. Tes données ne sont pas partagées.</div>
+      <div class="form-status" id="formStatus"></div>
+    </div>
+
+  </div>
 </div>
+
+<footer>
+  <div class="footer-logo">Nael <em>Lakhledj</em></div>
+  <div class="footer-copy">© 2026 — BTS SIO SISR — Villiers-le-Bel</div>
+</footer>
+
+<!-- EmailJS SDK -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// =============================================
+//  CONFIGURATION EMAILJS — À MODIFIER
+//  1. Crée un compte sur https://emailjs.com
+//  2. Crée un Service (Gmail par ex.)
+//  3. Crée un Template avec les variables :
+//     {{from_name}}, {{from_email}}, {{company}}, {{subject}}, {{message}}
+//  4. Remplace les 3 valeurs ci-dessous
+// =============================================
+const EMAILJS_PUBLIC_KEY  = 'HqGA1OUz4uPioUudF';
+const EMAILJS_SERVICE_ID  = 'service_9f11m0g';
+const EMAILJS_TEMPLATE_ID = 'template_k9w35pc';
+// =============================================
+
+const isConfigured = !['TON_PUBLIC_KEY','TON_SERVICE_ID','TON_TEMPLATE_ID']
+  .includes(EMAILJS_PUBLIC_KEY) &&
+  !['TON_PUBLIC_KEY','TON_SERVICE_ID','TON_TEMPLATE_ID'].includes(EMAILJS_SERVICE_ID) &&
+  !['TON_PUBLIC_KEY','TON_SERVICE_ID','TON_TEMPLATE_ID'].includes(EMAILJS_TEMPLATE_ID);
+
+if (!isConfigured) {
+  document.getElementById('setupNotice').style.display = 'block';
+} else {
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+}
+
+function sendEmail() {
+  const name    = document.getElementById('from_name').value.trim();
+  const email   = document.getElementById('from_email').value.trim();
+  const company = document.getElementById('company').value.trim();
+  const subject = document.getElementById('subject').value.trim();
+  const message = document.getElementById('message').value.trim();
+  const status  = document.getElementById('formStatus');
+  const btn     = document.getElementById('submitBtn');
+
+  // Validation
+  if (!name || !email || !subject || !message) {
+    showStatus('error', '⚠ Merci de remplir tous les champs obligatoires.');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showStatus('error', '⚠ Adresse email invalide.');
+    return;
+  }
+
+  if (!isConfigured) {
+    showStatus('error', '⚙ EmailJS non configuré. Suis les instructions en haut du formulaire.');
+    return;
+  }
+
+  // Envoi
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Envoi en cours…';
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    from_name: name,
+    from_email: email,
+    company: company || 'Non renseigné',
+    subject: subject,
+    message: message,
+    to_email: 'nlakhledj@gmail.com'
+  })
+  .then(() => {
+    showStatus('success', '✓ Message envoyé ! Je te répondrai rapidement.');
+    document.getElementById('contactForm').querySelectorAll('input, textarea').forEach(el => el.value = '');
+    btn.querySelector('span').textContent = 'Envoyer le message';
+    btn.disabled = false;
+  })
+  .catch(err => {
+    console.error('EmailJS error:', err);
+    showStatus('error', '✗ Erreur lors de l\'envoi. Réessaie ou contacte-moi directement par email.');
+    btn.querySelector('span').textContent = 'Envoyer le message';
+    btn.disabled = false;
+  });
+}
+
+function showStatus(type, msg) {
+  const el = document.getElementById('formStatus');
+  el.className = 'form-status ' + type;
+  el.textContent = msg;
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  if (type === 'success') setTimeout(() => { el.className = 'form-status'; }, 6000);
+}
+
+// Touche Entrée dans les inputs (pas textarea)
+document.querySelectorAll('#contactForm .form-input').forEach(input => {
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') sendEmail(); });
+});
+</script>
+
+<script>
+// Scroll reveal
+document.querySelectorAll('.reveal').forEach(function(el) {
+  new IntersectionObserver(function(entries, obs) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08 }).observe(el);
+});
+</script>
+
+<script>
+// Curseur custom — point rouge + anneau qui suit
+var cur  = document.getElementById('cursor');
+var ring = document.getElementById('cursor-ring');
+var mx = -50, my = -50, rx = -50, ry = -50;
+
+window.addEventListener('mousemove', function(e) {
+  mx = e.clientX;
+  my = e.clientY;
+  cur.style.left = mx + 'px';
+  cur.style.top  = my + 'px';
+});
+
+(function loop() {
+  rx += (mx - rx) * 0.14;
+  ry += (my - ry) * 0.14;
+  ring.style.left = rx + 'px';
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(loop);
+})();
+
+document.querySelectorAll('a, button, .skill-pill, .exp-row, .formation-card, .certif-tile, .form-field').forEach(function(el) {
+  el.addEventListener('mouseenter', function() {
+    cur.style.width = '20px'; cur.style.height = '20px';
+    ring.style.width = '56px'; ring.style.height = '56px';
+    ring.style.borderColor = 'rgba(232,25,44,1)';
+  });
+  el.addEventListener('mouseleave', function() {
+    cur.style.width = '10px'; cur.style.height = '10px';
+    ring.style.width = '36px'; ring.style.height = '36px';
+    ring.style.borderColor = 'rgba(232,25,44,0.6)';
+  });
+});
+</script>
 
 </body>
 </html>
