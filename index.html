@@ -780,23 +780,23 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
       <div class="section-divider"></div>
     </div>
     <div class="docs-grid reveal">
-      <button class="doc-card" onclick="openCvModal()">
+      <button class="doc-card" onclick="openPdfModal('cv')">
         <div class="doc-icon">📄</div>
         <div>
-          <div class="doc-name">CV</div>
+          <div class="doc-name">Curriculum Vitae</div>
           <div class="doc-desc">CV complet — BTS SIO SISR, expériences professionnelles, compétences et certifications.</div>
-          <div class="doc-action">Télécharger</div>
+          <div class="doc-action">Lire / Télécharger</div>
         </div>
       </button>
-      <button class="doc-card" onclick="openCvModal('tableau')">
+      <button class="doc-card" onclick="openPdfModal('tableau')">
         <div class="doc-icon">📊</div>
         <div>
           <div class="doc-name">Tableau de synthèse</div>
           <div class="doc-desc">Tableau de synthèse des compétences du BTS SIO SISR — récapitulatif des activités et réalisations.</div>
-          <div class="doc-action">Télécharger</div>
+          <div class="doc-action">Lire / Télécharger</div>
         </div>
       </button>
-      <button class="doc-card" onclick="openPdfModal()">
+      <button class="doc-card" onclick="openPdfModal('infra')">
         <div class="doc-icon">🖧</div>
         <div>
           <div class="doc-name">Documentation Infra</div>
@@ -1065,7 +1065,7 @@ document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-car
 
   <!-- ÉTAPE 1 : Mot de passe -->
   <div class="pdf-pwd-box" id="pdfPwdBox">
-    <div class="pdf-pwd-title">Documentation Infra</div>
+    <div class="pdf-pwd-title" id="pdfPwdTitle">Documentation Infra</div>
     <div class="pdf-pwd-sub">Ce document est protégé.<br>Entre le mot de passe pour l'afficher.</div>
     <input class="pdf-pwd-input" type="password" id="pdfPassword"
       placeholder="Mot de passe"
@@ -1078,9 +1078,9 @@ document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-car
   <!-- ÉTAPE 2 : Visionneuse -->
   <div class="pdf-viewer-box" id="pdfViewerBox" style="display:none">
     <div class="pdf-viewer-header">
-      <div class="pdf-viewer-title">Documentation <em>Infrastructure Virtualisée</em></div>
+      <div class="pdf-viewer-title" id="pdfViewerTitle">Documentation <em>Infrastructure Virtualisée</em></div>
       <div class="pdf-viewer-actions">
-        <button class="pdf-action-btn" onclick="downloadInfraDoc()">
+        <button class="pdf-action-btn" onclick="downloadCurrentDoc()">
           <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
           Télécharger
         </button>
@@ -1091,7 +1091,7 @@ document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-car
       <iframe id="pdfFrame" src="" title="Documentation Infrastructure"></iframe>
     </div>
     <div class="pdf-viewer-footer">
-      <div class="pdf-viewer-footer-txt">Documentation Technique — BTS SIO SISR · Nael Lakhledj · 2026</div>
+      <div class="pdf-viewer-footer-txt id="pdfFooterTxt">Documentation Technique — BTS SIO SISR · Nael Lakhledj · 2026</div>
       <div class="pdf-viewer-footer-badge">🔒 Confidentiel</div>
     </div>
   </div>
@@ -1099,14 +1099,37 @@ document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-car
 </div>
 
 <script>
-const PDF_PWD  = 'infra2026';
-const PDF_FILE = 'doc_ctx_lprs.pdf';
+const PDF_DOCS = {
+  'cv': {
+    file:  'cv-nael-alternance.pdf',
+    title: 'Curriculum <em>Vitae</em>',
+    pwd:   'nael2026',
+    label: 'CV — Nael Lakhledj · BTS SIO SISR · 2026',
+  },
+  'tableau': {
+    file:  'tbl.pdf',
+    title: 'Tableau de <em>Synthèse</em>',
+    pwd:   'nael2026',
+    label: 'Tableau de Synthèse — BTS SIO SISR · Nael Lakhledj · 2026',
+  },
+  'infra': {
+    file:  'doc_ctx_lprs.pdf',
+    title: 'Documentation <em>Infrastructure Virtualisée</em>',
+    pwd:   'infra2026',
+    label: 'Documentation Technique — BTS SIO SISR · Nael Lakhledj · 2026',
+  },
+};
 
-function openPdfModal() {
+var currentPdfDoc = null;
+
+function openPdfModal(type) {
+  currentPdfDoc = PDF_DOCS[type] || PDF_DOCS['cv'];
   document.getElementById('pdfModal').classList.add('open');
-  document.getElementById('pdfPwdBox').style.display   = 'block';
+  document.getElementById('pdfPwdBox').style.display    = 'block';
   document.getElementById('pdfViewerBox').style.display = 'none';
   document.getElementById('pdfFrame').src = '';
+  document.getElementById('pdfPwdTitle').textContent = currentPdfDoc.title.replace(/<em>|<\/em>/g, '');
+  document.getElementById('pdfFooterTxt').textContent = currentPdfDoc.label;
   setTimeout(function(){ document.getElementById('pdfPassword').focus(); }, 200);
 }
 
@@ -1123,34 +1146,29 @@ function closePdfModalOutside(e) {
 
 function checkPdfPassword() {
   var pwd = document.getElementById('pdfPassword').value;
-  if (pwd === PDF_PWD) {
+  if (pwd === currentPdfDoc.pwd) {
     document.getElementById('pdfPwdBox').style.display    = 'none';
     document.getElementById('pdfViewerBox').style.display = 'flex';
     document.getElementById('pdfViewerBox').style.flexDirection = 'column';
-    // Charger le PDF dans l'iframe
-    document.getElementById('pdfFrame').src = PDF_FILE + '#toolbar=0&navpanes=0';
+    document.getElementById('pdfViewerTitle').innerHTML  = currentPdfDoc.title;
+    document.getElementById('pdfFrame').src = currentPdfDoc.file + '#toolbar=0&navpanes=0';
   } else {
     document.getElementById('pdfError').classList.add('show');
     document.getElementById('pdfPassword').value = '';
     document.getElementById('pdfPassword').focus();
-    setTimeout(function(){
-      document.getElementById('pdfError').classList.remove('show');
-    }, 3000);
+    setTimeout(function(){ document.getElementById('pdfError').classList.remove('show'); }, 3000);
   }
 }
 
-function downloadInfraDoc() {
+function downloadCurrentDoc() {
   var a = document.createElement('a');
-  a.href = PDF_FILE; a.download = 'doc_infrastructure_nael.pdf';
+  a.href = currentPdfDoc.file;
+  a.download = currentPdfDoc.file;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
-// Fermer avec Échap (global — gère les deux modals)
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') {
-    closeCvModal();
-    closePdfModal();
-  }
+  if (e.key === 'Escape') { closeCvModal(); closePdfModal(); }
 });
 </script>
 
