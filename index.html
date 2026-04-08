@@ -378,10 +378,6 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="nav-right">
     <span class="status-dot"></span>
     <span class="nav-avail">Disponible — Sept. 2026</span>
-    <button class="btn-cv-nav" onclick="openCvModal()">
-      <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-      Télécharger CV
-    </button>
   </div>
 </nav>
 
@@ -787,7 +783,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
       <button class="doc-card" onclick="openCvModal()">
         <div class="doc-icon">📄</div>
         <div>
-          <div class="doc-name">Curriculum Vitae</div>
+          <div class="doc-name">CV</div>
           <div class="doc-desc">CV complet — BTS SIO SISR, expériences professionnelles, compétences et certifications.</div>
           <div class="doc-action">Télécharger</div>
         </div>
@@ -918,10 +914,10 @@ function showStatus(type,msg){
 
 function openCvModal(type) {
   var docs = {
-    'cv':      { file: 'CV_Nael_Lakhledj.pdf',   title: 'Accéder au CV',                    pwd: 'nael2026'  },
-    'tableau': { file: 'tableau_synthese.pdf',     title: 'Accéder au tableau de synthèse',   pwd: 'nael2026'  },
-    'infra':   { file: 'doc_infrastructure.pdf',   title: 'Accéder à la documentation infra', pwd: 'infra2026' },
-  };
+    'cv':      { file: 'cv-nael-alternance.pdf', title: 'Accéder au CV',                    pwd: 'nael2026'  },
+    'tableau': { file: 'tbl.pdf',                title: 'Accéder au tableau de synthèse',   pwd: 'nael2026'  },
+    'infra':   { file: 'doc_ctx_lprs.pdf',       title: 'Accéder à la documentation infra', pwd: 'infra2026' },
+};
   var key = type || 'cv';
   var doc = docs[key];
   cvTarget  = doc.file;
@@ -1104,7 +1100,7 @@ document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-car
 
 <script>
 const PDF_PWD  = 'infra2026';
-const PDF_FILE = 'doc_infrastructure.pdf';
+const PDF_FILE = 'doc_ctx_lprs.pdf';
 
 function openPdfModal() {
   document.getElementById('pdfModal').classList.add('open');
@@ -1145,7 +1141,7 @@ function checkPdfPassword() {
 
 function downloadInfraDoc() {
   var a = document.createElement('a');
-  a.href = PDF_FILE; a.download = PDF_FILE;
+  a.href = PDF_FILE; a.download = 'doc_infrastructure_nael.pdf';
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
