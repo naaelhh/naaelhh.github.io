@@ -4,199 +4,250 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nael Lakhledj — Portfolio BTS SIO SISR</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --black: #0a0a0a;
-  --black2: #111111;
-  --black3: #1a1a1a;
+  --black: #080808;
+  --black2: #0f0f0f;
+  --black3: #161616;
   --red: #e8192c;
   --red-glow: rgba(232,25,44,0.12);
+  --red-dim: rgba(232,25,44,0.06);
   --white: #ffffff;
-  --off-white: #f5f0eb;
-  --grey: #888;
-  --grey-light: #ccc;
-  --border: rgba(255,255,255,0.08);
+  --off-white: #f0ebe4;
+  --grey: #666;
+  --grey-light: #aaa;
+  --border: rgba(255,255,255,0.06);
+  --border-red: rgba(232,25,44,0.2);
+  --green: #00ff88;
+  --cyan: #00d4ff;
+  --mono: 'JetBrains Mono', monospace;
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--off-white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px;pointer-events:none;z-index:1;opacity:.5}
+
+/* GRAIN OVERLAY */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");background-size:256px;pointer-events:none;z-index:9999;opacity:.6}
+
+/* SCAN LINE */
+body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.015) 2px,rgba(0,0,0,0.015) 4px);pointer-events:none;z-index:9998}
+
+/* GRID BG */
+.grid-bg{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px}
 
 /* CURSOR */
-#cursor{position:fixed;width:10px;height:10px;background:var(--red);border-radius:50%;pointer-events:none;z-index:99999;left:-50px;top:-50px;transform:translate(-50%,-50%);transition:width .2s,height .2s}
-#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(232,25,44,.6);border-radius:50%;pointer-events:none;z-index:99998;left:-50px;top:-50px;transform:translate(-50%,-50%);transition:width .25s,height .25s,border-color .25s}
+#cursor{position:fixed;width:8px;height:8px;background:var(--red);pointer-events:none;z-index:99999;left:-50px;top:-50px;transform:translate(-50%,-50%);transition:width .15s,height .15s;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(232,25,44,.5);pointer-events:none;z-index:99998;left:-50px;top:-50px;transform:translate(-50%,-50%) rotate(45deg);transition:width .2s,height .2s,border-color .2s}
+
+/* TERMINAL EFFECT */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.blink{animation:blink 1s step-end infinite}
+@keyframes typeIn{from{width:0}to{width:100%}}
+@keyframes glitch{0%,100%{transform:translate(0)}20%{transform:translate(-2px,1px)}40%{transform:translate(2px,-1px)}60%{transform:translate(-1px,2px)}80%{transform:translate(1px,-2px)}}
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100vh)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,25,44,.4)}50%{box-shadow:0 0 0 8px rgba(232,25,44,0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes heroLoad{to{opacity:1;transform:translate(0,0)}}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes rgbShift{0%{text-shadow:2px 0 var(--red),-2px 0 var(--cyan)}50%{text-shadow:-2px 0 var(--red),2px 0 var(--cyan)}100%{text-shadow:2px 0 var(--red),-2px 0 var(--cyan)}}
+@keyframes borderFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+
+/* SCANLINE SWEEP */
+.scanline-sweep{position:fixed;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(232,25,44,.3),transparent);animation:scanline 8s linear infinite;pointer-events:none;z-index:9997}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,.9);backdrop-filter:blur(16px)}
-nav::after{content:'';position:absolute;bottom:0;left:4rem;right:4rem;height:1px;background:var(--border)}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white)}
-.nav-logo em{color:var(--red);font-style:normal}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 4rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,8,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:var(--mono);font-size:.85rem;font-weight:700;color:var(--white);display:flex;align-items:center;gap:.5rem}
+.nav-logo .prompt{color:var(--red)}
+.nav-logo .name{color:var(--white)}
+.nav-logo .cursor-blink{color:var(--red);animation:blink 1s step-end infinite}
 .nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{color:var(--grey);text-decoration:none;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;transition:color .3s;position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.nav-links a{color:var(--grey);text-decoration:none;font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;transition:color .3s;position:relative}
+.nav-links a::before{content:attr(data-num);position:absolute;left:-1.2rem;font-size:.5rem;color:var(--red);opacity:.6}
 .nav-links a:hover{color:var(--white)}
-.nav-links a:hover::after{transform:scaleX(1)}
 .nav-right{display:flex;align-items:center;gap:1rem}
-.status-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse-dot 2s infinite;display:inline-block;margin-right:.4rem}
-@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{box-shadow:0 0 0 5px rgba(34,197,94,0)}}
-.nav-avail{font-size:.65rem;color:var(--grey);letter-spacing:.1em}
-.btn-cv-nav{background:transparent;color:var(--grey-light);border:1px solid var(--border);padding:.45rem 1rem;font-family:'DM Sans',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;cursor:none;display:inline-flex;align-items:center;gap:.4rem;transition:all .25s}
-.btn-cv-nav:hover{border-color:var(--red);color:var(--white);background:var(--red-glow)}
-.btn-cv-nav svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+.status-indicator{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.6rem;color:var(--grey)}
+.status-dot{width:6px;height:6px;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
 
 /* HERO */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 4rem;padding-top:90px;position:relative;overflow:hidden;gap:4rem}
-.hero::before{content:'';position:absolute;top:-20%;right:-5%;width:55%;height:140%;background:linear-gradient(175deg,var(--red) 0%,#8b0000 100%);clip-path:polygon(15% 0%,100% 0%,100% 100%,0% 100%);opacity:.07;z-index:0}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 4rem;padding-top:80px;position:relative;overflow:hidden;gap:4rem;z-index:2}
+.hero-bg-text{position:absolute;font-family:var(--mono);font-size:20vw;font-weight:700;color:rgba(232,25,44,.02);right:-5%;top:50%;transform:translateY(-50%);pointer-events:none;letter-spacing:-.05em;line-height:1;user-select:none}
 .hero-left{position:relative;z-index:2}
-.hero-eyebrow{display:flex;align-items:center;gap:1rem;margin-bottom:1.8rem}
-.hero-eyebrow-line{width:40px;height:1px;background:var(--red)}
-.hero-eyebrow-text{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);font-weight:500}
-.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,6vw,6.5rem);font-weight:900;color:var(--white);line-height:.9;letter-spacing:-.02em;margin-bottom:.3rem}
+.hero-terminal{background:var(--black2);border:1px solid var(--border);padding:1.2rem 1.5rem;margin-bottom:2rem;font-family:var(--mono);font-size:.7rem;position:relative;overflow:hidden}
+.hero-terminal::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--red),transparent 60%)}
+.terminal-bar{display:flex;align-items:center;gap:.4rem;margin-bottom:.8rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+.t-dot{width:8px;height:8px;border-radius:50%}
+.t-dot:nth-child(1){background:#ff5f57}
+.t-dot:nth-child(2){background:#febc2e}
+.t-dot:nth-child(3){background:#28c840}
+.terminal-title{font-size:.55rem;color:var(--grey);margin-left:auto;letter-spacing:.1em}
+.t-line{color:var(--grey-light);line-height:1.8;font-size:.68rem}
+.t-line .prompt{color:var(--red)}
+.t-line .cmd{color:var(--white)}
+.t-line .output{color:var(--green)}
+.t-line .comment{color:var(--grey)}
+.t-line .val{color:var(--cyan)}
+
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(3rem,5.5vw,6rem);font-weight:900;color:var(--white);line-height:.9;letter-spacing:-.02em;margin-bottom:.4rem;position:relative}
 .hero-name .first{display:block}
-.hero-name .last{display:block;color:transparent;-webkit-text-stroke:1.5px var(--white);opacity:.9}
-.hero-title{font-size:.88rem;color:var(--grey-light);margin:1.5rem 0 .7rem;font-weight:400;letter-spacing:.05em}
-.hero-title span{color:var(--red)}
-.hero-desc{font-size:.82rem;color:var(--grey);line-height:1.9;max-width:420px;margin-bottom:2.5rem}
+.hero-name .last{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.6)}
+.hero-name:hover .last{animation:glitch .3s ease infinite}
+.hero-title{font-family:var(--mono);font-size:.78rem;color:var(--grey-light);margin:1.2rem 0 .6rem;display:flex;align-items:center;gap:.6rem}
+.hero-title::before{content:'$';color:var(--red)}
+.hero-desc{font-size:.82rem;color:var(--grey);line-height:1.9;max-width:420px;margin-bottom:2.2rem}
 .hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
-.btn-red{background:var(--red);color:var(--white);padding:.9rem 2rem;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;border:none;cursor:none;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:color .35s}
+.btn-red{background:var(--red);color:var(--white);padding:.85rem 2rem;font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:none;text-decoration:none;display:inline-block;position:relative;overflow:hidden;transition:color .35s}
 .btn-red::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .btn-red:hover::before{transform:scaleX(1)}
 .btn-red:hover{color:var(--red)}
 .btn-red span{position:relative;z-index:1}
-.btn-ghost{color:var(--grey-light);font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .3s;cursor:none;background:none;border:none}
-.btn-ghost:hover{color:var(--white)}
-.btn-ghost-arr{width:24px;height:1px;background:currentColor;position:relative;transition:width .3s}
-.btn-ghost-arr::after{content:'';position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid currentColor;border-top:1px solid currentColor;transform:rotate(45deg)}
-.btn-ghost:hover .btn-ghost-arr{width:40px}
+.btn-ghost{color:var(--grey-light);font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;gap:.5rem;transition:color .3s;cursor:none;background:none;border:1px solid var(--border);padding:.85rem 1.5rem}
+.btn-ghost:hover{color:var(--white);border-color:var(--red)}
+.btn-cv{background:transparent;border:1px solid rgba(0,255,136,.3);color:var(--green);font-family:var(--mono);font-size:.65rem;padding:.85rem 1.5rem;letter-spacing:.15em;text-transform:uppercase;cursor:none;transition:all .25s}
+.btn-cv:hover{background:rgba(0,255,136,.08);border-color:var(--green)}
 
-/* HERO RIGHT CARD */
-.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center}
-.hero-card{background:var(--black2);border:1px solid var(--border);padding:2.5rem;width:100%;max-width:400px;position:relative}
-.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.hero-card-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.8rem;display:flex;align-items:center;gap:.7rem}
-.hero-card-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-bottom:2px}
-.stat-cell{background:var(--black2);padding:1.3rem;transition:background .2s}
+/* HERO RIGHT */
+.hero-right{position:relative;z-index:2}
+.hero-card{background:var(--black2);border:1px solid var(--border);padding:2rem;width:100%;max-width:420px;position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan),transparent)}
+.hero-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border)}
+.hero-card-label{font-family:var(--mono);font-size:.6rem;color:var(--red);letter-spacing:.15em;text-transform:uppercase}
+.hero-card-status{font-family:var(--mono);font-size:.55rem;color:var(--green);display:flex;align-items:center;gap:.3rem}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px}
+.stat-cell{background:var(--black2);padding:1.2rem;transition:background .2s;position:relative;overflow:hidden}
+.stat-cell::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--red);transform:scaleX(0);transition:transform .3s}
 .stat-cell:hover{background:var(--black3)}
+.stat-cell:hover::after{transform:scaleX(1)}
 .stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:.2rem}
 .stat-val em{color:var(--red);font-style:normal}
-.stat-lbl{font-size:.6rem;color:var(--grey);letter-spacing:.1em;text-transform:uppercase}
-.hero-card-btm{background:var(--black3);padding:1rem 1.4rem;display:flex;align-items:center;justify-content:space-between}
-.hero-card-btm-txt{font-size:.7rem;color:var(--grey-light)}
-.hero-card-btm-badge{background:var(--red);color:var(--white);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .65rem}
+.stat-lbl{font-family:var(--mono);font-size:.55rem;color:var(--grey);letter-spacing:.1em;text-transform:uppercase}
+.hero-card-footer{background:var(--black3);padding:.9rem 1.2rem;display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.62rem}
+.hero-card-footer-txt{color:var(--grey-light)}
+.hero-card-footer-badge{background:rgba(232,25,44,.1);border:1px solid var(--border-red);color:var(--red);font-size:.55rem;letter-spacing:.1em;padding:.2rem .6rem}
+
+/* SKILLS RADAR / IP BADGE */
+.ip-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.62rem;color:var(--grey);border:1px solid var(--border);padding:.3rem .8rem;margin-top:1rem}
+.ip-badge .dot{width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 4px var(--green)}
 
 /* MARQUEE */
-.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 0;background:var(--black2);position:relative;z-index:2}
-.marquee-track{display:flex;animation:marquee 25s linear infinite;width:max-content}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:.8rem 0;background:var(--black2);position:relative;z-index:2}
+.marquee-track{display:flex;animation:marquee 30s linear infinite;width:max-content}
 .marquee-track:hover{animation-play-state:paused}
-.marquee-item{display:flex;align-items:center;gap:2rem;padding:0 2rem;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
-.marquee-dot{color:var(--red);font-size:1rem;line-height:0}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.marquee-item{display:flex;align-items:center;gap:1.5rem;padding:0 1.5rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);white-space:nowrap}
+.marquee-dot{color:var(--red)}
 
 /* SECTIONS */
 .section{padding:7rem 4rem;position:relative;z-index:2}
 .section-inner{max-width:1200px;margin:0 auto}
 .section-label{display:flex;align-items:center;gap:1.5rem;margin-bottom:3.5rem}
-.section-num{font-family:'Playfair Display',serif;font-size:4.5rem;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.07);line-height:1;user-select:none}
-.section-meta{display:flex;flex-direction:column;gap:.25rem}
-.section-tag{font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red)}
-.section-title{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
-.section-divider{flex:1;height:1px;background:var(--border);margin-top:auto;align-self:flex-end;margin-bottom:.7rem}
+.section-num{font-family:var(--mono);font-size:3rem;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(232,25,44,.15);line-height:1;user-select:none}
+.section-meta{display:flex;flex-direction:column;gap:.2rem}
+.section-tag{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red)}
+.section-title{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--white);letter-spacing:-.02em}
+.section-divider{flex:1;height:1px;background:var(--border);margin-top:auto;align-self:flex-end;margin-bottom:.6rem}
 
 /* ABOUT */
 .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:start}
-.about-text p{font-size:.88rem;color:var(--grey-light);line-height:2;margin-bottom:1.2rem}
+.about-text p{font-size:.85rem;color:var(--grey-light);line-height:2;margin-bottom:1.2rem}
 .about-text p strong{color:var(--white);font-weight:500}
-.about-quote{border-left:2px solid var(--red);padding-left:1.5rem;margin:2rem 0;font-style:italic;font-size:.9rem;color:var(--grey-light);line-height:1.8}
+.about-quote{border-left:2px solid var(--red);padding-left:1.5rem;margin:2rem 0;font-family:var(--mono);font-size:.72rem;color:var(--grey);line-height:1.8}
 .about-langs{display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
 .lang-row{display:flex;align-items:center;gap:1rem}
-.lang-name{font-size:.72rem;color:var(--grey-light);min-width:80px;letter-spacing:.05em}
-.lang-level{font-size:.6rem;color:var(--grey);letter-spacing:.1em;text-transform:uppercase;min-width:60px}
-.lang-bar{flex:1;height:2px;background:var(--border);position:relative}
-.lang-bar-fill{position:absolute;left:0;top:0;bottom:0;background:var(--red)}
+.lang-name{font-family:var(--mono);font-size:.65rem;color:var(--grey-light);min-width:80px}
+.lang-level{font-family:var(--mono);font-size:.55rem;color:var(--grey);min-width:50px}
+.lang-bar{flex:1;height:1px;background:var(--border);position:relative}
+.lang-bar-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,var(--red),var(--cyan))}
 .about-side{display:flex;flex-direction:column;gap:1px;background:var(--border)}
-.about-info-card{background:var(--black2);padding:1.5rem 2rem;transition:background .2s}
+.about-info-card{background:var(--black2);padding:1.2rem 1.5rem;transition:background .2s;position:relative;overflow:hidden}
 .about-info-card:hover{background:var(--black3)}
-.aic-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
-.aic-val{font-size:.85rem;color:var(--white);font-weight:400}
+.about-info-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--red);transform:scaleY(0);transition:transform .3s}
+.about-info-card:hover::before{transform:scaleY(1)}
+.aic-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.3rem}
+.aic-val{font-size:.8rem;color:var(--white)}
 
 /* PARCOURS */
 .parcours-timeline{position:relative;padding-left:2rem}
-.parcours-timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border)}
+.parcours-timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--red),var(--border) 70%)}
 .parcours-item{position:relative;padding-left:2rem;padding-bottom:3rem}
-.parcours-item::before{content:'';position:absolute;left:-6px;top:4px;width:13px;height:13px;border-radius:50%;background:var(--black);border:2px solid var(--border);transition:border-color .3s}
-.parcours-item:hover::before{border-color:var(--red)}
-.parcours-item.current::before{background:var(--red);border-color:var(--red);box-shadow:0 0 10px rgba(232,25,44,.4)}
-.parcours-year{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.4rem}
-.parcours-degree{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:.2rem}
-.parcours-school{font-size:.75rem;color:var(--grey);margin-bottom:.7rem}
+.parcours-item::before{content:'';position:absolute;left:-5px;top:4px;width:11px;height:11px;background:var(--black);border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
+.parcours-item:hover::before{border-color:var(--red);box-shadow:0 0 8px rgba(232,25,44,.4)}
+.parcours-item.current::before{background:var(--red);border-color:var(--red);box-shadow:0 0 12px rgba(232,25,44,.5)}
+.parcours-year{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;color:var(--red);margin-bottom:.4rem}
+.parcours-degree{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.2rem}
+.parcours-school{font-family:var(--mono);font-size:.68rem;color:var(--grey);margin-bottom:.6rem}
 .parcours-desc{font-size:.78rem;color:var(--grey-light);line-height:1.7}
-.parcours-badge{display:inline-block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid rgba(232,25,44,.4);color:var(--red);margin-top:.6rem}
+.parcours-badge{display:inline-block;font-family:var(--mono);font-size:.55rem;letter-spacing:.1em;padding:.22rem .65rem;border:1px solid rgba(232,25,44,.4);color:var(--red);margin-top:.6rem}
 
 /* CERTIFS */
 .certif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .certif-card{background:var(--black2);padding:2.5rem;transition:background .3s;position:relative;overflow:hidden}
+.certif-card::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(232,25,44,.05),transparent 70%);opacity:0;transition:opacity .4s}
 .certif-card:hover{background:var(--black3)}
-.certif-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.certif-card:hover::before{opacity:1}
+.certif-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .certif-card:hover::after{transform:scaleX(1)}
-.certif-icon{width:48px;height:48px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.2rem;transition:border-color .3s}
-.certif-card:hover .certif-icon{border-color:var(--red)}
-.certif-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
-.certif-org{font-size:.68rem;color:var(--red);letter-spacing:.08em;margin-bottom:.6rem}
+.certif-icon{width:44px;height:44px;border:1px solid var(--border-red);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.2rem;transition:border-color .3s,box-shadow .3s;font-family:var(--mono)}
+.certif-card:hover .certif-icon{border-color:var(--red);box-shadow:0 0 12px var(--red-glow)}
+.certif-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.2rem}
+.certif-org{font-family:var(--mono);font-size:.6rem;color:var(--red);letter-spacing:.08em;margin-bottom:.6rem}
 .certif-desc{font-size:.75rem;color:var(--grey);line-height:1.6}
-.certif-status{display:inline-block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .6rem;margin-top:.8rem}
-.certif-status.obtained{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.2)}
-.certif-status.planned{background:rgba(232,25,44,.08);color:var(--red);border:1px solid rgba(232,25,44,.2)}
+.certif-status{display:inline-block;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .6rem;margin-top:.8rem}
+.certif-status.obtained{background:rgba(0,255,136,.06);color:#00ff88;border:1px solid rgba(0,255,136,.2)}
+.certif-status.planned{background:rgba(232,25,44,.06);color:var(--red);border:1px solid var(--border-red)}
 
 /* VEILLE */
-.veille-intro{font-size:.88rem;color:var(--grey-light);line-height:1.9;max-width:700px;margin-bottom:3rem}
+.veille-intro{font-size:.85rem;color:var(--grey-light);line-height:1.9;max-width:700px;margin-bottom:3rem}
 .veille-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
-.veille-card{background:var(--black2);padding:2.5rem;transition:background .3s}
+.veille-card{background:var(--black2);padding:2.5rem;transition:background .3s;position:relative;overflow:hidden}
 .veille-card:hover{background:var(--black3)}
 .veille-card-head{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
-.veille-card-icon{width:40px;height:40px;background:var(--red-glow);border:1px solid rgba(232,25,44,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
-.veille-card-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white)}
-.veille-card-sub{font-size:.65rem;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.15rem}
+.veille-card-icon{width:40px;height:40px;background:var(--red-dim);border:1px solid var(--border-red);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.veille-card-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white)}
+.veille-card-sub{font-family:var(--mono);font-size:.58rem;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-top:.1rem}
 .veille-card-body{font-size:.78rem;color:var(--grey-light);line-height:1.8}
 .veille-sources{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem}
-.veille-tag{font-size:.62rem;color:var(--grey);border:1px solid var(--border);padding:.2rem .6rem;transition:all .2s}
+.veille-tag{font-family:var(--mono);font-size:.58rem;color:var(--grey);border:1px solid var(--border);padding:.18rem .55rem;transition:all .2s}
 .veille-tag:hover{border-color:var(--red);color:var(--white)}
 .veille-full{grid-column:1/-1}
 
 /* PROJETS */
 .projets-list{display:flex;flex-direction:column}
-.projet-row{display:grid;grid-template-columns:260px 1fr;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.projet-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.projet-row{display:grid;grid-template-columns:240px 1fr;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.projet-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--red),var(--cyan));transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.4,0,.2,1)}
 .projet-row:hover::after{transform:scaleY(1)}
-.projet-row:hover .projet-body{background:rgba(255,255,255,.015)}
+.projet-row:hover .projet-body{background:rgba(255,255,255,.012)}
 .projet-sidebar{padding:2.5rem 2rem 2.5rem 0;border-right:1px solid var(--border)}
-.projet-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:transparent;-webkit-text-stroke:1px rgba(232,25,44,.2);line-height:1;margin-bottom:.5rem}
-.projet-period{font-size:.68rem;color:var(--grey);line-height:1.6;margin-bottom:.8rem}
-.projet-type{display:inline-block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid}
+.projet-num{font-family:var(--mono);font-size:2.5rem;font-weight:700;color:transparent;-webkit-text-stroke:1px rgba(232,25,44,.2);line-height:1;margin-bottom:.5rem}
+.projet-period{font-family:var(--mono);font-size:.6rem;color:var(--grey);line-height:1.6;margin-bottom:.8rem}
+.projet-type{display:inline-block;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:.2rem .65rem;border:1px solid}
 .projet-type.infra{border-color:var(--red);color:var(--red)}
-.projet-type.reseau{border-color:rgba(255,255,255,.2);color:var(--grey-light)}
+.projet-type.reseau{border-color:rgba(0,212,255,.3);color:var(--cyan)}
 .projet-type.secu{border-color:rgba(255,165,0,.3);color:orange}
-.projet-type.mail{border-color:rgba(100,200,100,.3);color:#6dc86d}
+.projet-type.mail{border-color:rgba(0,255,136,.3);color:var(--green)}
 .projet-body{padding:2.5rem 0 2.5rem 3rem;transition:background .3s}
-.projet-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
-.projet-subtitle{font-size:.75rem;color:var(--red);margin-bottom:1.2rem;letter-spacing:.04em}
+.projet-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.projet-subtitle{font-family:var(--mono);font-size:.65rem;color:var(--red);margin-bottom:1.2rem;letter-spacing:.04em}
 .projet-desc{font-size:.8rem;color:var(--grey-light);line-height:1.8;margin-bottom:1.2rem}
 .projet-techs{display:flex;flex-wrap:wrap;gap:.4rem}
-.tech-tag{font-size:.65rem;color:var(--grey);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:.25rem .65rem;transition:all .2s}
-.tech-tag:hover{border-color:var(--red);color:var(--white)}
+.tech-tag{font-family:var(--mono);font-size:.6rem;color:var(--grey);background:rgba(255,255,255,.03);border:1px solid var(--border);padding:.22rem .6rem;transition:all .2s}
+.tech-tag:hover{border-color:var(--cyan);color:var(--cyan)}
 .projet-tasks{list-style:none;margin-bottom:1.2rem}
-.projet-tasks li{font-size:.78rem;color:var(--grey-light);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.3rem}
-.projet-tasks li::before{content:'—';position:absolute;left:0;color:var(--red)}
+.projet-tasks li{font-size:.78rem;color:var(--grey-light);line-height:1.7;padding-left:1.4rem;position:relative;margin-bottom:.3rem;font-family:inherit}
+.projet-tasks li::before{content:'>';position:absolute;left:0;color:var(--red);font-family:var(--mono)}
 
 /* COMPÉTENCES */
 .skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.skill-panel{background:var(--black);padding:2.5rem;transition:background .3s}
+.skill-panel{background:var(--black);padding:2.5rem;transition:background .3s;position:relative;overflow:hidden}
 .skill-panel:hover{background:var(--black2)}
-.skill-panel-title{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:1.8rem}
-.skill-items{display:flex;flex-wrap:wrap;gap:.5rem}
-.skill-pill{font-size:.72rem;color:var(--grey-light);border:1px solid var(--border);padding:.45rem 1rem;transition:all .25s;cursor:none}
-.skill-pill:hover{border-color:var(--red);color:var(--white);background:var(--red-glow)}
+.skill-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--red),transparent);opacity:0;transition:opacity .3s}
+.skill-panel:hover::before{opacity:1}
+.skill-panel-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem}
+.skill-items{display:flex;flex-wrap:wrap;gap:.4rem}
+.skill-pill{font-family:var(--mono);font-size:.65rem;color:var(--grey-light);border:1px solid var(--border);padding:.4rem .9rem;transition:all .25s;cursor:none}
+.skill-pill:hover{border-color:var(--cyan);color:var(--cyan);background:rgba(0,212,255,.05)}
 
 /* ENTREPRISE */
 .entreprise-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
@@ -205,152 +256,142 @@ nav::after{content:'';position:absolute;bottom:0;left:4rem;right:4rem;height:1px
 .env-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-top:1.5rem}
 .env-card{background:var(--black2);padding:1.5rem;transition:background .2s}
 .env-card:hover{background:var(--black3)}
-.env-card-title{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
+.env-card-title{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem}
 .env-card-list{list-style:none}
-.env-card-list li{font-size:.75rem;color:var(--grey-light);padding:.2rem 0;padding-left:.8rem;position:relative}
+.env-card-list li{font-family:var(--mono);font-size:.68rem;color:var(--grey-light);padding:.15rem 0;padding-left:.8rem;position:relative}
 .env-card-list li::before{content:'·';position:absolute;left:0;color:var(--red)}
 .missions-list{display:flex;flex-direction:column;gap:1px;background:var(--border)}
-.mission-item{background:var(--black2);padding:1.8rem 2rem;transition:background .2s;display:flex;gap:1.5rem;align-items:flex-start}
+.mission-item{background:var(--black2);padding:1.5rem 1.8rem;transition:background .2s;display:flex;gap:1.5rem;align-items:flex-start}
 .mission-item:hover{background:var(--black3)}
-.mission-icon{width:36px;height:36px;background:var(--red-glow);border:1px solid rgba(232,25,44,.2);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;margin-top:.1rem}
-.mission-title{font-size:.85rem;color:var(--white);font-weight:500;margin-bottom:.3rem}
+.mission-icon{width:34px;height:34px;background:var(--red-dim);border:1px solid var(--border-red);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0;margin-top:.1rem}
+.mission-title{font-family:var(--mono);font-size:.75rem;color:var(--white);margin-bottom:.3rem}
 .mission-desc{font-size:.75rem;color:var(--grey);line-height:1.6}
 
 /* DOCUMENTS */
-.docs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
-.doc-card{background:var(--black2);padding:2.5rem;display:flex;align-items:center;gap:2rem;transition:background .3s;cursor:none;border:none;width:100%;text-align:left}
+.docs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.doc-card{background:var(--black2);padding:2.5rem;display:flex;flex-direction:column;gap:1.2rem;transition:background .3s;cursor:none;border:none;width:100%;text-align:left;position:relative;overflow:hidden}
 .doc-card:hover{background:var(--black3)}
-.doc-icon{width:60px;height:60px;border:1px solid var(--red);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;transition:background .3s}
-.doc-card:hover .doc-icon{background:var(--red-glow)}
-.doc-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.doc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.doc-card:hover::before{transform:scaleX(1)}
+.doc-icon-wrap{width:52px;height:52px;border:1px solid var(--border-red);display:flex;align-items:center;justify-content:center;font-size:1.3rem;transition:all .3s}
+.doc-card:hover .doc-icon-wrap{background:var(--red-glow);border-color:var(--red);box-shadow:0 0 16px var(--red-glow)}
+.doc-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white)}
 .doc-desc{font-size:.72rem;color:var(--grey);line-height:1.5}
-.doc-action{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-top:.6rem;display:flex;align-items:center;gap:.4rem}
+.doc-action{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:.4rem;margin-top:auto}
 .doc-action::after{content:'→'}
+.doc-free-badge{font-family:var(--mono);font-size:.52rem;letter-spacing:.1em;padding:.15rem .5rem;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green);display:inline-flex;align-items:center;gap:.3rem}
 
 /* EXPERIENCE */
 .exp-list{display:flex;flex-direction:column}
-.exp-row{display:grid;grid-template-columns:220px 1fr;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.exp-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--red);transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.exp-row{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.exp-row::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--red),var(--cyan));transform:scaleY(0);transform-origin:top;transition:transform .45s cubic-bezier(.4,0,.2,1)}
 .exp-row:hover::after{transform:scaleY(1)}
-.exp-row:hover .exp-body{background:rgba(255,255,255,.015)}
+.exp-row:hover .exp-body{background:rgba(255,255,255,.012)}
 .exp-sidebar{padding:2.5rem 2rem 2.5rem 0;border-right:1px solid var(--border)}
-.exp-period{font-size:.7rem;color:var(--grey);line-height:1.7;margin-bottom:.8rem}
-.exp-type{display:inline-block;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:.25rem .7rem;border:1px solid}
+.exp-period{font-family:var(--mono);font-size:.65rem;color:var(--grey);line-height:1.7;margin-bottom:.8rem}
+.exp-type{display:inline-block;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:.22rem .65rem;border:1px solid}
 .exp-type.alt{border-color:var(--red);color:var(--red)}
 .exp-type.stage{border-color:var(--border);color:var(--grey)}
 .exp-body{padding:2.5rem 0 2.5rem 3rem;transition:background .3s}
-.exp-role{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
-.exp-company{font-size:.75rem;color:var(--red);margin-bottom:1.2rem;letter-spacing:.04em}
+.exp-role{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.exp-company{font-family:var(--mono);font-size:.68rem;color:var(--red);margin-bottom:1.2rem}
 .exp-missions{list-style:none}
-.exp-missions li{font-size:.8rem;color:var(--grey-light);line-height:1.7;padding-left:1.2rem;position:relative;margin-bottom:.3rem}
-.exp-missions li::before{content:'—';position:absolute;left:0;color:var(--red)}
+.exp-missions li{font-size:.8rem;color:var(--grey-light);line-height:1.7;padding-left:1.4rem;position:relative;margin-bottom:.3rem}
+.exp-missions li::before{content:'>';position:absolute;left:0;color:var(--red);font-family:var(--mono);font-size:.7rem}
 
 /* CONTACT */
-.contact-section{background:var(--black);padding:0;position:relative;z-index:2;overflow:hidden}
+.contact-section{background:var(--black);position:relative;z-index:2;overflow:hidden}
 .contact-wrapper{display:grid;grid-template-columns:1fr 1.2fr;min-height:90vh}
 .contact-panel-left{background:var(--red);padding:6rem 4rem;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
-.contact-panel-left::before{content:'';position:absolute;bottom:-120px;right:-120px;width:400px;height:400px;border-radius:50%;background:rgba(0,0,0,.12);pointer-events:none}
-.contact-panel-left::after{content:'';position:absolute;top:-80px;left:-80px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
-.contact-label-tag{display:inline-flex;align-items:center;gap:.6rem;font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:2rem;position:relative;z-index:1}
-.contact-label-tag::before{content:'08';font-size:.52rem;opacity:.6}
-.contact-label-tag::after{content:'';width:28px;height:1px;background:rgba(255,255,255,.4)}
+.contact-panel-left::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");background-size:200px;pointer-events:none}
+.contact-label-tag{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:2rem;position:relative;z-index:1}
 .contact-big{font-family:'Playfair Display',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:900;color:var(--white);line-height:1;letter-spacing:-.02em;position:relative;z-index:1}
 .contact-sub{margin-top:1.8rem;font-size:.82rem;color:rgba(255,255,255,.75);line-height:1.9;position:relative;z-index:1}
 .contact-info-list{margin-top:3rem;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.15);position:relative;z-index:1}
-.contact-info-item{display:flex;align-items:center;gap:1.2rem;padding:1.3rem 0;border-bottom:1px solid rgba(255,255,255,.15)}
-.cii-icon{width:36px;height:36px;flex-shrink:0;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.85rem;transition:background .2s}
+.contact-info-item{display:flex;align-items:center;gap:1.2rem;padding:1.2rem 0;border-bottom:1px solid rgba(255,255,255,.15)}
+.cii-icon{width:34px;height:34px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;transition:background .2s}
 .contact-info-item:hover .cii-icon{background:rgba(255,255,255,.22)}
-.cii-label{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.12rem}
-.cii-val{font-size:.82rem;color:var(--white);font-weight:500}
+.cii-label{font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:.1rem}
+.cii-val{font-size:.8rem;color:var(--white);font-weight:500}
 .contact-panel-right{background:var(--black2);padding:6rem 4rem;display:flex;flex-direction:column;justify-content:center;position:relative}
 .contact-panel-right::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:var(--border)}
 .form-header{margin-bottom:2.5rem}
 .form-header-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:700;color:var(--white);letter-spacing:-.02em;margin-bottom:.4rem}
-.form-header-sub{font-size:.75rem;color:var(--grey);line-height:1.6}
-.contact-form{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.04)}
-.form-duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.04)}
+.form-header-sub{font-family:var(--mono);font-size:.65rem;color:var(--grey);line-height:1.6}
+.contact-form{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.03)}
+.form-duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.03)}
 .form-field{position:relative;background:var(--black2);transition:background .2s}
-.form-field:focus-within{background:#161616}
-.field-label{display:block;padding:1.1rem 1.4rem 0;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--grey);transition:color .25s}
+.form-field:focus-within{background:#111}
+.field-label{display:block;padding:1rem 1.3rem 0;font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);transition:color .25s}
 .form-field:focus-within .field-label{color:var(--red)}
-.field-input,.field-textarea{display:block;width:100%;background:transparent;border:none;outline:none;padding:.35rem 1.4rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:400;color:var(--white);resize:none}
-.field-textarea{min-height:130px;padding-top:.5rem}
-.field-input::placeholder,.field-textarea::placeholder{color:rgba(255,255,255,.15);font-size:.82rem}
-.field-bar{position:absolute;bottom:0;left:0;right:0;height:2px;background:rgba(255,255,255,.06);overflow:hidden}
-.field-bar::after{content:'';position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.field-input,.field-textarea{display:block;width:100%;background:transparent;border:none;outline:none;padding:.3rem 1.3rem 1rem;font-family:'DM Sans',sans-serif;font-size:.85rem;color:var(--white);resize:none}
+.field-textarea{min-height:120px}
+.field-input::placeholder,.field-textarea::placeholder{color:rgba(255,255,255,.12);font-size:.78rem}
+.field-bar{position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(255,255,255,.05);overflow:hidden}
+.field-bar::after{content:'';position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .form-field:focus-within .field-bar::after{transform:scaleX(1)}
 .form-submit-row{display:flex;align-items:center;gap:1.5rem;margin-top:1.5rem}
-.btn-submit{flex:1;background:var(--red);color:var(--white);padding:1.15rem 2rem;border:none;cursor:none;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:.8rem;transition:opacity .3s}
-.btn-submit-inner{display:flex;align-items:center;gap:.8rem;position:relative;z-index:1}
-.btn-submit::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.btn-submit{flex:1;background:var(--red);color:var(--white);padding:1.1rem 2rem;border:none;cursor:none;font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:.8rem;transition:opacity .3s}
+.btn-submit::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .4s}
 .btn-submit:hover::before{transform:scaleX(1)}
 .btn-submit:hover{color:var(--red)}
 .btn-submit:disabled{opacity:.5;pointer-events:none}
-.btn-submit-arrow{width:30px;height:30px;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:border-color .3s,transform .3s}
-.btn-submit:hover .btn-submit-arrow{border-color:rgba(232,25,44,.4);transform:translateX(4px)}
-.form-hint{font-size:.62rem;color:var(--grey);line-height:1.6}
-.form-status{margin-top:1rem;padding:1rem 1.4rem;font-size:.75rem;display:none;align-items:center;gap:.8rem}
-.form-status.success{display:flex;background:rgba(34,197,94,.08);color:#4ade80;border-left:2px solid #22c55e}
+.btn-submit span{position:relative;z-index:1}
+.form-hint{font-family:var(--mono);font-size:.58rem;color:var(--grey);line-height:1.6}
+.form-status{margin-top:1rem;padding:1rem 1.3rem;font-family:var(--mono);font-size:.7rem;display:none;align-items:center;gap:.8rem}
+.form-status.success{display:flex;background:rgba(0,255,136,.06);color:var(--green);border-left:2px solid var(--green)}
 .form-status.error{display:flex;background:rgba(232,25,44,.08);color:#ff6b6b;border-left:2px solid var(--red)}
-.setup-notice{background:rgba(232,25,44,.06);border:1px dashed rgba(232,25,44,.25);padding:.9rem 1.3rem;font-size:.68rem;color:var(--grey);line-height:1.7;margin-bottom:1.4rem;display:none}
-.setup-notice strong{color:var(--red)}
-.setup-notice code{background:rgba(255,255,255,.06);padding:.1rem .4rem;font-family:monospace;font-size:.65rem;border-radius:2px;color:#ccc}
 
 /* FOOTER */
-footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem 4rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
-.footer-logo{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:var(--white)}
+footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4rem;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:2}
+.footer-logo{font-family:var(--mono);font-weight:700;font-size:.85rem;color:var(--white);display:flex;gap:.4rem}
 .footer-logo em{color:var(--red);font-style:normal}
-.footer-copy{font-size:.62rem;color:var(--grey);letter-spacing:.1em}
+.footer-copy{font-family:var(--mono);font-size:.58rem;color:var(--grey);letter-spacing:.1em}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:var(--mono);font-size:.58rem;color:var(--grey);text-decoration:none;letter-spacing:.1em;transition:color .2s}
+.footer-links a:hover{color:var(--red)}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(35px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* HERO ANIM */
-.hero-left>*{opacity:0;transform:translateY(25px);animation:heroLoad .8s cubic-bezier(.4,0,.2,1) forwards}
+/* HERO LOAD ANIM */
+.hero-left>*{opacity:0;transform:translateY(20px);animation:heroLoad .8s cubic-bezier(.4,0,.2,1) forwards}
 .hero-left>*:nth-child(1){animation-delay:.1s}
 .hero-left>*:nth-child(2){animation-delay:.2s}
 .hero-left>*:nth-child(3){animation-delay:.3s}
 .hero-left>*:nth-child(4){animation-delay:.4s}
 .hero-left>*:nth-child(5){animation-delay:.5s}
-.hero-right{opacity:0;transform:translateX(35px);animation:heroLoad .9s .3s cubic-bezier(.4,0,.2,1) forwards}
-@keyframes heroLoad{to{opacity:1;transform:translate(0,0)}}
+.hero-right{opacity:0;transform:translateX(30px);animation:heroLoad .9s .3s cubic-bezier(.4,0,.2,1) forwards}
 
-/* CV MODAL */
-.cv-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-.cv-modal-overlay.open{display:flex}
-.cv-modal{background:var(--black2);border:1px solid var(--border);padding:3rem;width:100%;max-width:400px;position:relative;animation:modalIn .3s cubic-bezier(.4,0,.2,1)}
-@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-.cv-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.cv-modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--grey);font-size:1.2rem;cursor:none;padding:.3rem .6rem;transition:color .2s}
-.cv-modal-close:hover{color:var(--white)}
-.cv-modal-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.35rem}
-.cv-modal-sub{font-size:.72rem;color:var(--grey);margin-bottom:1.8rem;line-height:1.6}
-.cv-modal-input{width:100%;background:var(--black3);border:1px solid var(--border);padding:.85rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--white);outline:none;margin-bottom:.7rem;transition:border-color .25s;letter-spacing:.2em}
-.cv-modal-input:focus{border-color:var(--red)}
-.cv-modal-input::placeholder{color:var(--grey);letter-spacing:.05em}
-.cv-modal-btn{width:100%;background:var(--red);color:var(--white);border:none;padding:.9rem;cursor:none;font-family:'DM Sans',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;position:relative;overflow:hidden;transition:color .3s}
-.cv-modal-btn::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.4,0,.2,1)}
-.cv-modal-btn:hover::before{transform:scaleX(1)}
-.cv-modal-btn:hover{color:var(--red)}
-.cv-modal-btn span{position:relative;z-index:1}
-.cv-modal-error{font-size:.7rem;color:#ff6b6b;margin-top:.5rem;display:none;padding-left:.2rem}
-.cv-modal-error.show{display:block}
-
-/* docs-grid 3 colonnes */
-.docs-grid { grid-template-columns: repeat(3,1fr) !important; }
-::-webkit-scrollbar-track{background:var(--black)}
-::-webkit-scrollbar-thumb{background:var(--red)}
+/* PDF MODAL */
+.pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:9100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);padding:1rem}
+.pdf-modal-overlay.open{display:flex}
+.pdf-viewer-box{background:var(--black2);width:100%;max-width:1000px;height:90vh;display:flex;flex-direction:column;border:1px solid var(--border);animation:modalIn .3s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative}
+.pdf-viewer-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan),transparent)}
+.pdf-viewer-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--black3);flex-shrink:0}
+.pdf-viewer-title{font-family:var(--mono);font-size:.8rem;font-weight:700;color:var(--white)}
+.pdf-viewer-title em{color:var(--red);font-style:normal}
+.pdf-viewer-actions{display:flex;gap:.6rem;align-items:center}
+.pdf-action-btn{background:transparent;border:1px solid var(--border);color:var(--grey-light);padding:.4rem .9rem;font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.pdf-action-btn:hover{border-color:var(--red);color:var(--white);background:var(--red-glow)}
+.pdf-action-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+.pdf-close-btn{background:transparent;border:none;color:var(--grey);font-size:1.1rem;cursor:none;padding:.3rem .6rem;transition:color .2s;font-family:var(--mono)}
+.pdf-close-btn:hover{color:var(--white)}
+.pdf-viewer-embed{flex:1;position:relative;background:#111}
+.pdf-viewer-embed iframe{width:100%;height:100%;border:none;display:block}
+.pdf-viewer-footer{padding:.6rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--black3);flex-shrink:0}
+.pdf-viewer-footer-txt{font-family:var(--mono);font-size:.58rem;color:var(--grey)}
+.pdf-viewer-footer-badge{font-family:var(--mono);font-size:.55rem;padding:.18rem .6rem;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);color:var(--green)}
 
 @media(max-width:900px){
   nav{padding:1.2rem 1.5rem}
-  nav::after{left:1.5rem;right:1.5rem}
   .nav-links{display:none}
-  .hero{grid-template-columns:1fr;padding:5.5rem 1.5rem 3rem;gap:2.5rem}
+  .hero{grid-template-columns:1fr;padding:5rem 1.5rem 3rem;gap:2.5rem}
   .section{padding:4.5rem 1.5rem}
-  .about-grid,.entreprise-grid,.contact-inner{grid-template-columns:1fr}
-  .skills-grid,.certif-grid,.veille-grid{grid-template-columns:1fr}
-  .docs-grid,.env-grid,.form-duo{grid-template-columns:1fr}
+  .about-grid,.entreprise-grid{grid-template-columns:1fr}
+  .skills-grid,.certif-grid,.veille-grid,.docs-grid{grid-template-columns:1fr}
+  .env-grid,.form-duo{grid-template-columns:1fr}
   .exp-row,.projet-row{grid-template-columns:1fr}
   .exp-sidebar,.projet-sidebar{border-right:none;border-bottom:1px solid var(--border);padding:1.5rem 0}
   .exp-body,.projet-body{padding:1.5rem 0}
@@ -362,48 +403,74 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
 </head>
 <body>
 
+<div class="grid-bg"></div>
+<div class="scanline-sweep"></div>
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Nael <em>Lakhledj</em></div>
+  <div class="nav-logo">
+    <span class="prompt">~/</span>
+    <span class="name">nael-lakhledj</span>
+    <span class="cursor-blink">█</span>
+  </div>
   <ul class="nav-links">
-    <li><a href="#about">À propos</a></li>
-    <li><a href="#parcours">Parcours</a></li>
-    <li><a href="#projets">Projets</a></li>
-    <li><a href="#entreprise">Entreprise</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about" data-num="01">À propos</a></li>
+    <li><a href="#parcours" data-num="02">Parcours</a></li>
+    <li><a href="#projets" data-num="05">Projets</a></li>
+    <li><a href="#entreprise" data-num="07">Entreprise</a></li>
+    <li><a href="#contact" data-num="09">Contact</a></li>
   </ul>
   <div class="nav-right">
-    <span class="status-dot"></span>
-    <span class="nav-avail">Disponible — Sept. 2026</span>
+    <div class="status-indicator">
+      <div class="status-dot"></div>
+      <span>OPEN TO WORK</span>
+    </div>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg-text">SR</div>
   <div class="hero-left">
-    <div class="hero-eyebrow"><div class="hero-eyebrow-line"></div><div class="hero-eyebrow-text">Portfolio BTS SIO SISR</div></div>
+    <div class="hero-terminal">
+      <div class="terminal-bar">
+        <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
+        <span class="terminal-title">nael@portfolio ~ bash</span>
+      </div>
+      <div class="t-line"><span class="prompt">$ </span><span class="cmd">whoami</span></div>
+      <div class="t-line"><span class="output">nael.lakhledj</span> <span class="comment">// BTS SIO SISR</span></div>
+      <div class="t-line"><span class="prompt">$ </span><span class="cmd">cat ./status.txt</span></div>
+      <div class="t-line"><span class="val">SEEKING_ALTERNANCE</span> <span class="comment">// Bachelor SR · Sept. 2026</span></div>
+      <div class="t-line"><span class="prompt">$ </span><span class="cmd">ping alternance.target<span class="blink">_</span></span></div>
+    </div>
     <h1 class="hero-name"><span class="first">Nael</span><span class="last">Lakhledj</span></h1>
-    <p class="hero-title">Administrateur réseaux <span>·</span> BTS SIO SISR</p>
-    <p class="hero-desc">Étudiant en alternance spécialisé en infrastructure IT.<br>Cisco, pfSense, Active Directory, Proxmox, Zabbix.<br>Paris / Île-de-France — Disponible septembre 2026.</p>
+    <p class="hero-title">Administrateur réseaux · BTS SIO SISR</p>
+    <p class="hero-desc">Étudiant en alternance spécialisé en infrastructure IT.<br>Cisco · pfSense · Active Directory · Proxmox · Zabbix.<br>Paris / Île-de-France — Disponible septembre 2026.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-red"><span>Me contacter</span></a>
-      <a href="#projets" class="btn-ghost">Mes projets <span class="btn-ghost-arr"></span></a>
-      <button class="btn-ghost" onclick="openCvModal()" style="margin-left:.3rem">CV <span class="btn-ghost-arr"></span></button>
+      <a href="#projets" class="btn-ghost">Mes projets</a>
+      <button class="btn-cv" onclick="openPdfModal('cv')">⬇ CV PDF</button>
     </div>
+    <div class="ip-badge"><span class="dot"></span><span>sys.admin@assomption-bondy · IDF · FR</span></div>
   </div>
   <div class="hero-right">
     <div class="hero-card">
-      <div class="hero-card-label">Profil technique</div>
-      <div class="stat-grid">
-        <div class="stat-cell"><div class="stat-val">4<em>+</em></div><div class="stat-lbl">Expériences</div></div>
-        <div class="stat-cell"><div class="stat-val">CCNA</div><div class="stat-lbl">Certifié Cisco</div></div>
-        <div class="stat-cell"><div class="stat-val">5<em>+</em></div><div class="stat-lbl">Projets BTS</div></div>
-        <div class="stat-cell"><div class="stat-val">2026</div><div class="stat-lbl">Diplôme BTS</div></div>
+      <div class="hero-card-header">
+        <div class="hero-card-label">// profil_technique.json</div>
+        <div class="hero-card-status"><span class="status-dot"></span>ONLINE</div>
       </div>
-      <div class="hero-card-btm"><div class="hero-card-btm-txt">Alternance — Sept. 2026</div><div class="hero-card-btm-badge">Bachelor SR</div></div>
+      <div class="stat-grid">
+        <div class="stat-cell"><div class="stat-val">4<em>+</em></div><div class="stat-lbl">expériences</div></div>
+        <div class="stat-cell"><div class="stat-val">CCNA</div><div class="stat-lbl">certifié_cisco</div></div>
+        <div class="stat-cell"><div class="stat-val">5<em>+</em></div><div class="stat-lbl">projets_bts</div></div>
+        <div class="stat-cell"><div class="stat-val">2026</div><div class="stat-lbl">diplôme_bts</div></div>
+      </div>
+      <div class="hero-card-footer">
+        <div class="hero-card-footer-txt">alternance :: sept.2026</div>
+        <div class="hero-card-footer-badge">BACHELOR_SR</div>
+      </div>
     </div>
   </div>
 </section>
@@ -411,8 +478,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
 <!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <div class="marquee-item"><span class="marquee-dot">·</span>Windows Server</div><div class="marquee-item"><span class="marquee-dot">·</span>Cisco / CCNA</div><div class="marquee-item"><span class="marquee-dot">·</span>pfSense</div><div class="marquee-item"><span class="marquee-dot">·</span>Active Directory</div><div class="marquee-item"><span class="marquee-dot">·</span>Proxmox</div><div class="marquee-item"><span class="marquee-dot">·</span>Hyper-V</div><div class="marquee-item"><span class="marquee-dot">·</span>Zabbix</div><div class="marquee-item"><span class="marquee-dot">·</span>GLPI</div><div class="marquee-item"><span class="marquee-dot">·</span>Exchange Server</div><div class="marquee-item"><span class="marquee-dot">·</span>VLAN / DMZ</div><div class="marquee-item"><span class="marquee-dot">·</span>NAT & Filtrage</div><div class="marquee-item"><span class="marquee-dot">·</span>Linux</div><div class="marquee-item"><span class="marquee-dot">·</span>Zimbra</div><div class="marquee-item"><span class="marquee-dot">·</span>Intelligence Artificielle</div>
-    <div class="marquee-item"><span class="marquee-dot">·</span>Windows Server</div><div class="marquee-item"><span class="marquee-dot">·</span>Cisco / CCNA</div><div class="marquee-item"><span class="marquee-dot">·</span>pfSense</div><div class="marquee-item"><span class="marquee-dot">·</span>Active Directory</div><div class="marquee-item"><span class="marquee-dot">·</span>Proxmox</div><div class="marquee-item"><span class="marquee-dot">·</span>Hyper-V</div><div class="marquee-item"><span class="marquee-dot">·</span>Zabbix</div><div class="marquee-item"><span class="marquee-dot">·</span>GLPI</div><div class="marquee-item"><span class="marquee-dot">·</span>Exchange Server</div><div class="marquee-item"><span class="marquee-dot">·</span>VLAN / DMZ</div><div class="marquee-item"><span class="marquee-dot">·</span>NAT & Filtrage</div><div class="marquee-item"><span class="marquee-dot">·</span>Linux</div><div class="marquee-item"><span class="marquee-dot">·</span>Zimbra</div><div class="marquee-item"><span class="marquee-dot">·</span>Intelligence Artificielle</div>
+    <div class="marquee-item"><span class="marquee-dot">//</span>Windows Server</div><div class="marquee-item"><span class="marquee-dot">//</span>Cisco / CCNA</div><div class="marquee-item"><span class="marquee-dot">//</span>pfSense</div><div class="marquee-item"><span class="marquee-dot">//</span>Active Directory</div><div class="marquee-item"><span class="marquee-dot">//</span>Proxmox</div><div class="marquee-item"><span class="marquee-dot">//</span>Hyper-V</div><div class="marquee-item"><span class="marquee-dot">//</span>Zabbix</div><div class="marquee-item"><span class="marquee-dot">//</span>GLPI</div><div class="marquee-item"><span class="marquee-dot">//</span>Exchange Server</div><div class="marquee-item"><span class="marquee-dot">//</span>VLAN / DMZ</div><div class="marquee-item"><span class="marquee-dot">//</span>NAT & Filtrage</div><div class="marquee-item"><span class="marquee-dot">//</span>Linux</div><div class="marquee-item"><span class="marquee-dot">//</span>Zimbra</div><div class="marquee-item"><span class="marquee-dot">//</span>IPv4 / IPv6</div>
+    <div class="marquee-item"><span class="marquee-dot">//</span>Windows Server</div><div class="marquee-item"><span class="marquee-dot">//</span>Cisco / CCNA</div><div class="marquee-item"><span class="marquee-dot">//</span>pfSense</div><div class="marquee-item"><span class="marquee-dot">//</span>Active Directory</div><div class="marquee-item"><span class="marquee-dot">//</span>Proxmox</div><div class="marquee-item"><span class="marquee-dot">//</span>Hyper-V</div><div class="marquee-item"><span class="marquee-dot">//</span>Zabbix</div><div class="marquee-item"><span class="marquee-dot">//</span>GLPI</div><div class="marquee-item"><span class="marquee-dot">//</span>Exchange Server</div><div class="marquee-item"><span class="marquee-dot">//</span>VLAN / DMZ</div><div class="marquee-item"><span class="marquee-dot">//</span>NAT & Filtrage</div><div class="marquee-item"><span class="marquee-dot">//</span>Linux</div><div class="marquee-item"><span class="marquee-dot">//</span>Zimbra</div><div class="marquee-item"><span class="marquee-dot">//</span>IPv4 / IPv6</div>
   </div>
 </div>
 
@@ -421,28 +488,28 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">01</div>
-      <div class="section-meta"><div class="section-tag">Qui suis-je</div><div class="section-title">Présentation</div></div>
+      <div class="section-meta"><div class="section-tag">// qui_suis_je</div><div class="section-title">Présentation</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="about-grid reveal">
       <div class="about-text">
         <p>Je m'appelle <strong>Nael Lakhledj</strong>, étudiant en <strong>BTS SIO option SISR</strong> au Lycée Robert Schuman à Dugny, en contrat d'apprentissage chez <strong>Assomption Bondy</strong> depuis août 2025.</p>
-        <p>Passionné par les <strong>infrastructures réseaux et systèmes</strong>, j'ai développé au fil de mes formations et expériences une expertise concrète sur des technologies clés : Active Directory, virtualisation avec Proxmox et Hyper-V, pare-feu pfSense, supervision avec Zabbix, et équipements Cisco.</p>
-        <p>Rigoureux, autonome et toujours en veille sur les évolutions du secteur, je cherche à poursuivre en <strong>Bachelor Systèmes, Réseaux et Cloud</strong> à partir de septembre 2026, en alternance (2 semaines entreprise / 2 semaines cours).</p>
-        <blockquote class="about-quote">"Je m'engage à développer des compétences solides en systèmes et réseaux à travers une formation exigeante et des mises en pratique concrètes."</blockquote>
+        <p>Passionné par les <strong>infrastructures réseaux et systèmes</strong>, j'ai développé une expertise concrète sur des technologies clés : Active Directory, virtualisation avec Proxmox et Hyper-V, pare-feu pfSense, supervision avec Zabbix, et équipements Cisco.</p>
+        <p>Rigoureux, autonome et en veille permanente sur les évolutions du secteur, je cherche à poursuivre en <strong>Bachelor Systèmes, Réseaux et Cloud</strong> à partir de septembre 2026, en alternance (2 semaines entreprise / 2 semaines cours).</p>
+        <blockquote class="about-quote">/* Je m'engage à développer des compétences solides en systèmes et réseaux<br>   à travers une formation exigeante et des mises en pratique concrètes. */</blockquote>
         <div class="about-langs">
-          <div class="lang-row"><span class="lang-name">Français</span><span class="lang-level">Maternelle</span><div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div></div>
+          <div class="lang-row"><span class="lang-name">Français</span><span class="lang-level">C2</span><div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div></div>
           <div class="lang-row"><span class="lang-name">Anglais</span><span class="lang-level">B2</span><div class="lang-bar"><div class="lang-bar-fill" style="width:75%"></div></div></div>
           <div class="lang-row"><span class="lang-name">Arabe</span><span class="lang-level">B2</span><div class="lang-bar"><div class="lang-bar-fill" style="width:75%"></div></div></div>
         </div>
       </div>
       <div class="about-side">
-        <div class="about-info-card"><div class="aic-label">Formation</div><div class="aic-val">BTS SIO SISR — Lycée Robert Schuman, Dugny</div></div>
-        <div class="about-info-card"><div class="aic-label">Alternance</div><div class="aic-val">Assomption Bondy — depuis août 2025</div></div>
-        <div class="about-info-card"><div class="aic-label">Localisation</div><div class="aic-val">Val d'Oise, Île-de-France</div></div>
-        <div class="about-info-card"><div class="aic-label">Objectif</div><div class="aic-val">Bachelor Systèmes, Réseaux & Cloud — Sept. 2026</div></div>
-        <div class="about-info-card"><div class="aic-label">Rythme souhaité</div><div class="aic-val">2 semaines entreprise / 2 semaines cours</div></div>
-        <div class="about-info-card"><div class="aic-label">Contact</div><div class="aic-val">nlakhledj@gmail.com · 07 67 95 78 83</div></div>
+        <div class="about-info-card"><div class="aic-label">formation</div><div class="aic-val">BTS SIO SISR — Lycée Robert Schuman, Dugny</div></div>
+        <div class="about-info-card"><div class="aic-label">alternance</div><div class="aic-val">Assomption Bondy — depuis août 2025</div></div>
+        <div class="about-info-card"><div class="aic-label">localisation</div><div class="aic-val">Val d'Oise, Île-de-France</div></div>
+        <div class="about-info-card"><div class="aic-label">objectif</div><div class="aic-val">Bachelor Systèmes, Réseaux & Cloud — Sept. 2026</div></div>
+        <div class="about-info-card"><div class="aic-label">rythme</div><div class="aic-val">2 semaines entreprise / 2 semaines cours</div></div>
+        <div class="about-info-card"><div class="aic-label">contact</div><div class="aic-val">nlakhledj@gmail.com · 07 67 95 78 83</div></div>
       </div>
     </div>
   </div>
@@ -453,7 +520,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">02</div>
-      <div class="section-meta"><div class="section-tag">Académique</div><div class="section-title">Parcours scolaire</div></div>
+      <div class="section-meta"><div class="section-tag">// académique</div><div class="section-title">Parcours scolaire</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="parcours-timeline reveal">
@@ -466,16 +533,16 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
       <div class="parcours-item current">
         <div class="parcours-year">2024 — 2026 · En cours</div>
         <div class="parcours-degree">BTS SIO — option SISR</div>
-        <div class="parcours-school">Lycée Robert Schuman — Dugny (93) · CERFAL</div>
-        <div class="parcours-desc">Solutions d'Infrastructure, Systèmes et Réseaux. Formation en alternance avec Assomption Bondy. Acquisition de compétences en administration réseaux, virtualisation, sécurité et supervision.</div>
+        <div class="parcours-school">Lycée Robert Schuman — Dugny (93)</div>
+        <div class="parcours-desc">Solutions d'Infrastructure, Systèmes et Réseaux. Formation en alternance avec Assomption Bondy. Compétences en administration réseaux, virtualisation, sécurité et supervision.</div>
         <span class="parcours-badge">Diplôme prévu 2026</span>
       </div>
       <div class="parcours-item">
         <div class="parcours-year">Prévu — Sept. 2026</div>
         <div class="parcours-degree">Bachelor Systèmes, Réseaux & Cloud</div>
         <div class="parcours-school">Sup de Vinci — Île-de-France</div>
-        <div class="parcours-desc">Poursuite d'études en alternance pour approfondir les compétences en architecture réseaux, cloud computing (AWS/Azure) et cybersécurité. Rythme : 2 semaines entreprise / 2 semaines école.</div>
-        <span class="parcours-badge" style="border-color:rgba(255,165,0,.4);color:orange">Objectif 2026</span>
+        <div class="parcours-desc">Poursuite d'études en alternance pour approfondir les compétences en architecture réseaux, cloud computing et cybersécurité. Rythme : 2 semaines entreprise / 2 semaines école.</div>
+        <span class="parcours-badge" style="border-color:rgba(0,212,255,.4);color:var(--cyan)">Objectif 2026</span>
       </div>
     </div>
   </div>
@@ -486,7 +553,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">03</div>
-      <div class="section-meta"><div class="section-tag">Reconnaissances</div><div class="section-title">Certifications</div></div>
+      <div class="section-meta"><div class="section-tag">// certifications</div><div class="section-title">Reconnaissances</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="certif-grid reveal">
@@ -495,53 +562,44 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         <div class="certif-name">CCNA 1</div>
         <div class="certif-org">Cisco Networking Academy</div>
         <div class="certif-desc">Introduction to Networks — Fondamentaux des réseaux, modèle OSI/TCP-IP, routage, commutation, adressage IPv4/IPv6.</div>
-        <span class="certif-status obtained">Obtenu</span>
+        <span class="certif-status obtained">✓ Obtenu</span>
       </div>
       <div class="certif-card">
         <div class="certif-icon">🇬🇧</div>
         <div class="certif-name">PIX</div>
-        <div class="certif-org">Test d'anglais professionnel</div>
-        <div class="certif-desc">Certification d'anglais professionnel — Niveau B2. Capacité à lire la documentation technique et à communiquer en environnement anglophone.</div>
-        <span class="certif-status obtained">Obtenu</span>
+        <div class="certif-org">Anglais professionnel · B2</div>
+        <div class="certif-desc">Certification d'anglais professionnel. Capacité à lire la documentation technique et à communiquer en environnement anglophone.</div>
+        <span class="certif-status obtained">✓ Obtenu</span>
       </div>
       <div class="certif-card">
         <div class="certif-icon">🔒</div>
         <div class="certif-name">CCNA Security</div>
         <div class="certif-org">Cisco Networking Academy</div>
         <div class="certif-desc">Sécurisation des infrastructures réseau Cisco — ACL, VPN, pare-feu, détection d'intrusion. En cours de préparation.</div>
-        <span class="certif-status planned">En préparation</span>
+        <span class="certif-status planned">⟳ En préparation</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 04 — VEILLE TECHNOLOGIQUE -->
+<!-- 04 — VEILLE -->
 <section class="section" id="veille">
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">04</div>
-      <div class="section-meta"><div class="section-tag">Curiosité technique</div><div class="section-title">Veille technologique</div></div>
+      <div class="section-meta"><div class="section-tag">// veille_techno</div><div class="section-title">Veille technologique</div></div>
       <div class="section-divider"></div>
     </div>
-    <p class="veille-intro reveal">Ma veille technologique est centrée sur <strong style="color:var(--white)">l'Intelligence Artificielle et son impact sur les métiers IT</strong> — en particulier l'automatisation des infrastructures, les outils d'assistance aux administrateurs systèmes, et les enjeux de sécurité liés à l'IA.</p>
+    <p class="veille-intro reveal">Ma veille est centrée sur <strong style="color:var(--white)">l'Intelligence Artificielle et son impact sur les métiers IT</strong> — automatisation des infrastructures, outils d'assistance aux administrateurs systèmes, et enjeux de sécurité liés à l'IA.</p>
     <div class="veille-grid reveal">
       <div class="veille-card veille-full">
         <div class="veille-card-head">
           <div class="veille-card-icon">🤖</div>
-          <div><div class="veille-card-title">Intelligence Artificielle & IT</div><div class="veille-card-sub">Sujet principal de veille</div></div>
+          <div><div class="veille-card-title">Intelligence Artificielle & IT</div><div class="veille-card-sub">Sujet principal</div></div>
         </div>
-        <div class="veille-card-body">
-          L'IA transforme rapidement les métiers des systèmes et réseaux. Je m'intéresse notamment à l'utilisation de modèles de langage (LLM) pour automatiser des tâches d'administration, à AIOps pour la supervision intelligente des infrastructures, et aux outils de détection d'anomalies basés sur le machine learning comme Zabbix ML ou des solutions de SIEM augmentées par l'IA. Je suis également attentif aux enjeux de sécurité introduits par l'IA : hallucinations dans des contextes critiques, attaques adversariales, et protection des données d'entraînement.
-        </div>
+        <div class="veille-card-body">L'IA transforme les métiers des systèmes et réseaux. Je m'intéresse à l'utilisation de LLM pour automatiser des tâches d'administration, à AIOps pour la supervision intelligente, et aux outils de détection d'anomalies basés sur le machine learning. Je suis également attentif aux enjeux de sécurité : hallucinations dans des contextes critiques, attaques adversariales, et protection des données.</div>
         <div class="veille-sources">
-          <span class="veille-tag">The Hacker News</span>
-          <span class="veille-tag">Numerama</span>
-          <span class="veille-tag">LeMagIT</span>
-          <span class="veille-tag">Reddit r/sysadmin</span>
-          <span class="veille-tag">Cisco Blog</span>
-          <span class="veille-tag">Anthropic Research</span>
-          <span class="veille-tag">OpenAI Blog</span>
-          <span class="veille-tag">YouTube — NetworkChuck</span>
+          <span class="veille-tag">The Hacker News</span><span class="veille-tag">Numerama</span><span class="veille-tag">LeMagIT</span><span class="veille-tag">Reddit r/sysadmin</span><span class="veille-tag">Cisco Blog</span><span class="veille-tag">Anthropic</span><span class="veille-tag">NetworkChuck</span>
         </div>
       </div>
       <div class="veille-card">
@@ -549,29 +607,28 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
           <div class="veille-card-icon">⚡</div>
           <div><div class="veille-card-title">AIOps & Supervision</div><div class="veille-card-sub">Application pratique</div></div>
         </div>
-        <div class="veille-card-body">L'IA appliquée à la supervision réseau permet de détecter automatiquement les anomalies avant qu'elles causent des incidents. Des outils comme Dynatrace ou des extensions ML sur Zabbix permettent de passer d'une supervision réactive à une supervision prédictive. Je surveille ces évolutions pour les appliquer dans mes futurs projets d'infrastructure.</div>
+        <div class="veille-card-body">L'IA appliquée à la supervision réseau permet de détecter automatiquement les anomalies avant qu'elles causent des incidents. Des outils comme Dynatrace ou des extensions ML sur Zabbix permettent une supervision prédictive.</div>
       </div>
       <div class="veille-card">
         <div class="veille-card-head">
           <div class="veille-card-icon">🛡️</div>
           <div><div class="veille-card-title">Cybersécurité & IA</div><div class="veille-card-sub">Enjeux et risques</div></div>
         </div>
-        <div class="veille-card-body">L'IA est aussi un vecteur d'attaques : phishing généré par LLM, deepfakes pour l'ingénierie sociale, automatisation des exploits. Ma veille inclut le suivi des vulnérabilités CVE, des bulletins ANSSI et des publications sur la sécurité des modèles d'IA pour anticiper les nouvelles menaces en entreprise.</div>
+        <div class="veille-card-body">L'IA est aussi un vecteur d'attaques : phishing LLM, deepfakes pour l'ingénierie sociale, automatisation des exploits. Ma veille inclut les CVE, les bulletins ANSSI et les publications sur la sécurité des modèles IA.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 05 — PROJETS BTS -->
+<!-- 05 — PROJETS -->
 <section class="section" id="projets" style="background:var(--black2)">
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">05</div>
-      <div class="section-meta"><div class="section-tag">Réalisations</div><div class="section-title">Projets BTS</div></div>
+      <div class="section-meta"><div class="section-tag">// réalisations</div><div class="section-title">Projets BTS</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="projets-list">
-
       <div class="projet-row reveal">
         <div class="projet-sidebar">
           <div class="projet-num">01</div>
@@ -581,21 +638,18 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         <div class="projet-body">
           <div class="projet-title">Infrastructure virtualisée complète</div>
           <div class="projet-subtitle">Lycée Robert Schuman — Projet fil rouge BTS</div>
-          <div class="projet-desc">Mise en place d'une infrastructure réseau entièrement virtualisée simulant un environnement d'entreprise réel. Le projet couvre l'ensemble des couches : réseau, sécurité, services, supervision et gestion de parc.</div>
+          <div class="projet-desc">Mise en place d'une infrastructure réseau entièrement virtualisée simulant un environnement d'entreprise réel. Couvre les couches réseau, sécurité, services, supervision et gestion de parc.</div>
           <ul class="projet-tasks">
-            <li>Déploiement de pfSense (WAN, LAN, DMZ) avec règles NAT, filtrage et DHCP/DNS</li>
-            <li>Installation et configuration d'Active Directory (AD principal + secondaire pour la continuité de service)</li>
-            <li>Mise en place de la supervision avec Zabbix (alertes, dashboards, agents)</li>
-            <li>Déploiement d'Exchange Server pour la messagerie interne</li>
-            <li>Gestion de parc avec GLPI (inventaire, tickets, ITIL)</li>
-            <li>Création et gestion des machines virtuelles sous Hyper-V et Proxmox</li>
+            <li>Déploiement pfSense (WAN, LAN, DMZ) avec NAT, filtrage, DHCP/DNS</li>
+            <li>Active Directory principal + secondaire pour la continuité de service</li>
+            <li>Supervision Zabbix (alertes, dashboards, agents)</li>
+            <li>Exchange Server pour la messagerie interne</li>
+            <li>Gestion de parc GLPI (inventaire, tickets, ITIL)</li>
+            <li>VMs sous Hyper-V et Proxmox</li>
           </ul>
-          <div class="projet-techs">
-            <span class="tech-tag">pfSense</span><span class="tech-tag">Active Directory</span><span class="tech-tag">Hyper-V</span><span class="tech-tag">Proxmox</span><span class="tech-tag">Zabbix</span><span class="tech-tag">Exchange</span><span class="tech-tag">GLPI</span><span class="tech-tag">Windows Server</span>
-          </div>
+          <div class="projet-techs"><span class="tech-tag">pfSense</span><span class="tech-tag">Active Directory</span><span class="tech-tag">Hyper-V</span><span class="tech-tag">Proxmox</span><span class="tech-tag">Zabbix</span><span class="tech-tag">Exchange</span><span class="tech-tag">GLPI</span><span class="tech-tag">Windows Server</span></div>
         </div>
       </div>
-
       <div class="projet-row reveal">
         <div class="projet-sidebar">
           <div class="projet-num">02</div>
@@ -605,20 +659,16 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         <div class="projet-body">
           <div class="projet-title">Architecture Cisco & switching VLAN</div>
           <div class="projet-subtitle">Configuration et segmentation réseau</div>
-          <div class="projet-desc">Conception et configuration d'une architecture réseau segmentée avec des équipements Cisco. Mise en œuvre de la segmentation par VLAN pour isoler les flux réseau et sécuriser les communications entre les différents environnements.</div>
+          <div class="projet-desc">Conception d'une architecture réseau segmentée avec des équipements Cisco. Mise en œuvre de la segmentation VLAN pour isoler les flux et sécuriser les communications.</div>
           <ul class="projet-tasks">
-            <li>Configuration des switches Cisco (ports access et trunk)</li>
-            <li>Création et attribution des VLANs (élèves, enseignants, administration, serveurs)</li>
-            <li>Configuration du routage inter-VLAN</li>
-            <li>Vérification de la connectivité et tests de communication</li>
-            <li>Documentation de l'architecture (schémas réseau, plans d'adressage)</li>
+            <li>Configuration switches Cisco (ports access et trunk)</li>
+            <li>VLANs (élèves, enseignants, administration, serveurs)</li>
+            <li>Routage inter-VLAN</li>
+            <li>Documentation (schémas réseau, plans d'adressage)</li>
           </ul>
-          <div class="projet-techs">
-            <span class="tech-tag">Cisco IOS</span><span class="tech-tag">VLAN</span><span class="tech-tag">Trunk / Access</span><span class="tech-tag">Routage inter-VLAN</span><span class="tech-tag">IPv4</span>
-          </div>
+          <div class="projet-techs"><span class="tech-tag">Cisco IOS</span><span class="tech-tag">VLAN</span><span class="tech-tag">Trunk / Access</span><span class="tech-tag">Routage inter-VLAN</span><span class="tech-tag">IPv4</span></div>
         </div>
       </div>
-
       <div class="projet-row reveal">
         <div class="projet-sidebar">
           <div class="projet-num">03</div>
@@ -628,20 +678,16 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         <div class="projet-body">
           <div class="projet-title">Serveur de messagerie Zimbra</div>
           <div class="projet-subtitle">Installation et configuration sur Debian</div>
-          <div class="projet-desc">Installation et configuration d'un serveur de messagerie Zimbra sur Debian. Projet visant à mettre en place une solution de messagerie open-source complète en remplacement d'Exchange, avec gestion des boîtes mail, DNS et certificats.</div>
+          <div class="projet-desc">Installation de Zimbra sur Debian — solution open-source en remplacement d'Exchange, avec gestion des boîtes mail, DNS et certificats.</div>
           <ul class="projet-tasks">
-            <li>Installation de Zimbra 10 sur environnement Debian (gestion des dépendances)</li>
-            <li>Configuration DNS (MX, SPF, DKIM) pour la délivrabilité des mails</li>
-            <li>Création et gestion des comptes utilisateurs et domaines</li>
-            <li>Résolution de problèmes de compatibilité Zimbra/Debian</li>
-            <li>Tests d'envoi/réception et validation du service</li>
+            <li>Installation Zimbra 10 sur Debian (gestion des dépendances)</li>
+            <li>Configuration DNS (MX, SPF, DKIM)</li>
+            <li>Création et gestion des comptes utilisateurs</li>
+            <li>Résolution de problèmes de compatibilité</li>
           </ul>
-          <div class="projet-techs">
-            <span class="tech-tag">Zimbra 10</span><span class="tech-tag">Debian</span><span class="tech-tag">DNS / MX</span><span class="tech-tag">SMTP / IMAP</span><span class="tech-tag">SSL/TLS</span><span class="tech-tag">Linux</span>
-          </div>
+          <div class="projet-techs"><span class="tech-tag">Zimbra 10</span><span class="tech-tag">Debian</span><span class="tech-tag">DNS / MX</span><span class="tech-tag">SMTP / IMAP</span><span class="tech-tag">SSL/TLS</span><span class="tech-tag">Linux</span></div>
         </div>
       </div>
-
       <div class="projet-row reveal">
         <div class="projet-sidebar">
           <div class="projet-num">04</div>
@@ -649,22 +695,18 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
           <span class="projet-type secu">Sécurité</span>
         </div>
         <div class="projet-body">
-          <div class="projet-title">Incident de sécurité — EcoleDirecte</div>
+          <div class="projet-title">Incident sécurité — EcoleDirecte</div>
           <div class="projet-subtitle">Investigation et analyse de logs de connexion</div>
-          <div class="projet-desc">Suite à une compromission de comptes EcoleDirecte au sein de l'établissement scolaire, investigation approfondie pour identifier l'origine de l'intrusion et les vecteurs d'attaque utilisés.</div>
+          <div class="projet-desc">Suite à une compromission de comptes EcoleDirecte, investigation pour identifier l'origine de l'intrusion et les vecteurs d'attaque utilisés.</div>
           <ul class="projet-tasks">
-            <li>Analyse des journaux de connexion pour identifier les accès suspects</li>
-            <li>Identification d'une adresse IP suspecte et géolocalisation</li>
-            <li>Analyse du comportement : horaires, fréquence, comptes ciblés</li>
-            <li>Rédaction d'un rapport d'incident avec recommandations</li>
-            <li>Mise en place de mesures préventives (MFA, politique de mots de passe)</li>
+            <li>Analyse des journaux de connexion suspects</li>
+            <li>Identification IP suspecte et géolocalisation</li>
+            <li>Rédaction rapport d'incident avec recommandations</li>
+            <li>Mise en place mesures préventives (MFA, politique MDP)</li>
           </ul>
-          <div class="projet-techs">
-            <span class="tech-tag">Analyse de logs</span><span class="tech-tag">OSINT</span><span class="tech-tag">Forensic réseau</span><span class="tech-tag">Rapport d'incident</span><span class="tech-tag">Cybersécurité</span>
-          </div>
+          <div class="projet-techs"><span class="tech-tag">Analyse de logs</span><span class="tech-tag">OSINT</span><span class="tech-tag">Forensic réseau</span><span class="tech-tag">Rapport d'incident</span></div>
         </div>
       </div>
-
       <div class="projet-row reveal">
         <div class="projet-sidebar">
           <div class="projet-num">05</div>
@@ -673,21 +715,17 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         </div>
         <div class="projet-body">
           <div class="projet-title">Portfolio professionnel en ligne</div>
-          <div class="projet-subtitle">Développement web — HTML / CSS / JavaScript</div>
-          <div class="projet-desc">Conception et développement d'un portfolio professionnel pour présenter mon parcours, mes projets et mes compétences. Intégration d'un formulaire de contact fonctionnel via EmailJS et hébergement sur GitHub Pages.</div>
+          <div class="projet-subtitle">HTML / CSS / JavaScript — GitHub Pages</div>
+          <div class="projet-desc">Conception d'un portfolio professionnel pour présenter mon parcours et mes compétences. Formulaire de contact via EmailJS, hébergement GitHub Pages.</div>
           <ul class="projet-tasks">
-            <li>Design UI/UX — palette rouge/blanc/noir, typographie Playfair Display</li>
-            <li>Animations CSS et JavaScript (curseur custom, scroll reveal, marquee)</li>
-            <li>Formulaire de contact avec envoi email via EmailJS (sans backend)</li>
-            <li>Protection du CV par mot de passe côté client</li>
-            <li>Hébergement sur GitHub Pages (domaine gratuit)</li>
+            <li>Design UI/UX — thème terminal/réseau</li>
+            <li>Animations CSS et JavaScript</li>
+            <li>Formulaire de contact EmailJS (sans backend)</li>
+            <li>Hébergement GitHub Pages</li>
           </ul>
-          <div class="projet-techs">
-            <span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">EmailJS</span><span class="tech-tag">GitHub Pages</span>
-          </div>
+          <div class="projet-techs"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span><span class="tech-tag">EmailJS</span><span class="tech-tag">GitHub Pages</span></div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -697,34 +735,33 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">06</div>
-      <div class="section-meta"><div class="section-tag">Expertise</div><div class="section-title">Compétences</div></div>
+      <div class="section-meta"><div class="section-tag">// expertise</div><div class="section-title">Compétences</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="skills-grid reveal">
-      <div class="skill-panel"><div class="skill-panel-title">Systèmes & Virtualisation</div><div class="skill-items"><span class="skill-pill">Windows Server</span><span class="skill-pill">Linux (Debian)</span><span class="skill-pill">Active Directory</span><span class="skill-pill">Hyper-V</span><span class="skill-pill">Proxmox</span><span class="skill-pill">Zabbix</span><span class="skill-pill">GLPI</span><span class="skill-pill">Exchange Server</span></div></div>
-      <div class="skill-panel"><div class="skill-panel-title">Réseau & Sécurité</div><div class="skill-items"><span class="skill-pill">Cisco (switches)</span><span class="skill-pill">pfSense</span><span class="skill-pill">VLAN / DMZ</span><span class="skill-pill">NAT & Filtrage</span><span class="skill-pill">DHCP / DNS</span><span class="skill-pill">Continuité AD</span><span class="skill-pill">VPN</span><span class="skill-pill">Analyse logs</span></div></div>
+      <div class="skill-panel"><div class="skill-panel-title">Systèmes & Virtualisation</div><div class="skill-items"><span class="skill-pill">Windows Server</span><span class="skill-pill">Linux Debian</span><span class="skill-pill">Active Directory</span><span class="skill-pill">Hyper-V</span><span class="skill-pill">Proxmox</span><span class="skill-pill">Zabbix</span><span class="skill-pill">GLPI</span><span class="skill-pill">Exchange Server</span></div></div>
+      <div class="skill-panel"><div class="skill-panel-title">Réseau & Sécurité</div><div class="skill-items"><span class="skill-pill">Cisco switches</span><span class="skill-pill">pfSense</span><span class="skill-pill">VLAN / DMZ</span><span class="skill-pill">NAT & Filtrage</span><span class="skill-pill">DHCP / DNS</span><span class="skill-pill">VPN</span><span class="skill-pill">Analyse logs</span></div></div>
       <div class="skill-panel"><div class="skill-panel-title">Déploiement & Support</div><div class="skill-items"><span class="skill-pill">AD & Exchange</span><span class="skill-pill">Zimbra</span><span class="skill-pill">Diagnostic réseau</span><span class="skill-pill">Dépannage Win</span><span class="skill-pill">Assistance users</span><span class="skill-pill">Ticketing GLPI</span></div></div>
       <div class="skill-panel"><div class="skill-panel-title">Langages & Outils</div><div class="skill-items"><span class="skill-pill">HTML / CSS</span><span class="skill-pill">JavaScript</span><span class="skill-pill">C#</span><span class="skill-pill">SQL</span><span class="skill-pill">GitHub</span><span class="skill-pill">Bash</span></div></div>
-      <div class="skill-panel"><div class="skill-panel-title">Méthodologies</div><div class="skill-items"><span class="skill-pill">ITIL (bases)</span><span class="skill-pill">Documentation technique</span><span class="skill-pill">Schémas réseau</span><span class="skill-pill">Rapport d'incident</span><span class="skill-pill">Gestion de parc</span></div></div>
-      <div class="skill-panel"><div class="skill-panel-title">Certifications</div><div class="skill-items"><span class="skill-pill">CCNA 1 — Cisco</span><span class="skill-pill">PIX — Anglais B2</span><span class="skill-pill">CCNA Security (en cours)</span></div></div>
+      <div class="skill-panel"><div class="skill-panel-title">Méthodologies</div><div class="skill-items"><span class="skill-pill">ITIL bases</span><span class="skill-pill">Documentation tech</span><span class="skill-pill">Schémas réseau</span><span class="skill-pill">Rapport d'incident</span><span class="skill-pill">Gestion de parc</span></div></div>
+      <div class="skill-panel"><div class="skill-panel-title">Certifications</div><div class="skill-items"><span class="skill-pill">CCNA 1 · Cisco</span><span class="skill-pill">PIX · Anglais B2</span><span class="skill-pill">CCNA Security (en cours)</span></div></div>
     </div>
   </div>
 </section>
 
-<!-- 07 — ENTREPRISE & MISSIONS -->
+<!-- 07 — ENTREPRISE -->
 <section class="section" id="entreprise" style="background:var(--black2)">
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">07</div>
-      <div class="section-meta"><div class="section-tag">Alternance</div><div class="section-title">Entreprise & Missions</div></div>
+      <div class="section-meta"><div class="section-tag">// alternance</div><div class="section-title">Entreprise & Missions</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="entreprise-grid reveal">
       <div>
         <div class="entreprise-text">
-          <p><strong>Assomption Bondy</strong> est un établissement scolaire privé situé à Bondy (93), relevant de l'enseignement catholique. L'établissement accueille des élèves du primaire au lycée et dispose d'un parc informatique conséquent nécessitant une gestion IT permanente.</p>
+          <p><strong>Assomption Bondy</strong> est un établissement scolaire privé situé à Bondy (93). L'établissement dispose d'un parc informatique conséquent nécessitant une gestion IT permanente.</p>
           <p>En tant qu'<strong>administrateur réseau en alternance</strong> depuis août 2025, j'assure la gestion complète de l'infrastructure informatique de l'établissement, en autonomie et sous la responsabilité de la direction.</p>
-          <p><strong>Environnement technique :</strong> Infrastructure Windows Server avec Active Directory, réseau Cisco, virtualisation Hyper-V, supervision Zabbix, gestion de parc GLPI, pare-feu pfSense.</p>
         </div>
         <div class="env-grid">
           <div class="env-card"><div class="env-card-title">Systèmes</div><ul class="env-card-list"><li>Windows Server 2019/2022</li><li>Active Directory</li><li>Exchange Server</li><li>Hyper-V</li></ul></div>
@@ -735,11 +772,11 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
       </div>
       <div>
         <div class="missions-list">
-          <div class="mission-item"><div class="mission-icon">🖥️</div><div><div class="mission-title">Support technique N1 & N2</div><div class="mission-desc">Prise en charge des demandes utilisateurs (élèves, enseignants, administration), dépannage de premier et deuxième niveau en totale autonomie.</div></div></div>
-          <div class="mission-item"><div class="mission-icon">🗄️</div><div><div class="mission-title">Gestion du parc informatique</div><div class="mission-desc">Maintenance des postes élèves et enseignants, gestion du câblage, des connexions réseau et des imprimantes. Inventaire via GLPI.</div></div></div>
-          <div class="mission-item"><div class="mission-icon">🪟</div><div><div class="mission-title">Administration Windows</div><div class="mission-desc">Installation, configuration et dépannage de postes Windows. Gestion des utilisateurs et droits dans Active Directory.</div></div></div>
-          <div class="mission-item"><div class="mission-icon">🔧</div><div><div class="mission-title">Infrastructure réseau</div><div class="mission-desc">Configuration des équipements Cisco, gestion des VLANs, maintenance du pare-feu pfSense, vérification de la connectivité.</div></div></div>
-          <div class="mission-item"><div class="mission-icon">📊</div><div><div class="mission-title">Supervision & monitoring</div><div class="mission-desc">Surveillance de l'infrastructure via Zabbix, gestion des alertes, reporting des incidents et suivi de la disponibilité des services.</div></div></div>
+          <div class="mission-item"><div class="mission-icon">🖥️</div><div><div class="mission-title">Support technique N1 & N2</div><div class="mission-desc">Prise en charge des demandes utilisateurs, dépannage de premier et deuxième niveau en autonomie.</div></div></div>
+          <div class="mission-item"><div class="mission-icon">🗄️</div><div><div class="mission-title">Gestion du parc informatique</div><div class="mission-desc">Maintenance des postes, câblage, connexions réseau, imprimantes. Inventaire via GLPI.</div></div></div>
+          <div class="mission-item"><div class="mission-icon">🪟</div><div><div class="mission-title">Administration Windows</div><div class="mission-desc">Installation, configuration et dépannage postes Windows. Gestion utilisateurs et droits AD.</div></div></div>
+          <div class="mission-item"><div class="mission-icon">🔧</div><div><div class="mission-title">Infrastructure réseau</div><div class="mission-desc">Configuration Cisco, gestion VLANs, maintenance pfSense, vérification connectivité.</div></div></div>
+          <div class="mission-item"><div class="mission-icon">📊</div><div><div class="mission-title">Supervision & monitoring</div><div class="mission-desc">Surveillance infrastructure Zabbix, gestion alertes, reporting incidents.</div></div></div>
         </div>
       </div>
     </div>
@@ -751,7 +788,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">07b</div>
-      <div class="section-meta"><div class="section-tag">Parcours pro</div><div class="section-title">Expériences</div></div>
+      <div class="section-meta"><div class="section-tag">// parcours_pro</div><div class="section-title">Expériences</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="exp-list">
@@ -761,10 +798,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
       </div>
       <div class="exp-row reveal">
         <div class="exp-sidebar"><div class="exp-period">Oct. — Nov. 2024<br>7 semaines</div><span class="exp-type stage">Stage</span></div>
-        <div class="exp-body"><div class="exp-role">Technicien Informatique</div><div class="exp-company">TSR Informatique</div><ul class="exp-missions"><li>Installation d'écrans tactiles à l'échelle nationale</li><li>Gestion et configuration des systèmes informatiques d'entreprise</li></ul></div>
+        <div class="exp-body"><div class="exp-role">Technicien Informatique</div><div class="exp-company">TSR Informatique</div><ul class="exp-missions"><li>Installation d'écrans tactiles à l'échelle nationale</li><li>Configuration et dépannage systèmes informatiques</li></ul></div>
       </div>
       <div class="exp-row reveal">
-        <div class="exp-sidebar"><div class="exp-period">2022 — 7 semaines</div><span class="exp-type stage">Stage</span></div>
+        <div class="exp-sidebar"><div class="exp-period">2022 · 7 semaines</div><span class="exp-type stage">Stage</span></div>
         <div class="exp-body"><div class="exp-role">Technicien Informatique</div><div class="exp-company">Auchan — Sarcelles, France</div><ul class="exp-missions"><li>Contrôle des stocks via logiciel de gestion</li><li>Assistance technique aux équipes</li></ul></div>
       </div>
     </div>
@@ -776,20 +813,22 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
   <div class="section-inner">
     <div class="section-label reveal">
       <div class="section-num">08</div>
-      <div class="section-meta"><div class="section-tag">Téléchargements</div><div class="section-title">Documents</div></div>
+      <div class="section-meta"><div class="section-tag">// téléchargements</div><div class="section-title">Documents</div></div>
       <div class="section-divider"></div>
     </div>
     <div class="docs-grid reveal">
-      <button class="doc-card" onclick="openPdfModal('cv')">
-        <div class="doc-icon">📄</div>
+      <!-- CV : accès direct, pas de mot de passe -->
+      <button class="doc-card" onclick="openCvDirect()">
+        <div class="doc-icon-wrap">📄</div>
         <div>
           <div class="doc-name">Curriculum Vitae</div>
           <div class="doc-desc">CV complet — BTS SIO SISR, expériences professionnelles, compétences et certifications.</div>
-          <div class="doc-action">Lire / Télécharger</div>
+          <div class="doc-free-badge">⬇ Accès libre</div>
+          <div class="doc-action">Télécharger</div>
         </div>
       </button>
       <button class="doc-card" onclick="openPdfModal('tableau')">
-        <div class="doc-icon">📊</div>
+        <div class="doc-icon-wrap">📊</div>
         <div>
           <div class="doc-name">Tableau de synthèse</div>
           <div class="doc-desc">Tableau de synthèse des compétences du BTS SIO SISR — récapitulatif des activités et réalisations.</div>
@@ -797,10 +836,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
         </div>
       </button>
       <button class="doc-card" onclick="openPdfModal('infra')">
-        <div class="doc-icon">🖧</div>
+        <div class="doc-icon-wrap">🖧</div>
         <div>
           <div class="doc-name">Documentation Infra</div>
-          <div class="doc-desc">Documentation technique complète — Infrastructure virtualisée BTS SIO SISR (pfSense, AD, Zabbix, Exchange, GLPI). 13 pages.</div>
+          <div class="doc-desc">Documentation technique — Infrastructure virtualisée BTS SIO SISR (pfSense, AD, Zabbix, Exchange, GLPI). 13 pages.</div>
           <div class="doc-action">Lire / Télécharger</div>
         </div>
       </button>
@@ -812,75 +851,174 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2.2rem
 <div class="contact-section" id="contact">
   <div class="contact-wrapper">
     <div class="contact-panel-left">
-      <div class="contact-label-tag">Contact</div>
+      <div class="contact-label-tag">// contact.init()</div>
       <div class="contact-big">Cherche<br>une alternance<br>Sept. 2026</div>
       <p class="contact-sub">Bachelor SR · Paris / Île-de-France<br>Rigoureux, autonome et passionné par les infrastructures IT.</p>
       <div class="contact-info-list">
-        <div class="contact-info-item"><div class="cii-icon">📞</div><div><div class="cii-label">Téléphone</div><div class="cii-val">07 67 95 78 83</div></div></div>
-        <div class="contact-info-item"><div class="cii-icon">✉</div><div><div class="cii-label">Email</div><div class="cii-val">nlakhledj@gmail.com</div></div></div>
-        <div class="contact-info-item"><div class="cii-icon">📍</div><div><div class="cii-label">Localisation</div><div class="cii-val">Val d'Oise, Île-de-France</div></div></div>
+        <div class="contact-info-item"><div class="cii-icon">📞</div><div><div class="cii-label">téléphone</div><div class="cii-val">07 67 95 78 83</div></div></div>
+        <div class="contact-info-item"><div class="cii-icon">✉</div><div><div class="cii-label">email</div><div class="cii-val">nlakhledj@gmail.com</div></div></div>
+        <div class="contact-info-item"><div class="cii-icon">📍</div><div><div class="cii-label">localisation</div><div class="cii-val">Val d'Oise, Île-de-France</div></div></div>
       </div>
     </div>
     <div class="contact-panel-right">
       <div class="form-header">
         <div class="form-header-title">Envoyer un message</div>
-        <div class="form-header-sub">Je réponds généralement sous 24h.</div>
+        <div class="form-header-sub">// Je réponds généralement sous 24h.</div>
       </div>
-      <div class="setup-notice" id="setupNotice"><strong>⚙ Configuration EmailJS requise</strong><br>Remplace dans le code : <code>TON_PUBLIC_KEY</code> · <code>TON_SERVICE_ID</code> · <code>TON_TEMPLATE_ID</code></div>
       <div id="contactForm" class="contact-form">
         <div class="form-duo">
-          <div class="form-field"><label class="field-label" for="from_name">Nom complet *</label><input class="field-input" type="text" id="from_name" placeholder="Jean Dupont" required><div class="field-bar"></div></div>
-          <div class="form-field"><label class="field-label" for="from_email">Email *</label><input class="field-input" type="email" id="from_email" placeholder="jean@entreprise.fr" required><div class="field-bar"></div></div>
+          <div class="form-field"><label class="field-label" for="from_name">nom_complet *</label><input class="field-input" type="text" id="from_name" placeholder="Jean Dupont" required><div class="field-bar"></div></div>
+          <div class="form-field"><label class="field-label" for="from_email">email *</label><input class="field-input" type="email" id="from_email" placeholder="jean@entreprise.fr" required><div class="field-bar"></div></div>
         </div>
         <div class="form-duo">
-          <div class="form-field"><label class="field-label" for="company">Entreprise</label><input class="field-input" type="text" id="company" placeholder="Nom de l'entreprise"><div class="field-bar"></div></div>
-          <div class="form-field"><label class="field-label" for="subject">Objet *</label><input class="field-input" type="text" id="subject" placeholder="Proposition d'alternance" required><div class="field-bar"></div></div>
+          <div class="form-field"><label class="field-label" for="company">entreprise</label><input class="field-input" type="text" id="company" placeholder="Nom de l'entreprise"><div class="field-bar"></div></div>
+          <div class="form-field"><label class="field-label" for="subject">objet *</label><input class="field-input" type="text" id="subject" placeholder="Proposition d'alternance" required><div class="field-bar"></div></div>
         </div>
-        <div class="form-field"><label class="field-label" for="message">Message *</label><textarea class="field-textarea" id="message" placeholder="Décrivez votre proposition…" required></textarea><div class="field-bar"></div></div>
+        <div class="form-field"><label class="field-label" for="message">message *</label><textarea class="field-textarea" id="message" placeholder="Décrivez votre proposition…" required></textarea><div class="field-bar"></div></div>
       </div>
       <div class="form-submit-row">
         <button type="button" class="btn-submit" id="submitBtn" onclick="sendEmail()">
-          <div class="btn-submit-inner"><span>Envoyer le message</span><div class="btn-submit-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div></div>
+          <span>Envoyer le message →</span>
         </button>
       </div>
-      <div class="form-hint">* Champs obligatoires. Tes données ne sont pas partagées.</div>
+      <div class="form-hint">* Champs obligatoires.</div>
       <div class="form-status" id="formStatus"></div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div class="footer-logo">Nael <em>Lakhledj</em></div>
-  <div class="footer-copy">© 2026 — BTS SIO SISR — Val d'Oise, Île-de-France</div>
+  <div class="footer-logo"><span class="prompt">~/</span><em>nael-lakhledj</em></div>
+  <div class="footer-copy">© 2026 · BTS SIO SISR · Val d'Oise</div>
+  <div class="footer-links">
+    <a href="https://naaelhh.github.io" target="_blank">portfolio</a>
+    <a href="mailto:nlakhledj@gmail.com">email</a>
+  </div>
 </footer>
 
-<!-- MODAL CV -->
-<div class="cv-modal-overlay" id="cvModal" onclick="closeCvModalOutside(event)">
-  <div class="cv-modal">
-    <button class="cv-modal-close" onclick="closeCvModal()">✕</button>
-    <div class="cv-modal-title" id="cvModalTitle">Accéder au document</div>
-    <div class="cv-modal-sub">Document protégé. Entre le mot de passe pour télécharger.</div>
-    <div id="cvModalHint" style="font-size:.68rem;color:var(--grey);margin-bottom:1.2rem;font-style:italic;"></div>
-    <input class="cv-modal-input" type="password" id="cvPassword" placeholder="Mot de passe" onkeydown="if(event.key==='Enter') checkCvPassword()" autocomplete="off">
-    <div class="cv-modal-error" id="cvError">❌ Mot de passe incorrect.</div>
-    <button class="cv-modal-btn" onclick="checkCvPassword()"><span>Télécharger →</span></button>
+<!-- PDF MODAL (avec mdp pour tableau et infra, sans pour CV) -->
+<style>
+.pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);padding:1rem}
+.pdf-modal-overlay.open{display:flex}
+.pdf-pwd-box{background:var(--black2);border:1px solid var(--border);padding:2.5rem;width:100%;max-width:400px;position:relative;animation:modalIn .3s cubic-bezier(.4,0,.2,1)}
+.pdf-pwd-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan))}
+.pdf-pwd-title{font-family:var(--mono);font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+.pdf-pwd-sub{font-family:var(--mono);font-size:.62rem;color:var(--grey);margin-bottom:1.8rem;line-height:1.6}
+.pdf-pwd-input{width:100%;background:var(--black3);border:1px solid var(--border);padding:.8rem 1rem;font-family:var(--mono);font-size:.85rem;color:var(--white);outline:none;margin-bottom:.7rem;transition:border-color .25s;letter-spacing:.15em}
+.pdf-pwd-input:focus{border-color:var(--red)}
+.pdf-pwd-btn{width:100%;background:var(--red);color:var(--white);border:none;padding:.85rem;cursor:none;font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;transition:opacity .2s}
+.pdf-pwd-btn:hover{opacity:.85}
+.pdf-pwd-err{font-family:var(--mono);font-size:.65rem;color:#ff6b6b;margin-top:.5rem;display:none}
+.pdf-pwd-err.show{display:block}
+.pdf-viewer-box{background:var(--black2);width:100%;max-width:1000px;height:90vh;display:flex;flex-direction:column;border:1px solid var(--border);animation:modalIn .3s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative}
+.pdf-viewer-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan),transparent)}
+.pdf-viewer-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--black3);flex-shrink:0}
+.pdf-viewer-title{font-family:var(--mono);font-size:.75rem;color:var(--white)}
+.pdf-viewer-title em{color:var(--red);font-style:normal}
+.pdf-viewer-actions{display:flex;gap:.6rem;align-items:center}
+.pdf-action-btn{background:transparent;border:1px solid var(--border);color:var(--grey-light);padding:.4rem .9rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
+.pdf-action-btn:hover{border-color:var(--red);color:var(--white)}
+.pdf-action-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
+.pdf-close-btn{background:transparent;border:none;color:var(--grey);font-family:var(--mono);font-size:1rem;cursor:none;padding:.3rem .6rem;transition:color .2s}
+.pdf-close-btn:hover{color:var(--white)}
+.pdf-viewer-embed{flex:1;position:relative;background:#111}
+.pdf-viewer-embed iframe{width:100%;height:100%;border:none;display:block}
+.pdf-viewer-footer{padding:.6rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--black3);flex-shrink:0}
+.pdf-viewer-footer-txt{font-family:var(--mono);font-size:.55rem;color:var(--grey)}
+.pdf-viewer-footer-badge{font-family:var(--mono);font-size:.52rem;padding:.18rem .6rem;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);color:var(--green)}
+</style>
+
+<div class="pdf-modal-overlay" id="pdfModal" onclick="closePdfModalOutside(event)">
+  <div class="pdf-pwd-box" id="pdfPwdBox">
+    <div class="pdf-pwd-title" id="pdfPwdTitle">Document protégé</div>
+    <div class="pdf-pwd-sub">// Entrer le mot de passe pour accéder.</div>
+    <input class="pdf-pwd-input" type="password" id="pdfPassword" placeholder="mot_de_passe" onkeydown="if(event.key==='Enter') checkPdfPassword()" autocomplete="off">
+    <div class="pdf-pwd-err" id="pdfError">// ERR: mot de passe incorrect</div>
+    <button class="pdf-pwd-btn" onclick="checkPdfPassword()">ACCESS →</button>
+  </div>
+  <div class="pdf-viewer-box" id="pdfViewerBox" style="display:none">
+    <div class="pdf-viewer-header">
+      <div class="pdf-viewer-title" id="pdfViewerTitle">Document</div>
+      <div class="pdf-viewer-actions">
+        <button class="pdf-action-btn" onclick="downloadCurrentDoc()">
+          <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
+          Télécharger
+        </button>
+        <button class="pdf-close-btn" onclick="closePdfModal()">✕</button>
+      </div>
+    </div>
+    <div class="pdf-viewer-embed">
+      <iframe id="pdfFrame" src="" title="Document"></iframe>
+    </div>
+    <div class="pdf-viewer-footer">
+      <div class="pdf-viewer-footer-txt" id="pdfFooterTxt">Nael Lakhledj · BTS SIO SISR · 2026</div>
+      <div class="pdf-viewer-footer-badge">CONFIDENTIEL</div>
+    </div>
   </div>
 </div>
 
-<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 const EMAILJS_PUBLIC_KEY  = 'HqGA1OUz4uPioUudF';
 const EMAILJS_SERVICE_ID  = 'service_9f11m0g';
 const EMAILJS_TEMPLATE_ID = 'template_k9w35pc';
-const CV_PASSWORD = '75Support95!';
-var cvTarget = 'CV_Nael_Lakhledj.pdf';
-var cvPwd    = '75Support95!';
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-const isConfigured = EMAILJS_PUBLIC_KEY !== 'TON_PUBLIC_KEY';
-if (!isConfigured) document.getElementById('setupNotice').style.display = 'block';
-else emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+// CV : accès direct sans mot de passe
+function openCvDirect() {
+  var a = document.createElement('a');
+  a.href = 'cv-nael-alternance.pdf';
+  a.download = 'cv-nael-alternance.pdf';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
 
+const PDF_DOCS = {
+  'tableau': { file: 'tbl.pdf', title: 'Tableau de <em>Synthèse</em>', pwd: '75Support95!?', label: 'Tableau de Synthèse · Nael Lakhledj · 2026' },
+  'infra':   { file: 'doc_ctx_lprs.pdf', title: 'Documentation <em>Infrastructure</em>', pwd: '75Support95!&', label: 'Documentation Technique · Nael Lakhledj · 2026' },
+};
+var currentPdfDoc = null;
+
+function openPdfModal(type) {
+  currentPdfDoc = PDF_DOCS[type];
+  if (!currentPdfDoc) return;
+  document.getElementById('pdfModal').classList.add('open');
+  document.getElementById('pdfPwdBox').style.display = 'block';
+  document.getElementById('pdfViewerBox').style.display = 'none';
+  document.getElementById('pdfFrame').src = '';
+  document.getElementById('pdfPwdTitle').innerHTML = '// ' + currentPdfDoc.title.replace(/<em>|<\/em>/g,'');
+  setTimeout(function(){ document.getElementById('pdfPassword').focus(); }, 200);
+}
+function closePdfModal() {
+  document.getElementById('pdfModal').classList.remove('open');
+  document.getElementById('pdfPassword').value = '';
+  document.getElementById('pdfError').classList.remove('show');
+  document.getElementById('pdfFrame').src = '';
+}
+function closePdfModalOutside(e) { if(e.target===document.getElementById('pdfModal')) closePdfModal(); }
+function checkPdfPassword() {
+  var pwd = document.getElementById('pdfPassword').value;
+  if (pwd === currentPdfDoc.pwd) {
+    document.getElementById('pdfPwdBox').style.display = 'none';
+    document.getElementById('pdfViewerBox').style.display = 'flex';
+    document.getElementById('pdfViewerBox').style.flexDirection = 'column';
+    document.getElementById('pdfViewerTitle').innerHTML = currentPdfDoc.title;
+    document.getElementById('pdfFooterTxt').textContent = currentPdfDoc.label;
+    document.getElementById('pdfFrame').src = currentPdfDoc.file + '#toolbar=0&navpanes=0';
+  } else {
+    document.getElementById('pdfError').classList.add('show');
+    document.getElementById('pdfPassword').value = '';
+    document.getElementById('pdfPassword').focus();
+    setTimeout(function(){ document.getElementById('pdfError').classList.remove('show'); }, 3000);
+  }
+}
+function downloadCurrentDoc() {
+  var a = document.createElement('a');
+  a.href = currentPdfDoc.file; a.download = currentPdfDoc.file;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePdfModal(); });
+
+// EmailJS
 function sendEmail() {
   var name=document.getElementById('from_name').value.trim();
   var email=document.getElementById('from_email').value.trim();
@@ -888,20 +1026,19 @@ function sendEmail() {
   var subject=document.getElementById('subject').value.trim();
   var message=document.getElementById('message').value.trim();
   var btn=document.getElementById('submitBtn');
-  if(!name||!email||!subject||!message){showStatus('error','⚠ Merci de remplir tous les champs obligatoires.');return;}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showStatus('error','⚠ Adresse email invalide.');return;}
-  if(!isConfigured){showStatus('error','⚙ EmailJS non configuré.');return;}
+  if(!name||!email||!subject||!message){showStatus('error','// ERR: champs obligatoires manquants');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showStatus('error','// ERR: adresse email invalide');return;}
   btn.disabled=true;
   btn.querySelector('span').textContent='Envoi en cours…';
   emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{from_name:name,from_email:email,company:company||'Non renseigné',subject:subject,message:message,to_email:'nlakhledj@gmail.com'})
   .then(function(){
-    showStatus('success','✓ Message envoyé ! Je te répondrai rapidement.');
+    showStatus('success','// OK: message envoyé avec succès');
     document.querySelectorAll('#contactForm input,#contactForm textarea').forEach(function(el){el.value='';});
-    btn.querySelector('span').textContent='Envoyer le message';
+    btn.querySelector('span').textContent='Envoyer le message →';
     btn.disabled=false;
   }).catch(function(){
-    showStatus('error','✗ Erreur lors de l\'envoi. Contacte-moi directement par email.');
-    btn.querySelector('span').textContent='Envoyer le message';
+    showStatus('error','// ERR: envoi échoué — contactez directement par email');
+    btn.querySelector('span').textContent='Envoyer le message →';
     btn.disabled=false;
   });
 }
@@ -912,45 +1049,6 @@ function showStatus(type,msg){
   if(type==='success')setTimeout(function(){el.className='form-status';},6000);
 }
 
-function openCvModal(type) {
-  var docs = {
-    'cv':      { file: 'cv-nael-alternance.pdf', title: 'Accéder au CV',                    pwd: '75Support95!'  },
-    'tableau': { file: 'tbl.pdf',                title: 'Accéder au tableau de synthèse',   pwd: '75Support95!?'  },
-    'infra':   { file: 'doc_ctx_lprs.pdf',       title: 'Accéder à la documentation infra', pwd: '75Support95!&' },
-};
-  var key = type || 'cv';
-  var doc = docs[key];
-  cvTarget  = doc.file;
-  cvPwd     = doc.pwd;
-  document.getElementById('cvModalTitle').textContent = doc.title;
-  document.getElementById('cvModalHint').textContent  =
-    key === 'infra' ? 'Mot de passe : fourni par Nael' : 'Mot de passe : fourni par Nael';
-  document.getElementById('cvModal').classList.add('open');
-  setTimeout(function(){document.getElementById('cvPassword').focus();},200);
-}
-function closeCvModal(){
-  document.getElementById('cvModal').classList.remove('open');
-  document.getElementById('cvPassword').value='';
-  document.getElementById('cvError').classList.remove('show');
-}
-function closeCvModalOutside(e){if(e.target===document.getElementById('cvModal'))closeCvModal();}
-function checkCvPassword(){
-  var pwd=document.getElementById('cvPassword').value;
-  if(pwd===cvPwd){
-    closeCvModal();
-    var a=document.createElement('a');a.href=cvTarget;a.download=cvTarget;
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-  } else {
-    document.getElementById('cvError').classList.add('show');
-    document.getElementById('cvPassword').value='';
-    document.getElementById('cvPassword').focus();
-    setTimeout(function(){document.getElementById('cvError').classList.remove('show');},3000);
-  }
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCvModal();});
-</script>
-
-<script>
 // Scroll reveal
 document.querySelectorAll('.reveal').forEach(function(el){
   new IntersectionObserver(function(entries,obs){
@@ -959,218 +1057,17 @@ document.querySelectorAll('.reveal').forEach(function(el){
     });
   },{threshold:.07}).observe(el);
 });
-</script>
 
-<script>
-// Curseur custom
+// Curseur
 var cur=document.getElementById('cursor');
 var ring=document.getElementById('cursor-ring');
 var mx=-50,my=-50,rx=-50,ry=-50;
 window.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-card,.veille-card,.doc-card,.formation-card').forEach(function(el){
-  el.addEventListener('mouseenter',function(){cur.style.width='18px';cur.style.height='18px';ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(232,25,44,1)';});
-  el.addEventListener('mouseleave',function(){cur.style.width='10px';cur.style.height='10px';ring.style.width='36px';ring.style.height='36px';ring.style.borderColor='rgba(232,25,44,.6)';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.skill-pill,.exp-row,.projet-row,.certif-card,.veille-card,.doc-card').forEach(function(el){
+  el.addEventListener('mouseenter',function(){cur.style.width='16px';cur.style.height='16px';ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(232,25,44,1)';});
+  el.addEventListener('mouseleave',function(){cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(232,25,44,.5)';});
 });
 </script>
-
-<!-- MODAL PDF VIEWER -->
-<style>
-.pdf-modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9100;
-  display:none;align-items:center;justify-content:center;
-  backdrop-filter:blur(8px);padding:1rem;
-}
-.pdf-modal-overlay.open{display:flex;}
-
-/* Écran mot de passe */
-.pdf-pwd-box{
-  background:var(--black2);border:1px solid var(--border);
-  padding:3rem;width:100%;max-width:420px;position:relative;
-  animation:modalIn .3s cubic-bezier(.4,0,.2,1);
-}
-.pdf-pwd-box::before{content:'';position:absolute;top:0;left:0;right:0;
-  height:2px;background:linear-gradient(90deg,var(--red),transparent)}
-.pdf-pwd-title{font-family:'Playfair Display',serif;font-size:1.4rem;
-  font-weight:700;color:var(--white);margin-bottom:.3rem}
-.pdf-pwd-sub{font-size:.72rem;color:var(--grey);margin-bottom:1.8rem;line-height:1.6}
-.pdf-pwd-input{width:100%;background:var(--black3);border:1px solid var(--border);
-  padding:.85rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;
-  color:var(--white);outline:none;margin-bottom:.7rem;
-  transition:border-color .25s;letter-spacing:.2em}
-.pdf-pwd-input:focus{border-color:var(--red)}
-.pdf-pwd-input::placeholder{color:var(--grey);letter-spacing:.05em}
-.pdf-pwd-btn{width:100%;background:var(--red);color:var(--white);border:none;
-  padding:.9rem;cursor:none;font-family:'DM Sans',sans-serif;font-size:.7rem;
-  font-weight:500;letter-spacing:.18em;text-transform:uppercase;
-  position:relative;overflow:hidden;transition:color .3s}
-.pdf-pwd-btn::before{content:'';position:absolute;inset:0;background:#fff;
-  transform:scaleX(0);transform-origin:left;
-  transition:transform .35s cubic-bezier(.4,0,.2,1)}
-.pdf-pwd-btn:hover::before{transform:scaleX(1)}
-.pdf-pwd-btn:hover{color:var(--red)}
-.pdf-pwd-btn span{position:relative;z-index:1}
-.pdf-pwd-err{font-size:.7rem;color:#ff6b6b;margin-top:.5rem;
-  display:none;padding-left:.2rem}
-.pdf-pwd-err.show{display:block}
-
-/* Visionneuse PDF */
-.pdf-viewer-box{
-  background:var(--black2);width:100%;max-width:1000px;
-  height:90vh;display:flex;flex-direction:column;
-  border:1px solid var(--border);
-  animation:modalIn .3s cubic-bezier(.4,0,.2,1);
-  overflow:hidden;
-}
-.pdf-viewer-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:1rem 1.5rem;border-bottom:1px solid var(--border);
-  background:var(--black3);flex-shrink:0;
-}
-.pdf-viewer-title{font-family:'Playfair Display',serif;font-size:1rem;
-  font-weight:700;color:var(--white)}
-.pdf-viewer-title span{color:var(--red);font-style:normal}
-.pdf-viewer-actions{display:flex;gap:.6rem;align-items:center}
-.pdf-action-btn{
-  background:transparent;border:1px solid var(--border);color:var(--grey-light);
-  padding:.4rem .9rem;font-family:'DM Sans',sans-serif;font-size:.65rem;
-  font-weight:500;letter-spacing:.1em;text-transform:uppercase;cursor:none;
-  transition:all .2s;display:inline-flex;align-items:center;gap:.4rem;
-}
-.pdf-action-btn:hover{border-color:var(--red);color:var(--white);background:var(--red-glow)}
-.pdf-action-btn svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
-.pdf-close-btn{
-  background:transparent;border:none;color:var(--grey);font-size:1.2rem;
-  cursor:none;padding:.3rem .6rem;transition:color .2s;
-}
-.pdf-close-btn:hover{color:var(--white)}
-.pdf-viewer-embed{flex:1;position:relative;background:#1c1c1c}
-.pdf-viewer-embed iframe{
-  width:100%;height:100%;border:none;display:block;
-}
-.pdf-viewer-footer{
-  padding:.7rem 1.5rem;border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--black3);flex-shrink:0;
-}
-.pdf-viewer-footer-txt{font-size:.62rem;color:var(--grey);letter-spacing:.08em}
-.pdf-viewer-footer-badge{
-  font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;
-  padding:.2rem .6rem;background:var(--red-glow);
-  border:1px solid rgba(232,25,44,.3);color:var(--red);
-}
-</style>
-
-<div class="pdf-modal-overlay" id="pdfModal" onclick="closePdfModalOutside(event)">
-
-  <!-- ÉTAPE 1 : Mot de passe -->
-  <div class="pdf-pwd-box" id="pdfPwdBox">
-    <div class="pdf-pwd-title" id="pdfPwdTitle">Documentation Infra</div>
-    <div class="pdf-pwd-sub">Ce document est protégé.<br>Entre le mot de passe pour l'afficher.</div>
-    <input class="pdf-pwd-input" type="password" id="pdfPassword"
-      placeholder="Mot de passe"
-      onkeydown="if(event.key==='Enter') checkPdfPassword()"
-      autocomplete="off">
-    <div class="pdf-pwd-err" id="pdfError">❌ Mot de passe incorrect.</div>
-    <button class="pdf-pwd-btn" onclick="checkPdfPassword()"><span>Accéder au document →</span></button>
-  </div>
-
-  <!-- ÉTAPE 2 : Visionneuse -->
-  <div class="pdf-viewer-box" id="pdfViewerBox" style="display:none">
-    <div class="pdf-viewer-header">
-      <div class="pdf-viewer-title" id="pdfViewerTitle">Documentation <em>Infrastructure Virtualisée</em></div>
-      <div class="pdf-viewer-actions">
-        <button class="pdf-action-btn" onclick="downloadCurrentDoc()">
-          <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-          Télécharger
-        </button>
-        <button class="pdf-close-btn" onclick="closePdfModal()">✕</button>
-      </div>
-    </div>
-    <div class="pdf-viewer-embed">
-      <iframe id="pdfFrame" src="" title="Documentation Infrastructure"></iframe>
-    </div>
-    <div class="pdf-viewer-footer">
-      <div class="pdf-viewer-footer-txt id="pdfFooterTxt">Documentation Technique — BTS SIO SISR · Nael Lakhledj · 2026</div>
-      <div class="pdf-viewer-footer-badge">🔒 Confidentiel</div>
-    </div>
-  </div>
-
-</div>
-
-<script>
-const PDF_DOCS = {
-  'cv': {
-    file:  'cv-nael-alternance.pdf',
-    title: 'Curriculum <em>Vitae</em>',
-    pwd:   '75Support95!',
-    label: 'CV — Nael Lakhledj · BTS SIO SISR · 2026',
-  },
-  'tableau': {
-    file:  'tbl.pdf',
-    title: 'Tableau de <em>Synthèse</em>',
-    pwd:   '75Support95!?',
-    label: 'Tableau de Synthèse — BTS SIO SISR · Nael Lakhledj · 2026',
-  },
-  'infra': {
-    file:  'doc_ctx_lprs.pdf',
-    title: 'Documentation <em>Infrastructure Virtualisée</em>',
-    pwd:   '75Support95!&',
-    label: 'Documentation Technique — BTS SIO SISR · Nael Lakhledj · 2026',
-  },
-};
-
-var currentPdfDoc = null;
-
-function openPdfModal(type) {
-  currentPdfDoc = PDF_DOCS[type] || PDF_DOCS['cv'];
-  document.getElementById('pdfModal').classList.add('open');
-  document.getElementById('pdfPwdBox').style.display    = 'block';
-  document.getElementById('pdfViewerBox').style.display = 'none';
-  document.getElementById('pdfFrame').src = '';
-  document.getElementById('pdfPwdTitle').textContent = currentPdfDoc.title.replace(/<em>|<\/em>/g, '');
-  document.getElementById('pdfFooterTxt').textContent = currentPdfDoc.label;
-  setTimeout(function(){ document.getElementById('pdfPassword').focus(); }, 200);
-}
-
-function closePdfModal() {
-  document.getElementById('pdfModal').classList.remove('open');
-  document.getElementById('pdfPassword').value = '';
-  document.getElementById('pdfError').classList.remove('show');
-  document.getElementById('pdfFrame').src = '';
-}
-
-function closePdfModalOutside(e) {
-  if (e.target === document.getElementById('pdfModal')) closePdfModal();
-}
-
-function checkPdfPassword() {
-  var pwd = document.getElementById('pdfPassword').value;
-  if (pwd === currentPdfDoc.pwd) {
-    document.getElementById('pdfPwdBox').style.display    = 'none';
-    document.getElementById('pdfViewerBox').style.display = 'flex';
-    document.getElementById('pdfViewerBox').style.flexDirection = 'column';
-    document.getElementById('pdfViewerTitle').innerHTML  = currentPdfDoc.title;
-    document.getElementById('pdfFrame').src = currentPdfDoc.file + '#toolbar=0&navpanes=0';
-  } else {
-    document.getElementById('pdfError').classList.add('show');
-    document.getElementById('pdfPassword').value = '';
-    document.getElementById('pdfPassword').focus();
-    setTimeout(function(){ document.getElementById('pdfError').classList.remove('show'); }, 3000);
-  }
-}
-
-function downloadCurrentDoc() {
-  var a = document.createElement('a');
-  a.href = currentPdfDoc.file;
-  a.download = currentPdfDoc.file;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') { closeCvModal(); closePdfModal(); }
-});
-</script>
-
 </body>
 </html>
