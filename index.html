@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nael Lakhledj — Portfolio Systèmes, Réseaux & Développement web</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --black: #080808;
@@ -402,6 +402,103 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
 
 #freelance .certif-grid{grid-template-columns:repeat(2,1fr)}
 @media(max-width:768px){#freelance .certif-grid{grid-template-columns:1fr}}
+
+/* ===== THEME « CÂBLE RÉSEAU » (oct. 2026) ===== */
+:root{
+  --black:#F3F5FA; --black2:#E8ECF6; --black3:#FFFFFF;
+  --white:#10162F; --off-white:#2A3150; --grey:#5B6480; --grey-light:#3D4566;
+  --red:#2747FF; --red-glow:rgba(39,71,255,.12); --red-dim:rgba(39,71,255,.06);
+  --border:rgba(16,22,47,.12); --border-red:rgba(39,71,255,.35);
+  --green:#12B76A; --cyan:#FF6A13; --orange:#FF6A13; --brown:#8A5A3B; --ink:#10162F;
+  --cable:linear-gradient(90deg,#FF6A13 0 25%,#12B76A 25% 50%,#2747FF 50% 75%,#8A5A3B 75% 100%);
+  --display:'Bricolage Grotesque',system-ui,sans-serif;
+}
+body{font-family:var(--display);font-weight:400;cursor:auto;color:var(--off-white)}
+body::before,.scanline-sweep,#cursor,#cursor-ring,.hero-bg-text{display:none!important}
+a,button,.skill-pill,.doc-card,.btn-red,.btn-ghost,.btn-cv,.btn-submit,.pdf-close-btn{cursor:pointer!important}
+:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+::selection{background:#FFD8C2;color:var(--ink)}
+/* titres */
+.hero-name,.stat-val,.section-title,.parcours-degree,.certif-name,.veille-card-title,.projet-title,.doc-name,.exp-role,.contact-big,.form-header-title{font-family:var(--display);letter-spacing:-.03em}
+.hero-name{font-weight:800;font-size:clamp(3.4rem,7vw,7.2rem);line-height:.88}
+.hero-name .last{color:var(--red);-webkit-text-stroke:0;position:relative;padding-bottom:.18em}
+.hero-name .last::after{content:'';position:absolute;left:0;bottom:0;width:min(100%,9.5ch);height:10px;border-radius:6px;background:var(--cable)}
+.section-title{font-size:clamp(2rem,3.4vw,2.8rem);font-weight:800}
+.section-num{-webkit-text-stroke:0;color:var(--red);opacity:.18;font-family:var(--display);font-weight:800}
+.section-divider{height:6px;border-radius:4px;background:var(--cable);opacity:.9;border:0}
+/* nav */
+nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
+.nav-logo .name{color:var(--ink)}
+.nav-links a{font-family:var(--display);font-size:.85rem;letter-spacing:0;color:var(--grey-light);font-weight:500}
+.nav-links a::before{display:none}
+.nav-links a:hover{color:var(--red)}
+.status-indicator{font-family:var(--display);font-size:.8rem;color:var(--ink);background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:.35rem .8rem;font-weight:600}
+/* hero */
+.hero-terminal{background:var(--ink);border:0;border-radius:14px;box-shadow:6px 6px 0 var(--orange);color:#E8ECF6}
+.hero-terminal .output{color:#7CF0B5}.hero-terminal .cmd{color:#fff}.hero-terminal .comment{color:#8B93B3}.hero-terminal .val{color:#FFB37E}
+.hero-title{font-family:var(--display);font-size:1.15rem;color:var(--ink);font-weight:600;letter-spacing:0}
+.hero-desc{font-size:1.05rem;line-height:1.7;color:var(--off-white)}
+.hero-card{background:#fff;border:1.5px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--red)}
+.hero-card::before{background:var(--cable)!important;height:6px}
+.stat-cell{border-color:var(--border)!important}
+.stat-val{color:var(--ink)}.stat-val em{color:var(--orange)}
+.hero-card-footer{background:var(--black2);border-radius:10px}
+.hero-card-footer-badge{background:var(--red);color:#fff;border:0;border-radius:999px}
+.ip-badge{background:#fff;border:1.5px solid var(--border);border-radius:999px}
+/* boutons */
+.btn-red,.btn-submit{background:var(--orange);color:#fff;font-family:var(--display);font-size:.95rem;font-weight:700;letter-spacing:0;text-transform:none;border-radius:999px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn-red::before,.btn-submit::before{display:none}
+.btn-red:hover,.btn-submit:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn-red span{color:#fff}
+.btn-ghost{font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:.8rem 1.6rem;background:#fff}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-cv{font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;border:2px solid var(--green);color:#0B7A47;border-radius:999px;background:#E6F8EF}
+/* marquee */
+.marquee-wrap{background:var(--ink);border:0}
+.marquee-item{color:#E8ECF6;font-family:var(--display);font-weight:600}
+.marquee-dot{color:var(--orange)}
+/* cartes & blocs */
+.about-info-card,.certif-card,.veille-card,.doc-card,.parcours-item,.exp-row,.projet-row{background:#fff}
+.about-info-card{border:1.5px solid var(--border);border-radius:12px}
+.aic-label,.section-tag,.projet-period,.exp-period,.parcours-year,.certif-org{font-family:var(--display);letter-spacing:0;text-transform:none;font-weight:600}
+.section-tag{color:var(--orange)}
+.certif-grid{gap:18px!important;background:transparent!important;border:0!important}
+.certif-card{border:1.5px solid var(--ink);border-radius:16px;box-shadow:5px 5px 0 var(--ink)}
+.certif-card:nth-child(4n+1){box-shadow:5px 5px 0 var(--orange)}
+.certif-card:nth-child(4n+2){box-shadow:5px 5px 0 var(--green)}
+.certif-card:nth-child(4n+3){box-shadow:5px 5px 0 var(--red)}
+.certif-card:nth-child(4n+4){box-shadow:5px 5px 0 var(--brown)}
+.certif-org{color:var(--red)}
+.certif-icon{border-radius:12px;border-color:var(--border)}
+.projet-row{border:1.5px solid var(--border);border-radius:18px;margin-bottom:22px;overflow:hidden}
+.projet-num{color:var(--red);-webkit-text-stroke:0;opacity:.25;font-family:var(--display);font-weight:800}
+.projet-type{border-radius:999px;font-family:var(--display);font-weight:600;letter-spacing:0;text-transform:none}
+.tech-tag{background:var(--black2);border:0;border-radius:999px;color:var(--ink);font-family:var(--display);font-size:.75rem;font-weight:500}
+.skill-pill{border-radius:999px;font-family:var(--display);font-size:.8rem;color:var(--ink);background:#fff;border:1.5px solid var(--border)}
+.skill-pill:hover{border-color:var(--red);color:var(--red)}
+.exp-row{border:1.5px solid var(--border);border-radius:16px;margin-bottom:16px}
+.exp-type{border-radius:999px;font-family:var(--display);text-transform:none;letter-spacing:0;font-weight:600}
+.exp-type.alt{background:var(--red);color:#fff;border-color:var(--red)}
+.parcours-item.current{border-color:var(--red)}
+.parcours-badge{border-radius:999px;font-family:var(--display);text-transform:none;letter-spacing:0}
+.doc-card{border:1.5px solid var(--border)!important;border-radius:16px}
+.doc-card:hover{background:#fff;border-color:var(--red)!important}
+.about-quote{border-left:6px solid;border-image:var(--cable) 1;color:var(--grey-light);font-family:var(--display);font-style:italic}
+.lang-bar{background:var(--black2);border-radius:4px}.lang-bar-fill{background:var(--cable)!important;border-radius:4px}
+/* contact */
+.contact-panel-left{background:var(--ink)}
+.contact-panel-left::before,.contact-panel-left::after{opacity:.0}
+.contact-big{color:#fff}
+.contact-sub,.cii-label{color:#B9C0DA}.cii-val{color:#fff}.contact-label-tag{color:var(--orange)}
+.contact-info-list,.contact-info-item{border-color:rgba(255,255,255,.15)}
+.cii-icon{border-radius:10px;background:rgba(255,255,255,.1)}
+.contact-form,.form-duo{background:var(--border)}
+.form-field{background:#fff}.form-field:focus-within{background:#F7F9FF}
+.field-input,.field-textarea{color:var(--ink)}
+.field-input::placeholder,.field-textarea::placeholder{color:#9AA2BF}
+.pdf-viewer-embed{background:#fff}
+.projet-sidebar{padding-left:1.8rem!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
