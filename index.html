@@ -498,6 +498,7 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
 .field-input::placeholder,.field-textarea::placeholder{color:#9AA2BF}
 .pdf-viewer-embed{background:#fff}
 .projet-sidebar{padding-left:1.8rem!important}
+#documents .docs-grid{grid-template-columns:minmax(0,520px);background:transparent}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -552,7 +553,7 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
     <div class="hero-actions">
       <a href="#contact" class="btn-red"><span>Me contacter</span></a>
       <a href="#freelance" class="btn-ghost">Freelance</a>
-      <button class="btn-cv" onclick="openPdfModal('cv')">⬇ CV PDF</button>
+      <button class="btn-cv" onclick="openCvDirect()">⬇ CV PDF</button>
     </div>
     <div class="ip-badge"><span class="dot"></span><span>netadmin@levels-sys · freelance · IDF · FR</span></div>
   </div>
@@ -967,7 +968,7 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
       <div class="section-divider"></div>
     </div>
     <div class="docs-grid reveal">
-      <!-- CV : accès direct, pas de mot de passe -->
+      <!-- CV : téléchargement direct -->
       <button class="doc-card" onclick="openCvDirect()">
         <div class="doc-icon-wrap">📄</div>
         <div>
@@ -975,22 +976,6 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
           <div class="doc-desc">CV complet — BTS SIO SISR, expériences professionnelles, compétences et certifications.</div>
           <div class="doc-free-badge">⬇ Accès libre</div>
           <div class="doc-action">Télécharger</div>
-        </div>
-      </button>
-      <button class="doc-card" onclick="openPdfModal('tableau')">
-        <div class="doc-icon-wrap">📊</div>
-        <div>
-          <div class="doc-name">Tableau de synthèse</div>
-          <div class="doc-desc">Tableau de synthèse des compétences du BTS SIO SISR — récapitulatif des activités et réalisations.</div>
-          <div class="doc-action">Lire / Télécharger</div>
-        </div>
-      </button>
-      <button class="doc-card" onclick="openPdfModal('infra')">
-        <div class="doc-icon-wrap">🖧</div>
-        <div>
-          <div class="doc-name">Documentation Infra</div>
-          <div class="doc-desc">Documentation technique — Infrastructure virtualisée BTS SIO SISR (pfSense, AD, Zabbix, Exchange, GLPI). 13 pages.</div>
-          <div class="doc-action">Lire / Télécharger</div>
         </div>
       </button>
     </div>
@@ -1046,67 +1031,6 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
   </div>
 </footer>
 
-<!-- PDF MODAL (avec mdp pour tableau et infra, sans pour CV) -->
-<style>
-.pdf-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:9100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);padding:1rem}
-.pdf-modal-overlay.open{display:flex}
-.pdf-pwd-box{background:var(--black2);border:1px solid var(--border);padding:2.5rem;width:100%;max-width:400px;position:relative;animation:modalIn .3s cubic-bezier(.4,0,.2,1)}
-.pdf-pwd-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan))}
-.pdf-pwd-title{font-family:var(--mono);font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
-.pdf-pwd-sub{font-family:var(--mono);font-size:.62rem;color:var(--grey);margin-bottom:1.8rem;line-height:1.6}
-.pdf-pwd-input{width:100%;background:var(--black3);border:1px solid var(--border);padding:.8rem 1rem;font-family:var(--mono);font-size:.85rem;color:var(--white);outline:none;margin-bottom:.7rem;transition:border-color .25s;letter-spacing:.15em}
-.pdf-pwd-input:focus{border-color:var(--red)}
-.pdf-pwd-btn{width:100%;background:var(--red);color:var(--white);border:none;padding:.85rem;cursor:none;font-family:var(--mono);font-size:.65rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;transition:opacity .2s}
-.pdf-pwd-btn:hover{opacity:.85}
-.pdf-pwd-err{font-family:var(--mono);font-size:.65rem;color:#ff6b6b;margin-top:.5rem;display:none}
-.pdf-pwd-err.show{display:block}
-.pdf-viewer-box{background:var(--black2);width:100%;max-width:1000px;height:90vh;display:flex;flex-direction:column;border:1px solid var(--border);animation:modalIn .3s cubic-bezier(.4,0,.2,1);overflow:hidden;position:relative}
-.pdf-viewer-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--red),var(--cyan),transparent)}
-.pdf-viewer-header{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--black3);flex-shrink:0}
-.pdf-viewer-title{font-family:var(--mono);font-size:.75rem;color:var(--white)}
-.pdf-viewer-title em{color:var(--red);font-style:normal}
-.pdf-viewer-actions{display:flex;gap:.6rem;align-items:center}
-.pdf-action-btn{background:transparent;border:1px solid var(--border);color:var(--grey-light);padding:.4rem .9rem;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;cursor:none;transition:all .2s;display:inline-flex;align-items:center;gap:.4rem}
-.pdf-action-btn:hover{border-color:var(--red);color:var(--white)}
-.pdf-action-btn svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2}
-.pdf-close-btn{background:transparent;border:none;color:var(--grey);font-family:var(--mono);font-size:1rem;cursor:none;padding:.3rem .6rem;transition:color .2s}
-.pdf-close-btn:hover{color:var(--white)}
-.pdf-viewer-embed{flex:1;position:relative;background:#111}
-.pdf-viewer-embed iframe{width:100%;height:100%;border:none;display:block}
-.pdf-viewer-footer{padding:.6rem 1.5rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--black3);flex-shrink:0}
-.pdf-viewer-footer-txt{font-family:var(--mono);font-size:.55rem;color:var(--grey)}
-.pdf-viewer-footer-badge{font-family:var(--mono);font-size:.52rem;padding:.18rem .6rem;background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.2);color:var(--green)}
-</style>
-
-<div class="pdf-modal-overlay" id="pdfModal" onclick="closePdfModalOutside(event)">
-  <div class="pdf-pwd-box" id="pdfPwdBox">
-    <div class="pdf-pwd-title" id="pdfPwdTitle">Document protégé</div>
-    <div class="pdf-pwd-sub">// Entrer le mot de passe pour accéder.</div>
-    <input class="pdf-pwd-input" type="password" id="pdfPassword" placeholder="mot_de_passe" onkeydown="if(event.key==='Enter') checkPdfPassword()" autocomplete="off">
-    <div class="pdf-pwd-err" id="pdfError">// ERR: mot de passe incorrect</div>
-    <button class="pdf-pwd-btn" onclick="checkPdfPassword()">ACCESS →</button>
-  </div>
-  <div class="pdf-viewer-box" id="pdfViewerBox" style="display:none">
-    <div class="pdf-viewer-header">
-      <div class="pdf-viewer-title" id="pdfViewerTitle">Document</div>
-      <div class="pdf-viewer-actions">
-        <button class="pdf-action-btn" onclick="downloadCurrentDoc()">
-          <svg viewBox="0 0 24 24"><path d="M12 15V3m0 12l-4-4m4 4l4-4M2 17l.621 2.485A2 2 0 004.561 21h14.878a2 2 0 001.94-1.515L22 17"/></svg>
-          Télécharger
-        </button>
-        <button class="pdf-close-btn" onclick="closePdfModal()">✕</button>
-      </div>
-    </div>
-    <div class="pdf-viewer-embed">
-      <iframe id="pdfFrame" src="" title="Document"></iframe>
-    </div>
-    <div class="pdf-viewer-footer">
-      <div class="pdf-viewer-footer-txt" id="pdfFooterTxt">Nael Lakhledj · BTS SIO SISR · 2026</div>
-      <div class="pdf-viewer-footer-badge">CONFIDENTIEL</div>
-    </div>
-  </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
 const EMAILJS_PUBLIC_KEY  = 'HqGA1OUz4uPioUudF';
@@ -1122,51 +1046,6 @@ function openCvDirect() {
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
 }
 
-const PDF_DOCS = {
-  'tableau': { file: 'tbl.pdf', title: 'Tableau de <em>Synthèse</em>', pwd: '75Support95!?', label: 'Tableau de Synthèse · Nael Lakhledj · 2026' },
-  'infra':   { file: 'doc_ctx_lprs.pdf', title: 'Documentation <em>Infrastructure</em>', pwd: '75Support95!&', label: 'Documentation Technique · Nael Lakhledj · 2026' },
-};
-var currentPdfDoc = null;
-
-function openPdfModal(type) {
-  currentPdfDoc = PDF_DOCS[type];
-  if (!currentPdfDoc) return;
-  document.getElementById('pdfModal').classList.add('open');
-  document.getElementById('pdfPwdBox').style.display = 'block';
-  document.getElementById('pdfViewerBox').style.display = 'none';
-  document.getElementById('pdfFrame').src = '';
-  document.getElementById('pdfPwdTitle').innerHTML = '// ' + currentPdfDoc.title.replace(/<em>|<\/em>/g,'');
-  setTimeout(function(){ document.getElementById('pdfPassword').focus(); }, 200);
-}
-function closePdfModal() {
-  document.getElementById('pdfModal').classList.remove('open');
-  document.getElementById('pdfPassword').value = '';
-  document.getElementById('pdfError').classList.remove('show');
-  document.getElementById('pdfFrame').src = '';
-}
-function closePdfModalOutside(e) { if(e.target===document.getElementById('pdfModal')) closePdfModal(); }
-function checkPdfPassword() {
-  var pwd = document.getElementById('pdfPassword').value;
-  if (pwd === currentPdfDoc.pwd) {
-    document.getElementById('pdfPwdBox').style.display = 'none';
-    document.getElementById('pdfViewerBox').style.display = 'flex';
-    document.getElementById('pdfViewerBox').style.flexDirection = 'column';
-    document.getElementById('pdfViewerTitle').innerHTML = currentPdfDoc.title;
-    document.getElementById('pdfFooterTxt').textContent = currentPdfDoc.label;
-    document.getElementById('pdfFrame').src = currentPdfDoc.file + '#toolbar=0&navpanes=0';
-  } else {
-    document.getElementById('pdfError').classList.add('show');
-    document.getElementById('pdfPassword').value = '';
-    document.getElementById('pdfPassword').focus();
-    setTimeout(function(){ document.getElementById('pdfError').classList.remove('show'); }, 3000);
-  }
-}
-function downloadCurrentDoc() {
-  var a = document.createElement('a');
-  a.href = currentPdfDoc.file; a.download = currentPdfDoc.file;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-}
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') closePdfModal(); });
 
 // EmailJS
 function sendEmail() {
