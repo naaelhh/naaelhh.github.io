@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nael Lakhledj — Portfolio BTS SIO SISR</title>
+<title>Nael Lakhledj — Portfolio Systèmes, Réseaux & Développement web</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=JetBrains+Mono:wght@300;400;500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -399,6 +399,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
   .contact-panel-left,.contact-panel-right{padding:4rem 1.5rem}
   footer{padding:1.5rem;flex-direction:column;gap:.8rem;text-align:center}
 }
+
+#freelance .certif-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:768px){#freelance .certif-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -420,12 +423,13 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
     <li><a href="#parcours" data-num="02">Parcours</a></li>
     <li><a href="#projets" data-num="05">Projets</a></li>
     <li><a href="#entreprise" data-num="07">Entreprise</a></li>
+    <li><a href="#freelance" data-num="08">Freelance</a></li>
     <li><a href="#contact" data-num="09">Contact</a></li>
   </ul>
   <div class="nav-right">
     <div class="status-indicator">
       <div class="status-dot"></div>
-      <span>OPEN TO WORK</span>
+      <span>DISPO FREELANCE</span>
     </div>
   </div>
 </nav>
@@ -440,20 +444,20 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
         <span class="terminal-title">nael@portfolio ~ bash</span>
       </div>
       <div class="t-line"><span class="prompt">$ </span><span class="cmd">whoami</span></div>
-      <div class="t-line"><span class="output">nael.lakhledj</span> <span class="comment">// BTS SIO SISR</span></div>
+      <div class="t-line"><span class="output">nael.lakhledj</span> <span class="comment">// Systèmes, Réseaux & Web</span></div>
       <div class="t-line"><span class="prompt">$ </span><span class="cmd">cat ./status.txt</span></div>
-      <div class="t-line"><span class="val">SEEKING_ALTERNANCE</span> <span class="comment">// Bachelor SR · Sept. 2026</span></div>
-      <div class="t-line"><span class="prompt">$ </span><span class="cmd">ping alternance.target<span class="blink">_</span></span></div>
+      <div class="t-line"><span class="val">ALTERNANCE @ LEVELS_SYS</span> <span class="comment">// Bachelor SR · Sup de Vinci</span></div>
+      <div class="t-line"><span class="prompt">$ </span><span class="cmd">./freelance --status <span class="val">AVAILABLE</span><span class="blink">_</span></span></div>
     </div>
     <h1 class="hero-name"><span class="first">Nael</span><span class="last">Lakhledj</span></h1>
-    <p class="hero-title">Administrateur réseaux · BTS SIO SISR</p>
-    <p class="hero-desc">Étudiant en alternance spécialisé en infrastructure IT.<br>Cisco · pfSense · Active Directory · Proxmox · Zabbix.<br>Paris / Île-de-France — Disponible septembre 2026.</p>
+    <p class="hero-title">Administrateur réseaux · Développeur web freelance</p>
+    <p class="hero-desc">Bachelor Systèmes, Réseaux & Cloud en alternance chez Levels Sys.<br>Cisco · Linux · pfSense · Active Directory · Proxmox · WordPress · Python.<br>Freelance : sites web &amp; prestations IT — Paris / Île-de-France.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn-red"><span>Me contacter</span></a>
-      <a href="#projets" class="btn-ghost">Mes projets</a>
+      <a href="#freelance" class="btn-ghost">Freelance</a>
       <button class="btn-cv" onclick="openPdfModal('cv')">⬇ CV PDF</button>
     </div>
-    <div class="ip-badge"><span class="dot"></span><span>sys.admin@assomption-bondy · IDF · FR</span></div>
+    <div class="ip-badge"><span class="dot"></span><span>netadmin@levels-sys · freelance · IDF · FR</span></div>
   </div>
   <div class="hero-right">
     <div class="hero-card">
@@ -465,10 +469,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
         <div class="stat-cell"><div class="stat-val">4<em>+</em></div><div class="stat-lbl">expériences</div></div>
         <div class="stat-cell"><div class="stat-val">CCNA</div><div class="stat-lbl">certifié_cisco</div></div>
         <div class="stat-cell"><div class="stat-val">5<em>+</em></div><div class="stat-lbl">projets_bts</div></div>
-        <div class="stat-cell"><div class="stat-val">2026</div><div class="stat-lbl">diplôme_bts</div></div>
+        <div class="stat-cell"><div class="stat-val">BTS</div><div class="stat-lbl">obtenu_2026</div></div>
       </div>
       <div class="hero-card-footer">
-        <div class="hero-card-footer-txt">alternance :: sept.2026</div>
+        <div class="hero-card-footer-txt">alternance :: levels_sys</div>
         <div class="hero-card-footer-badge">BACHELOR_SR</div>
       </div>
     </div>
@@ -493,9 +497,9 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
     </div>
     <div class="about-grid reveal">
       <div class="about-text">
-        <p>Je m'appelle <strong>Nael Lakhledj</strong>, étudiant en <strong>BTS SIO option SISR</strong> au Lycée Robert Schuman à Dugny, en contrat d'apprentissage chez <strong>Assomption Bondy</strong> depuis août 2025.</p>
+        <p>Je m'appelle <strong>Nael Lakhledj</strong>. Diplômé d'un <strong>BTS SIO option SISR</strong> (Lycée Robert Schuman, Dugny), je poursuis en <strong>Bachelor Systèmes, Réseaux & Cloud</strong> chez Sup de Vinci, en alternance comme <strong>administrateur réseau Linux chez Levels Sys</strong> depuis septembre 2026.</p>
         <p>Passionné par les <strong>infrastructures réseaux et systèmes</strong>, j'ai développé une expertise concrète sur des technologies clés : Active Directory, virtualisation avec Proxmox et Hyper-V, pare-feu pfSense, supervision avec Zabbix, et équipements Cisco.</p>
-        <p>Rigoureux, autonome et en veille permanente sur les évolutions du secteur, je cherche à poursuivre en <strong>Bachelor Systèmes, Réseaux et Cloud</strong> à partir de septembre 2026, en alternance (2 semaines entreprise / 2 semaines cours).</p>
+        <p>En parallèle, j'exerce en <strong>freelance</strong> (micro-entreprise) : création de <strong>sites web</strong> (HTML/CSS/JS, WordPress), maintenance et sécurisation de sites, scripts Python et prestations systèmes &amp; réseaux pour les indépendants et petites entreprises.</p>
         <blockquote class="about-quote">/* Je m'engage à développer des compétences solides en systèmes et réseaux<br>   à travers une formation exigeante et des mises en pratique concrètes. */</blockquote>
         <div class="about-langs">
           <div class="lang-row"><span class="lang-name">Français</span><span class="lang-level">C2</span><div class="lang-bar"><div class="lang-bar-fill" style="width:100%"></div></div></div>
@@ -504,10 +508,10 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
         </div>
       </div>
       <div class="about-side">
-        <div class="about-info-card"><div class="aic-label">formation</div><div class="aic-val">BTS SIO SISR — Lycée Robert Schuman, Dugny</div></div>
-        <div class="about-info-card"><div class="aic-label">alternance</div><div class="aic-val">Assomption Bondy — depuis août 2025</div></div>
+        <div class="about-info-card"><div class="aic-label">formation</div><div class="aic-val">Bachelor Systèmes, Réseaux & Cloud — Sup de Vinci</div></div>
+        <div class="about-info-card"><div class="aic-label">alternance</div><div class="aic-val">Levels Sys — administrateur réseau Linux</div></div>
         <div class="about-info-card"><div class="aic-label">localisation</div><div class="aic-val">Val d'Oise, Île-de-France</div></div>
-        <div class="about-info-card"><div class="aic-label">objectif</div><div class="aic-val">Bachelor Systèmes, Réseaux & Cloud — Sept. 2026</div></div>
+        <div class="about-info-card"><div class="aic-label">freelance</div><div class="aic-val">Sites web &amp; prestations IT — micro-entreprise</div></div>
         <div class="about-info-card"><div class="aic-label">rythme</div><div class="aic-val">2 semaines entreprise / 2 semaines cours</div></div>
         <div class="about-info-card"><div class="aic-label">contact</div><div class="aic-val">nlakhledj@gmail.com · 07 67 95 78 83</div></div>
       </div>
@@ -530,19 +534,19 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
         <div class="parcours-school">Lycée Robert Schuman — Dugny (93)</div>
         <div class="parcours-desc">Formation technique axée sur les systèmes numériques, l'électronique et l'informatique industrielle. Obtention du baccalauréat en 2024.</div>
       </div>
-      <div class="parcours-item current">
-        <div class="parcours-year">2024 — 2026 · En cours</div>
+      <div class="parcours-item">
+        <div class="parcours-year">2024 — 2026</div>
         <div class="parcours-degree">BTS SIO — option SISR</div>
         <div class="parcours-school">Lycée Robert Schuman — Dugny (93)</div>
         <div class="parcours-desc">Solutions d'Infrastructure, Systèmes et Réseaux. Formation en alternance avec Assomption Bondy. Compétences en administration réseaux, virtualisation, sécurité et supervision.</div>
-        <span class="parcours-badge">Diplôme prévu 2026</span>
+        <span class="parcours-badge">Diplôme obtenu</span>
       </div>
-      <div class="parcours-item">
-        <div class="parcours-year">Prévu — Sept. 2026</div>
+      <div class="parcours-item current">
+        <div class="parcours-year">2026 — En cours</div>
         <div class="parcours-degree">Bachelor Systèmes, Réseaux & Cloud</div>
         <div class="parcours-school">Sup de Vinci — Île-de-France</div>
-        <div class="parcours-desc">Poursuite d'études en alternance pour approfondir les compétences en architecture réseaux, cloud computing et cybersécurité. Rythme : 2 semaines entreprise / 2 semaines école.</div>
-        <span class="parcours-badge" style="border-color:rgba(0,212,255,.4);color:var(--cyan)">Objectif 2026</span>
+        <div class="parcours-desc">En alternance chez Levels Sys. Architecture réseaux, administration Linux, cloud computing et cybersécurité. Rythme : 2 semaines entreprise / 2 semaines école.</div>
+        <span class="parcours-badge" style="border-color:rgba(0,212,255,.4);color:var(--cyan)">En cours</span>
       </div>
     </div>
   </div>
@@ -761,7 +765,7 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
       <div>
         <div class="entreprise-text">
           <p><strong>Assomption Bondy</strong> est un établissement scolaire privé situé à Bondy (93). L'établissement dispose d'un parc informatique conséquent nécessitant une gestion IT permanente.</p>
-          <p>En tant qu'<strong>administrateur réseau en alternance</strong> depuis août 2025, j'assure la gestion complète de l'infrastructure informatique de l'établissement, en autonomie et sous la responsabilité de la direction.</p>
+          <p>D'août 2025 à août 2026, en tant qu'<strong>administrateur réseau en alternance</strong> (BTS), j'ai assuré la gestion complète de l'infrastructure informatique de l'établissement, en autonomie et sous la responsabilité de la direction.</p>
         </div>
         <div class="env-grid">
           <div class="env-card"><div class="env-card-title">Systèmes</div><ul class="env-card-list"><li>Windows Server 2019/2022</li><li>Active Directory</li><li>Exchange Server</li><li>Hyper-V</li></ul></div>
@@ -793,7 +797,15 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
     </div>
     <div class="exp-list">
       <div class="exp-row reveal">
-        <div class="exp-sidebar"><div class="exp-period">Août 2025 → Présent</div><span class="exp-type alt">Apprentissage</span></div>
+        <div class="exp-sidebar"><div class="exp-period">Oct. 2026 → Présent</div><span class="exp-type alt">Freelance</span></div>
+        <div class="exp-body"><div class="exp-role">Développeur web &amp; technicien systèmes / réseaux</div><div class="exp-company">Micro-entreprise — Val-d'Oise / à distance</div><ul class="exp-missions"><li>Création de sites vitrines et boutiques en ligne (HTML/CSS/JS, WordPress, Shopify)</li><li>Maintenance, dépannage et sécurisation de sites WordPress</li><li>Scripts Python d'automatisation et prestations systèmes &amp; réseaux</li></ul></div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-sidebar"><div class="exp-period">Sept. 2026 → Présent</div><span class="exp-type alt">Alternance</span></div>
+        <div class="exp-body"><div class="exp-role">Administrateur Réseau Linux</div><div class="exp-company">Levels Sys — Paris / Île-de-France</div><ul class="exp-missions"><li>Administration de serveurs Linux et de l'infrastructure réseau</li><li>Supervision, maintenance et sécurisation des systèmes</li></ul></div>
+      </div>
+      <div class="exp-row reveal">
+        <div class="exp-sidebar"><div class="exp-period">Août 2025 → Août 2026</div><span class="exp-type alt">Apprentissage</span></div>
         <div class="exp-body"><div class="exp-role">Administrateur Réseau</div><div class="exp-company">Assomption Bondy — Bondy, France</div><ul class="exp-missions"><li>Support technique N1/N2 en autonomie</li><li>Gestion et maintenance du parc informatique</li><li>Administration Windows Server et Active Directory</li></ul></div>
       </div>
       <div class="exp-row reveal">
@@ -804,6 +816,47 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
         <div class="exp-sidebar"><div class="exp-period">2022 · 7 semaines</div><span class="exp-type stage">Stage</span></div>
         <div class="exp-body"><div class="exp-role">Technicien Informatique</div><div class="exp-company">Auchan — Sarcelles, France</div><ul class="exp-missions"><li>Contrôle des stocks via logiciel de gestion</li><li>Assistance technique aux équipes</li></ul></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 07c — FREELANCE -->
+<section class="section" id="freelance" style="background:var(--black2)">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <div class="section-num">07c</div>
+      <div class="section-meta"><div class="section-tag">// freelance.services()</div><div class="section-title">Freelance</div></div>
+      <div class="section-divider"></div>
+    </div>
+    <div class="about-text reveal" style="max-width:820px;margin-bottom:2.5rem">
+      <p>En parallèle de mon alternance, je travaille en <strong>freelance</strong> (micro-entreprise immatriculée) pour les indépendants, commerçants et petites entreprises. Comme je viens de l'administration systèmes, je m'occupe de tout, <strong>du code jusqu'au serveur</strong> : un seul interlocuteur pour votre projet.</p>
+    </div>
+    <div class="certif-grid reveal">
+      <div class="certif-card"><div class="certif-icon">🌐</div><div class="certif-name">Sites vitrines</div><div class="certif-org">HTML · CSS · JavaScript · WordPress</div><div class="certif-desc">Sites modernes, rapides et adaptés au mobile, avec les bonnes bases de référencement Google.</div></div>
+      <div class="certif-card"><div class="certif-icon">🛒</div><div class="certif-name">Boutiques en ligne</div><div class="certif-org">Shopify · WooCommerce</div><div class="certif-desc">Mise en place de la boutique, des produits, du paiement et de la livraison.</div></div>
+      <div class="certif-card"><div class="certif-icon">🛡️</div><div class="certif-name">Maintenance WordPress</div><div class="certif-org">Mises à jour · sauvegardes · sécurité</div><div class="certif-desc">Dépannage (erreurs 500, extensions), nettoyage après piratage, sauvegardes automatiques, migration de site.</div></div>
+      <div class="certif-card"><div class="certif-icon">⚙️</div><div class="certif-name">Scripts &amp; IT</div><div class="certif-org">Python · Linux · Docker · réseau</div><div class="certif-desc">Automatisation de tâches, extraction de données, installation de serveurs, hébergement, domaines et HTTPS.</div></div>
+    </div>
+    <div class="projets-list" style="margin-top:3rem">
+      <div class="projet-row reveal">
+        <div class="projet-sidebar">
+          <div class="projet-num">W1</div>
+          <div class="projet-period">Oct. 2026<br>Projet de démonstration</div>
+          <span class="projet-type reseau">Web</span>
+        </div>
+        <div class="projet-body">
+          <div class="projet-title">Fade Studio — site vitrine de barbier</div>
+          <div class="projet-subtitle">Commerce fictif · conçu et codé de A à Z</div>
+          <a href="fade-studio.html" target="_blank" rel="noopener"><img src="fade-studio.jpg" alt="Aperçu du site Fade Studio" loading="lazy" style="width:100%;max-width:720px;border:1px solid var(--border);margin:1rem 0;display:block"></a>
+          <div class="projet-desc">Site one-page responsive réalisé sans framework : identité visuelle noir et doré, prestations et tarifs, galerie, avis, horaires et formulaire de prise de rendez-vous.</div>
+          <div class="projet-techs"><span class="tech-tag">HTML5</span><span class="tech-tag">CSS3</span><span class="tech-tag">JavaScript</span><span class="tech-tag">Responsive</span><span class="tech-tag">SEO</span></div>
+          <div class="hero-actions" style="margin-top:1.2rem"><a href="fade-studio.html" target="_blank" rel="noopener" class="btn-ghost">Voir le site en ligne ↗</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-actions reveal" style="margin-top:2.5rem">
+      <a href="#contact" class="btn-red"><span>Demander un devis</span></a>
+      <a href="https://www.codeur.com/-naell" target="_blank" rel="noopener" class="btn-ghost">Profil Codeur.com ↗</a>
     </div>
   </div>
 </section>
@@ -852,8 +905,8 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
   <div class="contact-wrapper">
     <div class="contact-panel-left">
       <div class="contact-label-tag">// contact.init()</div>
-      <div class="contact-big">Cherche<br>une alternance<br>Sept. 2026</div>
-      <p class="contact-sub">Bachelor SR · Paris / Île-de-France<br>Rigoureux, autonome et passionné par les infrastructures IT.</p>
+      <div class="contact-big">Un projet<br>de site web ?<br>Parlons-en.</div>
+      <p class="contact-sub">Freelance · Paris / Île-de-France · à distance<br>Sites web, maintenance WordPress et prestations IT.</p>
       <div class="contact-info-list">
         <div class="contact-info-item"><div class="cii-icon">📞</div><div><div class="cii-label">téléphone</div><div class="cii-val">07 67 95 78 83</div></div></div>
         <div class="contact-info-item"><div class="cii-icon">✉</div><div><div class="cii-label">email</div><div class="cii-val">nlakhledj@gmail.com</div></div></div>
