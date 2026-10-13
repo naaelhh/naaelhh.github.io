@@ -538,13 +538,65 @@ html,body{overflow-x:clip}
  .care-label{max-width:calc(100vw - 48px);transform:rotate(1.5deg)}
 }
 /* ===== EFFETS SPÉCIAUX (oct. 2026) ===== */
-/* intro "drop" */
-#fx-intro{position:fixed;inset:0;z-index:100000;background:var(--selvedge);display:grid;place-items:center;transition:clip-path .9s cubic-bezier(.77,0,.18,1);clip-path:inset(0 0 0 0)}
-#fx-intro.out{clip-path:inset(0 0 100% 0)}
-#fx-intro .in{font-family:var(--display);font-weight:900;font-size:clamp(3rem,12vw,9rem);color:var(--bone);letter-spacing:.02em;line-height:.9;text-align:center;text-transform:uppercase}
-#fx-intro .in small{display:block;font-family:var(--mono);font-size:.9rem;letter-spacing:.3em;color:var(--thread);margin-top:1rem}
-#fx-intro .bar{position:absolute;left:0;bottom:0;height:6px;background:var(--thread);width:0;animation:fxbar 1.1s ease forwards}
-@keyframes fxbar{to{width:100%}}
+/* intro : ouvrir la veste */
+#fx-jacket{position:fixed;inset:0;z-index:100000;perspective:1600px;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+#fx-jacket .half{position:absolute;top:0;bottom:0;width:50.5%;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.65,0,.25,1)}
+#fx-jacket .half.l{left:0;transform-origin:0 50%}
+#fx-jacket .half.r{right:0;transform-origin:100% 50%}
+#fx-jacket.open .half.l{transform:rotateY(-105deg)}
+#fx-jacket.open .half.r{transform:rotateY(105deg)}
+#fx-jacket .face,#fx-jacket .lining{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+#fx-jacket .face{background:
+  repeating-linear-gradient(135deg,rgba(255,255,255,.05) 0 2px,transparent 2px 5px),
+  repeating-linear-gradient(45deg,rgba(0,0,0,.18) 0 1px,transparent 1px 4px),
+  radial-gradient(120% 90% at 50% 10%,#33427a 0%,#25315e 45%,#18203f 100%);box-shadow:inset 0 0 120px rgba(0,0,0,.45)}
+#fx-jacket .half.l .face{clip-path:polygon(0 0,calc(100% - var(--gap,0px)) 0,100% var(--zp,0%),100% 100%,0 100%)}
+#fx-jacket .half.r .face{clip-path:polygon(var(--gap,0px) 0,100% 0,100% 100%,0 100%,0 var(--zp,0%))}
+#fx-jacket .lining{transform:rotateY(180deg);background:
+  repeating-linear-gradient(90deg,rgba(0,0,0,.18) 0 22px,transparent 22px 44px),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.08) 0 22px,transparent 22px 44px),#a50e26}
+/* coutures */
+#fx-jacket .seam{position:absolute;border:0 dashed var(--thread);opacity:.85}
+#fx-jacket .s-hem{left:0;right:0;bottom:70px;border-top-width:2px}
+#fx-jacket .s-hem2{left:0;right:0;bottom:62px;border-top-width:2px}
+#fx-jacket .half.l .s-plk{right:58px;top:0;bottom:0;border-left-width:2px}
+#fx-jacket .half.r .s-plk{left:58px;top:0;bottom:0;border-left-width:2px}
+#fx-jacket .s-yoke{left:0;right:0;top:24%;border-top-width:2px}
+/* poches poitrine */
+#fx-jacket .pocket{position:absolute;top:30%;width:min(24vw,210px);height:min(22vw,190px);border:2px dashed var(--thread);border-top:none;border-radius:0 0 46% 46%/0 0 22% 22%}
+#fx-jacket .half.l .pocket{right:20%}
+#fx-jacket .half.r .pocket{left:20%}
+#fx-jacket .flap{position:absolute;top:-6px;left:-8px;right:-8px;height:38%;background:rgba(0,0,0,.18);border:2px dashed var(--thread);clip-path:polygon(0 0,100% 0,100% 55%,50% 100%,0 55%)}
+#fx-jacket .rivet{position:absolute;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f3cf8a,#b07a2a 60%,#5d3d10);box-shadow:0 1px 2px rgba(0,0,0,.6)}
+#fx-jacket .flap .rivet{left:50%;bottom:6%;margin-left:-8px}
+/* col */
+#fx-jacket .collar{position:absolute;top:0;width:min(20vw,220px);height:min(26vh,230px);background:linear-gradient(160deg,#2c3a6e,#141a35);border-bottom:2px dashed var(--thread)}
+#fx-jacket .half.l .collar{right:0;clip-path:polygon(0 0,100% 0,100% 100%);box-shadow:inset -8px 0 20px rgba(0,0,0,.4)}
+#fx-jacket .half.r .collar{left:0;clip-path:polygon(0 0,100% 0,0 100%)}
+/* patch cuir */
+#fx-jacket .patch{position:absolute;right:16%;bottom:120px;padding:.7rem 1rem;background:linear-gradient(135deg,#a6763f,#7b5226);color:#2b1a08;border:2px dashed rgba(43,26,8,.5);font-family:var(--display);font-weight:900;font-size:clamp(.9rem,1.6vw,1.3rem);line-height:1;text-transform:uppercase;transform:rotate(-3deg);box-shadow:0 3px 8px rgba(0,0,0,.4)}
+#fx-jacket .patch small{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;margin-top:.35rem;font-weight:600}
+#fx-jacket .tab{position:absolute;left:0;bottom:120px;width:28px;height:54px;background:var(--selvedge);box-shadow:2px 2px 0 rgba(0,0,0,.3)}
+/* zip */
+#fx-jacket .teeth{position:absolute;top:0;bottom:0;width:12px;background:repeating-linear-gradient(180deg,#d9dde6 0 5px,#8c93a3 5px 7px,transparent 7px 10px)}
+#fx-jacket .half.l .teeth{right:2px}
+#fx-jacket .half.r .teeth{left:2px}
+#fx-jacket .tape{position:absolute;top:0;bottom:0;width:22px;background:#141a33}
+#fx-jacket .half.l .tape{right:0}
+#fx-jacket .half.r .tape{left:0}
+#fx-pull{position:absolute;left:50%;top:0;z-index:5;width:48px;margin-left:-24px;cursor:grab;transition:opacity .3s;display:flex;flex-direction:column;align-items:center}
+#fx-pull:active{cursor:grabbing}
+#fx-pull:focus{outline:none}#fx-pull:focus-visible .slider{box-shadow:0 0 0 3px var(--thread),0 3px 6px rgba(0,0,0,.5)}
+#fx-pull .slider{width:34px;height:30px;border-radius:6px 6px 10px 10px;background:linear-gradient(180deg,#f4f6fb,#9aa1b1);box-shadow:0 3px 6px rgba(0,0,0,.5)}
+#fx-pull .tag{width:22px;height:64px;margin-top:-4px;border-radius:4px 4px 11px 11px;background:linear-gradient(90deg,#c9ced9,#f4f6fb 45%,#8c93a3);box-shadow:0 4px 8px rgba(0,0,0,.5);position:relative}
+#fx-pull .tag::after{content:"";position:absolute;left:50%;bottom:10px;width:8px;height:18px;margin-left:-4px;border-radius:4px;background:#1b2340}
+#fx-pull.hint{animation:fxtug 1.4s ease-in-out infinite}
+@keyframes fxtug{0%,60%,100%{translate:0 0}30%{translate:0 14px}}
+#fx-help{position:absolute;left:50%;top:clamp(140px,22vh,200px);transform:translateX(-50%);z-index:6;font-family:var(--mono);font-size:.8rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ink,#1b2340);background:var(--thread);padding:.55rem .9rem;white-space:nowrap;box-shadow:4px 4px 0 var(--selvedge);transition:opacity .3s;pointer-events:none}
+#fx-skip{position:absolute;right:18px;bottom:18px;z-index:6;font-family:var(--mono);font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--bone);background:transparent;border:1px solid rgba(242,240,234,.4);padding:.5rem .8rem;cursor:pointer}
+#fx-jacket.open #fx-pull,#fx-jacket.open #fx-help,#fx-jacket.open #fx-skip,#fx-jacket.zipping #fx-help{opacity:0}
+#fx-jacket.gone{opacity:0;transition:opacity .4s}
+@media(max-width:640px){#fx-jacket .pocket{top:32%;width:30vw;height:26vw}#fx-jacket .half.l .pocket{right:14%}#fx-jacket .half.r .pocket{left:14%}#fx-jacket .patch{right:8%;bottom:110px;font-size:.8rem;padding:.5rem .6rem;max-width:42vw}#fx-jacket .patch small{font-size:.5rem;letter-spacing:.1em}#fx-jacket .half.l .s-plk{right:40px}#fx-jacket .half.r .s-plk{left:40px}#fx-help{font-size:.68rem}}
 /* barre de progression "fil" */
 #fx-progress{position:fixed;top:0;left:0;height:4px;width:100%;transform-origin:0 50%;transform:scaleX(0);z-index:9999;background:repeating-linear-gradient(90deg,var(--thread) 0 14px,transparent 14px 20px)}
 /* curseur viseur (FPS) */
@@ -586,7 +638,7 @@ html,body{overflow-x:clip}
 @keyframes fxgrain{0%{transform:translate(0,0)}20%{transform:translate(-5%,3%)}40%{transform:translate(3%,-6%)}60%{transform:translate(-7%,-2%)}80%{transform:translate(6%,5%)}100%{transform:translate(0,0)}}
 /* kana parallaxe */
 .hero-name .kana{transition:transform .1s linear}
-@media (prefers-reduced-motion:reduce){#fx-intro,#fx-grain,.fx-spark{display:none!important}.section-title.fx-wipe{clip-path:none!important}.hero-name .fx-g::before,.hero-name .fx-g::after{display:none}}
+@media (prefers-reduced-motion:reduce){#fx-jacket,#fx-grain,.fx-spark{display:none!important}.section-title.fx-wipe{clip-path:none!important}.hero-name .fx-g::before,.hero-name .fx-g::after{display:none}}
 </style>
 </head>
 <body>
@@ -1250,14 +1302,37 @@ var RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 var FINE=window.matchMedia('(hover:hover) and (pointer:fine)').matches;
 function el(t,id,c){var e=document.createElement(t);if(id)e.id=id;if(c)e.className=c;return e}
 
-/* 1. intro "drop" (une fois par session) */
-var seen=false;try{seen=sessionStorage.getItem('fxIntro')==='1'}catch(e){}
+/* 1. intro : ouvrir la veste */
+var seen=false;try{seen=sessionStorage.getItem('fxJacket')==='1'}catch(e){}
+if(/[?&]veste/.test(location.search))seen=false;
 if(!RM&&!seen){
-  var intro=el('div','fx-intro');intro.innerHTML='<div class="in">Drop 2026<small>NAEL L. — MADE IN 95</small></div><div class="bar"></div>';
-  document.body.appendChild(intro);
-  setTimeout(function(){intro.classList.add('out')},1150);
-  setTimeout(function(){intro.remove();glitch()},2050);
-  try{sessionStorage.setItem('fxIntro','1')}catch(e){}
+  var J=el('div','fx-jacket');
+  var half=function(side){return '<div class="half '+side+'"><div class="face">'+
+    '<div class="seam s-yoke"></div><div class="seam s-plk"></div><div class="seam s-hem"></div><div class="seam s-hem2"></div>'+
+    '<div class="collar"></div><div class="pocket"><div class="flap"><span class="rivet"></span></div></div>'+
+    (side==='r'?'<div class="patch">Nael L.<small>made in 95 · drop 2026</small></div>':'<div class="tab"></div>')+
+    '<div class="tape"></div><div class="teeth"></div></div><div class="lining"></div></div>'};
+  J.innerHTML=half('l')+half('r')+'<div id="fx-pull" class="hint" role="button" tabindex="0" aria-label="Ouvrir la veste pour entrer"><div class="slider"></div><div class="tag"></div></div>'+
+    '<div id="fx-help">↓ Tire la fermeture pour entrer</div><button id="fx-skip" type="button">Entrer directement</button>';
+  document.body.appendChild(J);document.documentElement.style.overflow='hidden';
+  var pull=J.querySelector('#fx-pull'),done=false,dragging=false,startY=0,p=0;
+  function setP(v){p=Math.max(0,Math.min(1,v));var H=innerHeight;pull.style.transform='translateY('+(p*(H-60))+'px)';
+    J.style.setProperty('--zp',(p*100)+'%');J.style.setProperty('--gap',(p*Math.min(160,innerWidth*.12))+'px');}
+  function openJ(){if(done)return;done=true;J.classList.add('open');document.documentElement.style.overflow='';
+    try{sessionStorage.setItem('fxJacket','1')}catch(e){}
+    setTimeout(function(){J.classList.add('gone')},950);setTimeout(function(){J.remove();glitch()},1400);}
+  function autoZip(){if(done)return;J.classList.add('zipping');pull.classList.remove('hint');var s=p,t0=null;
+    (function step(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/650);setP(s+(1-s)*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(step);else openJ()})(performance.now());
+    requestAnimationFrame(function f(t){})}
+  pull.addEventListener('pointerdown',function(e){dragging=true;startY=e.clientY-p*(innerHeight-60);pull.classList.remove('hint');J.classList.add('zipping');pull.setPointerCapture(e.pointerId);e.preventDefault()});
+  pull.addEventListener('pointermove',function(e){if(!dragging)return;setP((e.clientY-startY)/(innerHeight-60));if(p>.55){dragging=false;autoZip()}});
+  pull.addEventListener('pointerup',function(){if(!dragging)return;dragging=false;if(p>.12)autoZip();else{autoZip()}});
+  pull.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();autoZip()}});
+  J.addEventListener('click',function(e){if(e.target.id==='fx-skip'){openJ();return}if(!e.target.closest('#fx-pull'))autoZip()});
+  document.addEventListener('keydown',function k(e){if(e.key==='Escape'||e.key==='Enter'){autoZip();document.removeEventListener('keydown',k)}});
+  window.addEventListener('wheel',function w(){autoZip();window.removeEventListener('wheel',w)},{passive:true});
+  setTimeout(function(){pull.focus({preventScroll:true})},50);
+  setP(0);
 }
 
 /* 2. barre de progression */
