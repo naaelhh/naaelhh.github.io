@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nael Lakhledj — Portfolio Systèmes, Réseaux & Développement web</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
 <style>
 :root {
   --black: #080808;
@@ -403,103 +403,138 @@ footer{background:var(--black);border-top:1px solid var(--border);padding:2rem 4
 #freelance .certif-grid{grid-template-columns:repeat(2,1fr)}
 @media(max-width:768px){#freelance .certif-grid{grid-template-columns:1fr}}
 
-/* ===== THEME « CÂBLE RÉSEAU » (oct. 2026) ===== */
+/* ===== THEME « DROP DENIM » (oct. 2026) ===== */
 :root{
-  --black:#F3F5FA; --black2:#E8ECF6; --black3:#FFFFFF;
-  --white:#10162F; --off-white:#2A3150; --grey:#5B6480; --grey-light:#3D4566;
-  --red:#2747FF; --red-glow:rgba(39,71,255,.12); --red-dim:rgba(39,71,255,.06);
-  --border:rgba(16,22,47,.12); --border-red:rgba(39,71,255,.35);
-  --green:#12B76A; --cyan:#FF6A13; --orange:#FF6A13; --brown:#8A5A3B; --ink:#10162F;
-  --cable:linear-gradient(90deg,#FF6A13 0 25%,#12B76A 25% 50%,#2747FF 50% 75%,#8A5A3B 75% 100%);
-  --display:'Bricolage Grotesque',system-ui,sans-serif;
+  --indigo:#1B2340; --indigo2:#232D52; --indigo3:#2C3863; --bone:#F2F0EA; --selvedge:#C8102E; --thread:#E8B33C; --fade:#9AA6C8;
+  --black:var(--indigo); --black2:var(--indigo2); --black3:var(--indigo3);
+  --white:var(--bone); --off-white:#DCE0EE; --grey:var(--fade); --grey-light:#C3CAE0;
+  --red:var(--selvedge); --cyan:var(--thread); --green:#7FD69E;
+  --border:rgba(242,240,234,.14); --border-red:rgba(200,16,46,.45);
+  --display:'Big Shoulders Display',Impact,sans-serif; --body:'Archivo',system-ui,sans-serif;
+  --stitch:2px dashed var(--thread);
 }
-body{font-family:var(--display);font-weight:400;cursor:auto;color:var(--off-white)}
-body::before,.scanline-sweep,#cursor,#cursor-ring,.hero-bg-text{display:none!important}
-a,button,.skill-pill,.doc-card,.btn-red,.btn-ghost,.btn-cv,.btn-submit,.pdf-close-btn{cursor:pointer!important}
-:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
-::selection{background:#FFD8C2;color:var(--ink)}
-/* titres */
-.hero-name,.stat-val,.section-title,.parcours-degree,.certif-name,.veille-card-title,.projet-title,.doc-name,.exp-role,.contact-big,.form-header-title{font-family:var(--display);letter-spacing:-.03em}
-.hero-name{font-weight:800;font-size:clamp(3.4rem,7vw,7.2rem);line-height:.88}
-.hero-name .last{color:var(--red);-webkit-text-stroke:0;position:relative;padding-bottom:.18em}
-.hero-name .last::after{content:'';position:absolute;left:0;bottom:0;width:min(100%,9.5ch);height:10px;border-radius:6px;background:var(--cable)}
-.section-title{font-size:clamp(2rem,3.4vw,2.8rem);font-weight:800}
-.section-num{-webkit-text-stroke:0;color:var(--red);opacity:.18;font-family:var(--display);font-weight:800}
-.section-divider{height:6px;border-radius:4px;background:var(--cable);opacity:.9;border:0}
+body{font-family:var(--body);font-weight:400;cursor:auto;color:var(--off-white);background:var(--indigo)}
+body::before{opacity:.35!important}
+.scanline-sweep,#cursor,#cursor-ring,.hero-bg-text{display:none!important}
+a,button,.skill-pill,.doc-card,.btn-red,.btn-ghost,.btn-cv,.btn-submit{cursor:pointer!important}
+:focus-visible{outline:3px solid var(--thread);outline-offset:3px}
+::selection{background:var(--thread);color:var(--indigo)}
+.hero-name,.stat-val,.section-title,.parcours-degree,.certif-name,.veille-card-title,.projet-title,.doc-name,.exp-role,.contact-big,.form-header-title,.u-tile h3{font-family:var(--display);letter-spacing:.005em;text-transform:none}
 /* nav */
-nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
-.nav-logo .name{color:var(--ink)}
-.nav-links a{font-family:var(--display);font-size:.85rem;letter-spacing:0;color:var(--grey-light);font-weight:500}
-.nav-links a::before{display:none}
-.nav-links a:hover{color:var(--red)}
-.status-indicator{font-family:var(--display);font-size:.8rem;color:var(--ink);background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:.35rem .8rem;font-weight:600}
+nav{background:rgba(27,35,64,.9);border-bottom:var(--stitch)}
+.nav-logo .prompt{color:var(--thread)}.nav-logo .name{color:var(--bone)}.nav-logo .cursor-blink{display:none}
+.nav-links a{font-family:var(--body);font-size:.85rem;letter-spacing:0;color:#C3CAE0;font-weight:600}
+.nav-links a::before{display:none}.nav-links a:hover{color:var(--thread)}
+.status-indicator{font-family:var(--body);font-size:.8rem;color:var(--indigo);background:var(--thread);border-radius:3px;padding:.35rem .8rem;font-weight:700;transform:rotate(-2deg)}
+.status-indicator .status-dot{background:var(--selvedge);box-shadow:none}
 /* hero */
-.hero-terminal{background:var(--ink);border:0;border-radius:14px;box-shadow:6px 6px 0 var(--orange);color:#E8ECF6}
-.hero-terminal .output{color:#7CF0B5}.hero-terminal .cmd{color:#fff}.hero-terminal .comment{color:#8B93B3}.hero-terminal .val{color:#FFB37E}
-.hero-title{font-family:var(--display);font-size:1.15rem;color:var(--ink);font-weight:600;letter-spacing:0}
-.hero-desc{font-size:1.05rem;line-height:1.7;color:var(--off-white)}
-.hero-card{background:#fff;border:1.5px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--red)}
-.hero-card::before{background:var(--cable)!important;height:6px}
-.stat-cell{border-color:var(--border)!important}
-.stat-val{color:var(--ink)}.stat-val em{color:var(--orange)}
-.hero-card-footer{background:var(--black2);border-radius:10px}
-.hero-card-footer-badge{background:var(--red);color:#fff;border:0;border-radius:999px}
-.ip-badge{background:#fff;border:1.5px solid var(--border);border-radius:999px}
+.hero{background:radial-gradient(1200px 600px at 85% 30%,#2A3770 0,transparent 60%),var(--indigo)}
+.drop-row{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.6rem}
+.drop-tag{font-family:var(--display);font-weight:800;font-size:1.05rem;letter-spacing:.04em;background:var(--selvedge);color:var(--bone);padding:.35rem .9rem;transform:rotate(-2deg);display:inline-flex;align-items:center;gap:.45rem}
+.drop-tag.ghost{background:transparent;border:var(--stitch);color:var(--thread);transform:none;font-size:.95rem}
+.dot-live{width:8px;height:8px;border-radius:50%;background:#7FD69E;display:inline-block}
+.hero-name{font-weight:900;font-size:clamp(4.6rem,11vw,10.5rem);line-height:.82;color:var(--bone);position:relative;text-transform:uppercase}
+.hero-name .last{color:transparent;-webkit-text-stroke:2px var(--thread);position:relative}
+.hero-name .kana{position:absolute;right:-.2em;top:.1em;font-family:'Noto Sans JP',sans-serif;font-size:.16em;writing-mode:vertical-rl;color:var(--selvedge);letter-spacing:.2em;-webkit-text-stroke:0}
+.hero-title{font-family:var(--display);font-size:1.7rem;font-weight:800;color:var(--bone);letter-spacing:.01em}
+.hero-title::before{color:var(--selvedge)!important}
+.hero-desc{font-size:1.02rem;line-height:1.7;color:#C3CAE0}
+.ip-badge{display:none}
+/* care label */
+.care-label{position:relative;background:var(--bone);color:#1B2340;width:min(360px,100%);margin:0 auto;padding:1.6rem 1.6rem 1.2rem;transform:rotate(3deg);box-shadow:14px 18px 0 rgba(0,0,0,.25);font-family:var(--body)}
+.care-label::before{content:'';position:absolute;top:-14px;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--indigo);box-shadow:0 0 0 4px var(--bone)}
+.care-label::after{content:'';position:absolute;inset:8px;border:var(--stitch);border-color:rgba(200,16,46,.55);pointer-events:none}
+.cl-brand{font-family:var(--display);font-size:2.2rem;font-weight:900;line-height:1;letter-spacing:.02em}
+.cl-brand span{font-size:1rem;font-weight:700;color:var(--selvedge)}
+.cl-size{font-size:.78rem;font-weight:600;margin:.3rem 0 1rem;color:#4A5272}
+.cl-title{font-family:var(--display);font-weight:800;font-size:1.15rem;border-top:2px solid #1B2340;padding-top:.6rem}
+.cl-comp{list-style:none;margin:.5rem 0 1rem;font-size:.92rem;line-height:1.75}
+.cl-comp b{display:inline-block;min-width:3.4rem;font-family:var(--display);font-size:1.15rem}
+.cl-care{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.cl-care span{border:1.5px solid #1B2340;font-size:.72rem;font-weight:700;padding:.2rem .5rem}
+.cl-foot{font-size:.75rem;font-weight:600;color:#4A5272;margin-bottom:.8rem}
+.cl-barcode{height:34px;background:repeating-linear-gradient(90deg,#1B2340 0 2px,transparent 2px 4px,#1B2340 4px 7px,transparent 7px 9px,#1B2340 9px 10px,transparent 10px 13px)}
 /* boutons */
-.btn-red,.btn-submit{background:var(--orange);color:#fff;font-family:var(--display);font-size:.95rem;font-weight:700;letter-spacing:0;text-transform:none;border-radius:999px;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}
+.btn-red,.btn-submit{background:var(--selvedge);color:var(--bone);font-family:var(--display);font-size:1.15rem;font-weight:800;letter-spacing:.03em;text-transform:none;border-radius:0;border:0;box-shadow:5px 5px 0 var(--thread);transition:transform .15s,box-shadow .15s}
 .btn-red::before,.btn-submit::before{display:none}
-.btn-red:hover,.btn-submit:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.btn-red span{color:#fff}
-.btn-ghost{font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);border:2px solid var(--ink);border-radius:999px;padding:.8rem 1.6rem;background:#fff}
-.btn-ghost:hover{background:var(--ink);color:#fff}
-.btn-cv{font-family:var(--display);font-size:.95rem;font-weight:600;letter-spacing:0;text-transform:none;border:2px solid var(--green);color:#0B7A47;border-radius:999px;background:#E6F8EF}
+.btn-red:hover,.btn-submit:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--thread)}
+.btn-red span{color:var(--bone)}
+.btn-ghost{font-family:var(--display);font-size:1.15rem;font-weight:800;letter-spacing:.03em;text-transform:none;color:var(--bone);border:var(--stitch);border-radius:0;padding:.75rem 1.5rem;background:transparent}
+.btn-ghost:hover{background:var(--thread);color:var(--indigo)}
+.btn-cv{font-family:var(--display);font-size:1.15rem;font-weight:800;letter-spacing:.03em;text-transform:none;border:2px solid var(--bone);color:var(--bone);border-radius:0;background:transparent}
+.btn-cv:hover{background:var(--bone);color:var(--indigo)}
 /* marquee */
-.marquee-wrap{background:var(--ink);border:0}
-.marquee-item{color:#E8ECF6;font-family:var(--display);font-weight:600}
-.marquee-dot{color:var(--orange)}
-/* cartes & blocs */
-.about-info-card,.certif-card,.veille-card,.doc-card,.parcours-item,.exp-row,.projet-row{background:#fff}
-.about-info-card{border:1.5px solid var(--border);border-radius:12px}
-.aic-label,.section-tag,.projet-period,.exp-period,.parcours-year,.certif-org{font-family:var(--display);letter-spacing:0;text-transform:none;font-weight:600}
-.section-tag{color:var(--orange)}
+.marquee-wrap{background:var(--selvedge);border:0;transform:rotate(-1deg);margin:1rem -1rem}
+.marquee-item{color:var(--bone);font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:.04em}
+.marquee-dot{color:var(--thread)}
+/* sections */
+.section-title{font-size:clamp(2.6rem,5vw,4.2rem);font-weight:900;color:var(--bone);text-transform:uppercase}
+.section-num{-webkit-text-stroke:0;color:var(--thread);opacity:.9;font-family:var(--display);font-weight:900;font-size:1.4rem}
+.section-tag{font-family:var(--mono);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--thread)}
+.univers .section-tag{color:var(--selvedge)}
+.section-title{color:var(--bone)}
+.univers .section-title{color:var(--indigo)}
+.section-divider{height:0;border-top:var(--stitch);background:none;opacity:.8}
+.about-info-card,.certif-card,.veille-card,.doc-card,.parcours-item,.exp-row,.projet-row{background:var(--indigo2)}
+.about-info-card{border:1px solid var(--border);border-left:4px solid var(--selvedge)}
+.aic-label,.projet-period,.exp-period,.parcours-year,.certif-org{font-family:var(--body);letter-spacing:0;text-transform:none;font-weight:600}
+.aic-label,.certif-org,.parcours-year{color:var(--thread)}
 .certif-grid{gap:18px!important;background:transparent!important;border:0!important}
-.certif-card{border:1.5px solid var(--ink);border-radius:16px;box-shadow:5px 5px 0 var(--ink)}
-.certif-card:nth-child(4n+1){box-shadow:5px 5px 0 var(--orange)}
-.certif-card:nth-child(4n+2){box-shadow:5px 5px 0 var(--green)}
-.certif-card:nth-child(4n+3){box-shadow:5px 5px 0 var(--red)}
-.certif-card:nth-child(4n+4){box-shadow:5px 5px 0 var(--brown)}
-.certif-org{color:var(--red)}
-.certif-icon{border-radius:12px;border-color:var(--border)}
-.projet-row{border:1.5px solid var(--border);border-radius:18px;margin-bottom:22px;overflow:hidden}
-.projet-num{color:var(--red);-webkit-text-stroke:0;opacity:.25;font-family:var(--display);font-weight:800}
-.projet-type{border-radius:999px;font-family:var(--display);font-weight:600;letter-spacing:0;text-transform:none}
-.tech-tag{background:var(--black2);border:0;border-radius:999px;color:var(--ink);font-family:var(--display);font-size:.75rem;font-weight:500}
-.skill-pill{border-radius:999px;font-family:var(--display);font-size:.8rem;color:var(--ink);background:#fff;border:1.5px solid var(--border)}
-.skill-pill:hover{border-color:var(--red);color:var(--red)}
-.exp-row{border:1.5px solid var(--border);border-radius:16px;margin-bottom:16px}
-.exp-type{border-radius:999px;font-family:var(--display);text-transform:none;letter-spacing:0;font-weight:600}
-.exp-type.alt{background:var(--red);color:#fff;border-color:var(--red)}
-.parcours-item.current{border-color:var(--red)}
-.parcours-badge{border-radius:999px;font-family:var(--display);text-transform:none;letter-spacing:0}
-.doc-card{border:1.5px solid var(--border)!important;border-radius:16px}
-.doc-card:hover{background:#fff;border-color:var(--red)!important}
-.about-quote{border-left:6px solid;border-image:var(--cable) 1;color:var(--grey-light);font-family:var(--display);font-style:italic}
-.lang-bar{background:var(--black2);border-radius:4px}.lang-bar-fill{background:var(--cable)!important;border-radius:4px}
-/* contact */
-.contact-panel-left{background:var(--ink)}
-.contact-panel-left::before,.contact-panel-left::after{opacity:.0}
-.contact-big{color:#fff}
-.contact-sub,.cii-label{color:#B9C0DA}.cii-val{color:#fff}.contact-label-tag{color:var(--orange)}
-.contact-info-list,.contact-info-item{border-color:rgba(255,255,255,.15)}
-.cii-icon{border-radius:10px;background:rgba(255,255,255,.1)}
-.contact-form,.form-duo{background:var(--border)}
-.form-field{background:#fff}.form-field:focus-within{background:#F7F9FF}
-.field-input,.field-textarea{color:var(--ink)}
-.field-input::placeholder,.field-textarea::placeholder{color:#9AA2BF}
-.pdf-viewer-embed{background:#fff}
+.certif-card{border:var(--stitch);border-radius:0;box-shadow:none;position:relative}
+.certif-card:hover{background:var(--indigo3)}
+.projet-row{border:1px solid var(--border);margin-bottom:22px;position:relative}
+.projet-row::after{content:'';position:absolute;inset:6px;border:var(--stitch);opacity:.35;pointer-events:none}
 .projet-sidebar{padding-left:1.8rem!important}
+.projet-num{color:var(--selvedge);-webkit-text-stroke:0;opacity:1;font-family:var(--display);font-weight:900}
+.projet-type{border-radius:0;font-family:var(--body);font-weight:700;letter-spacing:0;text-transform:none;background:var(--thread);color:var(--indigo)!important;border:0!important}
+.projet-subtitle{color:var(--thread)}
+.tech-tag{background:transparent;border:1px solid var(--border);border-radius:0;color:var(--bone);font-family:var(--body);font-size:.75rem;font-weight:600}
+.skill-pill{border-radius:0;font-family:var(--body);font-size:.8rem;color:var(--bone);border:1px solid var(--border)}
+.skill-pill:hover{border-color:var(--thread);color:var(--thread)}
+.exp-row{border:1px solid var(--border)}
+.exp-type{border-radius:0;font-family:var(--body);text-transform:none;letter-spacing:0;font-weight:700}
+.exp-type.alt{background:var(--selvedge);color:var(--bone);border-color:var(--selvedge)}
+.parcours-badge{border-radius:0;font-family:var(--body);text-transform:none;letter-spacing:0}
+.doc-card{border:var(--stitch)!important}
+.about-quote{border-left:4px solid var(--selvedge);color:#C3CAE0;font-family:var(--body);font-style:italic}
+.lang-bar{background:var(--indigo3)}.lang-bar-fill{background:var(--thread)!important}
+/* univers */
+.univers{background:var(--bone)!important}
+.univers .section-title{color:var(--indigo)}
+.univers-intro{font-size:1.15rem;line-height:1.6;color:#2A3150;max-width:60ch;margin-bottom:2.4rem}
+.univers-grid{display:grid;grid-template-columns:1.3fr 1fr;grid-auto-rows:minmax(220px,auto);gap:16px}
+.u-tile{padding:1.8rem;position:relative;overflow:hidden;color:var(--bone)}
+.u-tile h3{font-size:2rem;font-weight:900;line-height:1;margin:.6rem 0 .8rem;text-transform:uppercase}
+.u-tile p{font-size:.98rem;line-height:1.6;max-width:44ch}
+.u-kicker{display:inline-block;font-family:var(--display);font-weight:800;font-size:1rem;padding:.2rem .6rem;background:var(--bone);color:var(--indigo)}
+.u-fringues{grid-row:span 2;background:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 2px,transparent 2px 6px),linear-gradient(160deg,#2C3E7A,#1B2340);border-right:10px solid var(--selvedge)}
+.u-fringues::after{content:'';position:absolute;inset:10px;border:var(--stitch);pointer-events:none}
+.u-musique{background:var(--selvedge)}
+.u-sport{background:#1E7A4F}
+.u-jeux{background:#16161C;grid-column:span 2}
+.u-jeux h3{color:var(--thread)}
+/* contact */
+.contact-panel-left{background:var(--selvedge)}
+.contact-big{color:var(--bone);text-transform:uppercase}
+.contact-sub,.cii-label{color:#FFD9DF}.cii-val{color:var(--bone)}.contact-label-tag{color:var(--thread)}
+.form-field{background:var(--indigo2)}.form-field:focus-within{background:var(--indigo3)}
+.field-input,.field-textarea{color:var(--bone)}
+.field-input::placeholder,.field-textarea::placeholder{color:#7D88AD}
+#freelance .certif-grid{grid-template-columns:repeat(2,1fr)}
 #documents .docs-grid{grid-template-columns:minmax(0,520px);background:transparent}
+@media(max-width:900px){.univers-grid{grid-template-columns:1fr}.u-fringues{grid-row:auto}.u-jeux{grid-column:auto}.care-label{transform:rotate(1.5deg);margin-top:2rem}.hero-name .kana{display:none}}
+@media(max-width:768px){#freelance .certif-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* fix mobile overflow */
+html,body{overflow-x:clip}
+.hero-left,.hero-right{min-width:0}
+.marquee-wrap{overflow:hidden;max-width:100vw}
+@media(max-width:560px){
+ .hero-name{font-size:clamp(2.6rem,13vw,4rem)!important}
+ .hero-name .last{font-size:.82em}
+ .hero-title{font-size:1.15rem}
+ .care-label{max-width:calc(100vw - 48px);transform:rotate(1.5deg)}
+}
 </style>
 </head>
 <body>
@@ -518,6 +553,7 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
   </div>
   <ul class="nav-links">
     <li><a href="#about" data-num="01">À propos</a></li>
+    <li><a href="#univers" data-num="01b">Univers</a></li>
     <li><a href="#parcours" data-num="02">Parcours</a></li>
     <li><a href="#projets" data-num="05">Projets</a></li>
     <li><a href="#entreprise" data-num="07">Entreprise</a></li>
@@ -527,7 +563,7 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
   <div class="nav-right">
     <div class="status-indicator">
       <div class="status-dot"></div>
-      <span>DISPO FREELANCE</span>
+      <span>Dispo freelance</span>
     </div>
   </div>
 </nav>
@@ -536,18 +572,12 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
 <section class="hero">
   <div class="hero-bg-text">SR</div>
   <div class="hero-left">
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <span class="t-dot"></span><span class="t-dot"></span><span class="t-dot"></span>
-        <span class="terminal-title">nael@portfolio ~ bash</span>
-      </div>
-      <div class="t-line"><span class="prompt">$ </span><span class="cmd">whoami</span></div>
-      <div class="t-line"><span class="output">nael.lakhledj</span> <span class="comment">// Systèmes, Réseaux & Web</span></div>
-      <div class="t-line"><span class="prompt">$ </span><span class="cmd">cat ./status.txt</span></div>
-      <div class="t-line"><span class="val">ALTERNANCE @ LEVELS_SYS</span> <span class="comment">// Bachelor SR · Sup de Vinci</span></div>
-      <div class="t-line"><span class="prompt">$ </span><span class="cmd">./freelance --status <span class="val">AVAILABLE</span><span class="blink">_</span></span></div>
+    <div class="drop-row">
+      <span class="drop-tag">Drop 2026</span>
+      <span class="drop-tag ghost">Villiers-le-Bel · 95</span>
+      <span class="drop-tag ghost"><span class="dot-live"></span>Dispo en freelance</span>
     </div>
-    <h1 class="hero-name"><span class="first">Nael</span><span class="last">Lakhledj</span></h1>
+    <h1 class="hero-name"><span class="first">Nael</span><span class="last">Lakhledj</span><span class="kana" aria-hidden="true">ナエル</span></h1>
     <p class="hero-title">Administrateur réseaux · Développeur web freelance</p>
     <p class="hero-desc">Bachelor Systèmes, Réseaux & Cloud en alternance chez Levels Sys.<br>Cisco · Linux · pfSense · Active Directory · Proxmox · WordPress · Python.<br>Freelance : sites web &amp; prestations IT — Paris / Île-de-France.</p>
     <div class="hero-actions">
@@ -558,21 +588,22 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
     <div class="ip-badge"><span class="dot"></span><span>netadmin@levels-sys · freelance · IDF · FR</span></div>
   </div>
   <div class="hero-right">
-    <div class="hero-card">
-      <div class="hero-card-header">
-        <div class="hero-card-label">// profil_technique.json</div>
-        <div class="hero-card-status"><span class="status-dot"></span>ONLINE</div>
+    <div class="care-label" aria-label="Étiquette : composition de Nael">
+      <div class="cl-brand">NAEL L. <span>— made in 95</span></div>
+      <div class="cl-size">Taille unique · Édition 2026</div>
+      <div class="cl-title">Composition</div>
+      <ul class="cl-comp">
+        <li><b>40 %</b> réseau &amp; systèmes</li>
+        <li><b>25 %</b> code &amp; web</li>
+        <li><b>15 %</b> musique</li>
+        <li><b>10 %</b> foot &amp; sport</li>
+        <li><b>10 %</b> jeux vidéo</li>
+      </ul>
+      <div class="cl-care">
+        <span title="Certifié Cisco">CCNA ×2</span><span title="Diplôme">BTS SIO</span><span title="En cours">Bachelor SR</span>
       </div>
-      <div class="stat-grid">
-        <div class="stat-cell"><div class="stat-val">4<em>+</em></div><div class="stat-lbl">expériences</div></div>
-        <div class="stat-cell"><div class="stat-val">CCNA</div><div class="stat-lbl">certifié_cisco</div></div>
-        <div class="stat-cell"><div class="stat-val">5<em>+</em></div><div class="stat-lbl">projets_bts</div></div>
-        <div class="stat-cell"><div class="stat-val">BTS</div><div class="stat-lbl">obtenu_2026</div></div>
-      </div>
-      <div class="hero-card-footer">
-        <div class="hero-card-footer-txt">alternance :: levels_sys</div>
-        <div class="hero-card-footer-badge">BACHELOR_SR</div>
-      </div>
+      <div class="cl-foot">Alternance · Levels Sys &nbsp;/&nbsp; Freelance web</div>
+      <div class="cl-barcode" aria-hidden="true"></div>
     </div>
   </div>
 </section>
@@ -613,6 +644,40 @@ nav{background:rgba(243,245,250,.88);border-bottom:1px solid var(--border)}
         <div class="about-info-card"><div class="aic-label">rythme</div><div class="aic-val">2 semaines entreprise / 2 semaines cours</div></div>
         <div class="about-info-card"><div class="aic-label">contact</div><div class="aic-val">nlakhledj@gmail.com · 07 67 95 78 83</div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNIVERS -->
+<section class="section univers" id="univers">
+  <div class="section-inner">
+    <div class="section-label reveal">
+      <div class="section-num">01b</div>
+      <div class="section-meta"><div class="section-tag">hors écran</div><div class="section-title">Mon univers</div></div>
+      <div class="section-divider"></div>
+    </div>
+    <p class="univers-intro reveal">L'informatique, c'est mon métier. Mais ce qui nourrit mon style — y compris dans les sites que je crée — vient d'ailleurs.</p>
+    <div class="univers-grid reveal">
+      <article class="u-tile u-fringues">
+        <div class="u-kicker">Fringues</div>
+        <h3>Denim vintage &amp; archives japonaises</h3>
+        <p>Selvedge, sneakers, pièces d'archive. J'aime les vêtements qui ont une histoire et un vrai savoir-faire — c'est pareil pour un site.</p>
+      </article>
+      <article class="u-tile u-musique">
+        <div class="u-kicker">Musique</div>
+        <h3>Toujours un son qui tourne</h3>
+        <p>Pendant que je code, que je configure un serveur ou que je suis dans les transports. Le rythme compte, partout.</p>
+      </article>
+      <article class="u-tile u-sport">
+        <div class="u-kicker">Foot &amp; sport</div>
+        <h3>Esprit d'équipe, du terrain aux Shorts</h3>
+        <p>Le foot, la salle, et une chaîne YouTube Shorts foot que j'automatise moi-même en Python.</p>
+      </article>
+      <article class="u-tile u-jeux">
+        <div class="u-kicker">Jeux vidéo</div>
+        <h3>Rocket League · Call of Duty · DBFZ</h3>
+        <p>Réflexes, stratégie et un peu de compétition. Je développe aussi mon propre jeu sur Roblox.</p>
+      </article>
     </div>
   </div>
 </section>
