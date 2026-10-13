@@ -524,6 +524,8 @@ nav{background:rgba(27,35,64,.9);border-bottom:var(--stitch)}
 #documents .docs-grid{grid-template-columns:minmax(0,520px);background:transparent}
 @media(max-width:900px){.univers-grid{grid-template-columns:1fr}.u-fringues{grid-row:auto}.u-jeux{grid-column:auto}.care-label{transform:rotate(1.5deg);margin-top:2rem}.hero-name .kana{display:none}}
 @media(max-width:768px){#freelance .certif-grid{grid-template-columns:1fr}}
+#certifications .certif-grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:768px){#certifications .certif-grid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 /* fix mobile overflow */
 html,body{overflow-x:clip}
@@ -600,7 +602,7 @@ html,body{overflow-x:clip}
         <li><b>10 %</b> jeux vidéo</li>
       </ul>
       <div class="cl-care">
-        <span title="Certifié Cisco">CCNA ×2</span><span title="Diplôme">BTS SIO</span><span title="En cours">Bachelor SR</span>
+        <span title="Certifié Cisco">CCNA ×3</span><span title="Diplôme">BTS SIO</span><span title="En cours">Bachelor SR</span>
       </div>
       <div class="cl-foot">Alternance · Levels Sys &nbsp;/&nbsp; Freelance web</div>
       <div class="cl-barcode" aria-hidden="true"></div>
@@ -726,9 +728,23 @@ html,body{overflow-x:clip}
     <div class="certif-grid reveal">
       <div class="certif-card">
         <div class="certif-icon">🌐</div>
-        <div class="certif-name">CCNA 1</div>
+        <div class="certif-name">CCNA 1 — ITN</div>
         <div class="certif-org">Cisco Networking Academy</div>
-        <div class="certif-desc">Introduction to Networks — Fondamentaux des réseaux, modèle OSI/TCP-IP, routage, commutation, adressage IPv4/IPv6.</div>
+        <div class="certif-desc">Introduction to Networks — modèle OSI/TCP-IP, adressage IPv4/IPv6, bases du routage et de la commutation.</div>
+        <span class="certif-status obtained">✓ Obtenu</span>
+      </div>
+      <div class="certif-card">
+        <div class="certif-icon">🔀</div>
+        <div class="certif-name">CCNA 2 — SRWE</div>
+        <div class="certif-org">Cisco Networking Academy</div>
+        <div class="certif-desc">Switching, Routing & Wireless Essentials — VLAN, STP, EtherChannel, DHCP, routage statique, Wi-Fi.</div>
+        <span class="certif-status obtained">✓ Obtenu</span>
+      </div>
+      <div class="certif-card">
+        <div class="certif-icon">🔒</div>
+        <div class="certif-name">CCNA 3 — ENSA</div>
+        <div class="certif-org">Cisco Networking Academy</div>
+        <div class="certif-desc">Enterprise Networking, Security & Automation — OSPF, ACL, NAT, VPN, sécurité réseau, QoS, automatisation.</div>
         <span class="certif-status obtained">✓ Obtenu</span>
       </div>
       <div class="certif-card">
@@ -737,13 +753,6 @@ html,body{overflow-x:clip}
         <div class="certif-org">Anglais professionnel · B2</div>
         <div class="certif-desc">Certification d'anglais professionnel. Capacité à lire la documentation technique et à communiquer en environnement anglophone.</div>
         <span class="certif-status obtained">✓ Obtenu</span>
-      </div>
-      <div class="certif-card">
-        <div class="certif-icon">🔒</div>
-        <div class="certif-name">CCNA Security</div>
-        <div class="certif-org">Cisco Networking Academy</div>
-        <div class="certif-desc">Sécurisation des infrastructures réseau Cisco — ACL, VPN, pare-feu, détection d'intrusion. En cours de préparation.</div>
-        <span class="certif-status planned">⟳ En préparation</span>
       </div>
     </div>
   </div>
@@ -932,7 +941,7 @@ html,body{overflow-x:clip}
       <div class="skill-panel"><div class="skill-panel-title">Déploiement & Support</div><div class="skill-items"><span class="skill-pill">AD & Exchange</span><span class="skill-pill">Zimbra</span><span class="skill-pill">Diagnostic réseau</span><span class="skill-pill">Dépannage Win</span><span class="skill-pill">Assistance users</span><span class="skill-pill">Ticketing GLPI</span></div></div>
       <div class="skill-panel"><div class="skill-panel-title">Langages & Outils</div><div class="skill-items"><span class="skill-pill">HTML / CSS</span><span class="skill-pill">JavaScript</span><span class="skill-pill">C#</span><span class="skill-pill">SQL</span><span class="skill-pill">GitHub</span><span class="skill-pill">Bash</span></div></div>
       <div class="skill-panel"><div class="skill-panel-title">Méthodologies</div><div class="skill-items"><span class="skill-pill">ITIL bases</span><span class="skill-pill">Documentation tech</span><span class="skill-pill">Schémas réseau</span><span class="skill-pill">Rapport d'incident</span><span class="skill-pill">Gestion de parc</span></div></div>
-      <div class="skill-panel"><div class="skill-panel-title">Certifications</div><div class="skill-items"><span class="skill-pill">CCNA 1 · Cisco</span><span class="skill-pill">PIX · Anglais B2</span><span class="skill-pill">CCNA Security (en cours)</span></div></div>
+      <div class="skill-panel"><div class="skill-panel-title">Certifications</div><div class="skill-items"><span class="skill-pill">CCNA 1 · 2 · 3 · Cisco</span><span class="skill-pill">PIX · Anglais B2</span></div></div>
     </div>
   </div>
 </section>
